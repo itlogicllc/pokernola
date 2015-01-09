@@ -1,0 +1,11 @@
+{
+    "name": "vendor/pokernola",
+    "description": "Description of project pokernola.",
+    "authors": [
+        {
+            "name": "Keith",
+            "email": "info@itlogic.org"
+        }
+    ],
+    "require": {}
+}

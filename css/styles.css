@@ -1,0 +1,93 @@
+@charset "utf-8";
+/* CSS Document */
+body {
+    font-size:small;
+    background-color: #000;
+}
+#custom_loader {
+    text-align:center;
+}
+.date_range {
+    font-size:x-small;
+    font-weight:normal;
+}
+.date_from {
+    color:#CCC;
+}
+.date_to {
+    color:#CCC;
+}
+.season_range {
+    text-align:center;
+}
+.grid_container {
+    border-top:#000 solid 1px;
+    border-left:#000 solid 1px;
+    border-right:#000 solid 1px;
+    margin-top:5px;
+}
+.grid1 {
+    background-color:#EEE;
+    border-bottom:#000 solid 1px;
+    text-align:center;
+    height:80px;
+}
+.grid1 a {
+    color:#000;
+    text-decoration:none;
+}
+.grid2 {
+    background-color:#DDD;
+    border-bottom:#000 solid 1px;
+    text-align:center;
+    height:80px;
+}
+.grid2 a {
+    color:#000;
+    text-decoration:none;
+}
+.grid3 {
+    background-color:#CCC;
+    border-bottom:#000 solid 1px;
+    text-align:center;
+    height:80px;
+}
+.grid3 a {
+    color:#000;
+    text-decoration:none;
+}
+.label_div {
+    text-align:center;
+    font-size:medium;
+    padding-top:10px;
+    padding-bottom:10px;
+    font-weight:bold;
+}
+.comment {
+    text-align:center;
+}
+.info {
+    color:#6CF;
+}
+.alert {
+    color:#FFCCC4;
+}
+.expired {
+    color:#CCC;
+    text-decoration:line-through;
+}
+.scoring {
+    font-weight:bold;
+    text-transform:uppercase;
+    color:#0F0;
+}
+.disabled_input {
+    color:#CCC;
+}
+.enabled_input {
+    color:#000;
+}
+.ranking {
+    font-size:small;
+    font-weight:normal;
+}  
