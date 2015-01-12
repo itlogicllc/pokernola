@@ -63,7 +63,8 @@ function games_pot_sum() {
     for ($i = 0; $i <= count($games_array); $i++) {
         $pot_sum = $games_array[$i]['total_pot'] + $pot_sum;
     }
-    return money_format('%n', $pot_sum);
+    //return money_format('%n', $pot_sum);
+    return "$" . number_format($pot_sum, 2);
 }
 
 function games_largest_pot() {
@@ -75,7 +76,8 @@ function games_largest_pot() {
             $pot_amount = $games_array[$i]['total_pot'];
         }
     }
-    return money_format('%n', $pot_amount);
+    //return money_format('%n', $pot_amount);
+    return "$" . number_format($pot_amount, 2);
 }
 
 function games_most_players() {

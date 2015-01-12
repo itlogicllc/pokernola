@@ -57,7 +57,7 @@ $money_makers = payout_range(1, 3);
                 <ol data-role="listview" data-inset="true">
                     <li data-role="list-divider">Money Makers</li>
                     <?php for ($i = 0; $i <= count($money_makers) - 1; $i++) { ?>
-                        <li><a href="player_details.php?player_id=<?php echo $money_makers[$i]['player_id']; ?>"><?php echo $money_makers[$i]['full_name']; ?><span class="ui-li-count"><?php echo money_format('%n', $money_makers[$i]['total_amount']); ?></span></a></li>
+                        <li><a href="player_details.php?player_id=<?php echo $money_makers[$i]['player_id']; ?>"><?php echo $money_makers[$i]['full_name']; ?><span class="ui-li-count"><?php echo '$' . number_format($money_makers[$i]['total_amount'], 2); //echo money_format('%n', $money_makers[$i]['total_amount']); ?></span></a></li>
                             <?php } ?>
                 </ol>
             </div>

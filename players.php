@@ -58,12 +58,12 @@ $payouts = payout_range();
                             <?php $previous_payout = 0; ?>
                             <?php
                             for ($i = 0; $i <= count($payouts) - 1; $i++) {
-                                $current_payout = money_format('%n', $payouts[$i]['total_amount']);
+                                $current_payout = "$" . number_format($payouts[$i]['total_amount'], 2);
                                 if ($current_payout != $previous_payout) {
                                     $payout_rank++;
                                 }
                                 ?>
-                                <li><a href="player_details.php?player_id=<?php echo $payouts[$i]['player_id']; ?>"><span class="ranking"><?php echo $payout_rank . '.  '; ?></span><?php echo $payouts[$i]['full_name']; ?><span class="ui-li-count"><?php echo(money_format('%n', $payouts[$i]['total_amount'])); ?></span></a></li>
+                                <li><a href="player_details.php?player_id=<?php echo $payouts[$i]['player_id']; ?>"><span class="ranking"><?php echo $payout_rank . '.  '; ?></span><?php echo $payouts[$i]['full_name']; ?><span class="ui-li-count"><?php echo("$" . number_format($payouts[$i]['total_amount'], 2)); ?></span></a></li>
                                 <?php
                                     $previous_payout = $current_payout;
                                 }
