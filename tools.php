@@ -14,7 +14,7 @@
 		<?php require('includes/set_tools.php'); ?>
 	</div>
 	<div role="main" class="ui-content">
-                <?php if ($_SESSION['player_access'] == 'admin') { ?>
+                <?php if (isset($_SESSION['player_access']) && $_SESSION['player_access'] == 'admin') { ?>
                     <a href="tools_settings.php" data-role="button" data-transition="fade">Create New Season</a>
                 <?php } ?>
 		<a href="tools_scoring.php" data-role="button" data-transition="fade">Season Rules</a>

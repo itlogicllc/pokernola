@@ -83,7 +83,7 @@ function winner_by_place($player, $place) {
    $winner_place_array = array();
    $pointer = 0;
 
-   for ($i = 0; $i <= count($winners_array); $i++) {
+   for ($i = 0; $i <= count($winners_array) - 1; $i++) {
       if ($winners_array[$i]['player_id'] == $player && $winners_array[$i]['place'] == $place) {
          $winner_place_array[$pointer] = $winners_array[$i];
          $pointer++;

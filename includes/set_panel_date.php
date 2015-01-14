@@ -13,7 +13,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 if (isset($_POST['date_pick'])) {
     $_SESSION['from_date'] = date_to_mysql($_POST['date_pick_from']);
     $_SESSION['to_date'] = date_to_mysql($_POST['date_pick_to']);
-    header("location: $editFormAction");
+   // header("location: $editFormAction");
 }
 ?>
 <script type="text/javascript">
@@ -29,7 +29,7 @@ if (isset($_POST['date_pick'])) {
           }
     }
 </script>
-<div data-role="panel" id="date_panel<?php echo $random_num; ?>" data-display="overlay" ui-panel-inner="true">
+<div data-role="panel" id="date_panel" data-display="overlay" ui-panel-inner="true">
     <form name="date_form" id="date_form<?php echo $random_num; ?>" action="<?php echo $editFormAction; ?>" method="post">
         <div class="label_div" style="color:#FFF">Date Range by Season:</div>
         <div data-role="controlgroup">

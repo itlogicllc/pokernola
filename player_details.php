@@ -17,8 +17,15 @@ $total_points = winner_total_points($player_id);
 $games_count = games_played_count();
 $number_played = game_players_played($player_id);
 
+if ($number_player == 0) {
+   $percent_top_10 = 0;
+   $percent_top_3 = 0;
+} else{
+   $percent_top_10 = $top_10_count / $number_played;
+   $percent_top_3 = $top_3_count / $number_played;
+}
+
 $percent_played = $number_played / $games_count;
-$percent_top_10 = $top_10_count / $number_played;
 $comp_percent_top_10 = $percent_top_10 * $percent_played;
 $percent_top_3 = $top_3_count / $number_played;
 $comp_percent_top_3 = $percent_top_3 * $percent_played;
@@ -77,13 +84,19 @@ $comp_percent_top_3 = $percent_top_3 * $percent_played;
                     for ($i = 1; $i <= 10; $i++) {
                         $place = winner_by_place($player_id, $i);
                         $place_amount = count($place);
-                        $place_percent = $place_amount / $number_played;
+                        
+                        if ($number_played == 0) {
+                           $place_percent = 0; 
+                        } else {
+                           $place_percent = $place_amount / $number_played;
+                        }
+                      
                         $comp_place_percent = $place_percent * $percent_played;
                         if ($place_amount > 0) {
                             ?>
                             <div data-role="collapsible" data-collapsed="true">
                                 <h3>Placed <?php echo $i; ?>: <span style="font-weight:normal"><?php echo $place_amount; ?> times - <?php echo number_format($place_percent, 1) * 100; ?>% (<?php echo number_format($comp_place_percent, 1) * 100; ?>%)</span></h3>
-                                <ul data-role="listview" data-inset="false">
+                                <ul data-role="listview" data-inset="true">
                                             <?php for ($li = 0; $li <= $place_amount - 1; $li++) { ?>
                                         <li>
                                             <a href="game_details.php?game_id=<?php echo $place[$li]['game_id']; ?>">

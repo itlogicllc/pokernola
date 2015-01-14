@@ -7,12 +7,12 @@
 $game_id = $_GET['game_id'];
 $game_array = games_game($game_id);
 $total_pot = $game_array['total_pot'];
-$game_pot = money_format('%n', $total_pot);
+$game_pot = "$" . number_format($total_pot, 2);
 $game_winners_array = winners_by_game($game_id);
 $game_players_array = game_players_by_game($game_id);
-$first_pot = money_format('%n', $game_winners_array[0]['amount'] * $total_pot);
-$second_pot = money_format('%n', $game_winners_array[1]['amount'] * $total_pot);
-$third_pot = money_format('%n', $game_winners_array[2]['amount'] * $total_pot);
+$first_pot = "$" . number_format($game_winners_array[0]['amount'] * $total_pot, 2);
+$second_pot = "$" . number_format($game_winners_array[1]['amount'] * $total_pot, 2);
+$third_pot = "$" . number_format($game_winners_array[2]['amount'] * $total_pot, 2);
 $settings_array[0] = settings_current($game_array['settings_id']);
 
 if ($game_array['registration'] == 1) {
@@ -78,12 +78,12 @@ if ($game_array['registration'] == 1) {
                 <div data-role="collapsible-set">
                     <div data-role="collapsible" data-collapsed="true">
                         <h3>Winners</h3>
-                        <ol data-role="listview" data-inset="false" data-count-theme="a">
+                        <ol data-role="listview" data-inset="true" data-count-theme="a">
 <?php for ($i = 0; $i <= count($game_winners_array) - 1; $i++) { ?>
                                 <li>
                                     <a href="player_details.php?player_id=<?php echo $game_winners_array[$i]['player_id']; ?>"> 
                                         <h2><?php echo $game_winners_array[$i]['full_name']; ?><span class="ui-li-count"><?php echo trim(number_format($game_winners_array[$i]['points'], 2)); ?></span></h2>
-                                        <p style="margin-top:5px">Payout: <strong class="info"><?php echo money_format('%n', $game_winners_array[$i]['split_diff'] * $total_pot); ?></strong>
+                                        <p style="margin-top:5px">Payout: <strong class="info"><?php echo "$" . number_format($game_winners_array[$i]['split_diff'] * $total_pot, 2); ?></strong>
                                             <?php
                                             if ($game_winners_array[$i]['split'] == 1) {
                                                 $split_percentage = $game_winners_array[$i]['split_diff'] * 100;
@@ -98,7 +98,7 @@ if ($game_array['registration'] == 1) {
                     </div>
                     <div data-role="collapsible" data-collapsed="true">
                         <h3>Players</h3>
-                        <ul data-role="listview" data-inset="false" data-count-theme="a">
+                        <ul data-role="listview" data-inset="true" data-count-theme="a">
                             <?php for ($i = 0; $i <= count($game_players_array) - 1; $i++) { ?>
                             <li>
                                 <a href="player_details.php?player_id=<?php echo $game_players_array[$i]['player_id']; ?>"> 

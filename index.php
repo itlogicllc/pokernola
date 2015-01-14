@@ -7,6 +7,11 @@
 <?php
 $top_3 = rankings_range(1, 3);
 $money_makers = payout_range(1, 3);
+$number_games_played = games_played_count();
+$number_registered = players_count();
+$most_players = games_most_players();
+$largest_pot = games_largest_pot();
+$total_payout = games_pot_sum();
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,13 +29,13 @@ $money_makers = payout_range(1, 3);
             <div role="main" class="ui-content">
                 <div class="grid_container">
                     <div class="ui-grid-b">
-                        <div class="ui-block-a grid1"><h4><a href="#total_games" data-transition="pop" data-rel="popup">Games</a></h4><p><?php echo games_played_count(); ?></p></div>
-                        <div class="ui-block-b grid2"><h4><a href="#total_players" data-transition="pop" data-rel="popup">Registered</a></h4><p><?php echo players_count(); ?></p></div>
-                        <div class="ui-block-c grid3"><h4><a href="#most_players" data-transition="pop" data-rel="popup">Most Players</a></h4><p><?php echo games_most_players(); ?></p></div>
+                        <div class="ui-block-a grid1"><h4><a href="#total_games" data-transition="pop" data-rel="popup">Games</a></h4><p><?php echo $number_games_played; ?></p></div>
+                        <div class="ui-block-b grid2"><h4><a href="#total_players" data-transition="pop" data-rel="popup">Registered</a></h4><p><?php echo $number_registered; ?></p></div>
+                        <div class="ui-block-c grid3"><h4><a href="#most_players" data-transition="pop" data-rel="popup">Most Players</a></h4><p><?php echo $most_players; ?></p></div>
                     </div>
                     <div class="ui-grid-a">
-                        <div class="ui-block-a grid1"><h4><a href="#largest_pot" data-transition="pop" data-rel="popup">Largest Pot</a></h4><p><?php echo games_largest_pot(); ?></p></div>
-                        <div class="ui-block-b grid3"><h4><a href="#total_payout" data-transition="pop" data-rel="popup">Total Payout</a></h4><p><?php echo games_pot_sum(); ?></p></div>
+                        <div class="ui-block-a grid1"><h4><a href="#largest_pot" data-transition="pop" data-rel="popup">Largest Pot</a></h4><p><?php echo $largest_pot; ?></p></div>
+                        <div class="ui-block-b grid3"><h4><a href="#total_payout" data-transition="pop" data-rel="popup">Total Payout</a></h4><p><?php echo $total_payout; ?></p></div>
                     </div>
                 </div>
                 <div id="largest_pot" data-role="popup" data-arrow="true">

@@ -1,4 +1,4 @@
-<a href="#date_panel<?php echo $random_num; ?>" class="ui-btn-left" data-role="button" data-icon="<?php echo ($date_pick_on == 1 ? 'calendar' : 'forbidden'); ?>" data-iconpos="notext" data-transition="fade">Calendar</a>
+<a href="#date_panel" class="ui-btn-left" data-role="button" data-icon="<?php echo ($date_pick_on == 1 ? 'calendar' : 'forbidden'); ?>" data-iconpos="notext" data-transition="fade">Calendar</a>
 <h6>
     <?php
         $seasons = settings_list();

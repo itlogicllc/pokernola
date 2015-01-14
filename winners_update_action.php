@@ -27,16 +27,16 @@ if ($multiply_amount == 0)
     $multiply_amount = 1;
 
 $points = array(
-     $settings_array['pt1'] * $multiply_amount,
-     $settings_array['pt2'] * $multiply_amount,
-     $settings_array['pt3'] * $multiply_amount,
-     $settings_array['pt4'] * $multiply_amount,
-     $settings_array['pt5'] * $multiply_amount,
-     $settings_array['pt6'] * $multiply_amount,
-     $settings_array['pt7'] * $multiply_amount,
-     $settings_array['pt8'] * $multiply_amount,
-     $settings_array['pt9'] * $multiply_amount,
-     $settings_array['pt10'] * $multiply_amount);
+    $settings_array['pt1'] * $multiply_amount,
+    $settings_array['pt2'] * $multiply_amount,
+    $settings_array['pt3'] * $multiply_amount,
+    $settings_array['pt4'] * $multiply_amount,
+    $settings_array['pt5'] * $multiply_amount,
+    $settings_array['pt6'] * $multiply_amount,
+    $settings_array['pt7'] * $multiply_amount,
+    $settings_array['pt8'] * $multiply_amount,
+    $settings_array['pt9'] * $multiply_amount,
+    $settings_array['pt10'] * $multiply_amount);
 
 for ($i = 0; $i <= count($winners_array) - 1; $i++) {
     switch ($i) {
@@ -209,13 +209,13 @@ header(sprintf("Location: %s", $updateGoTo));
 ?>
 <!DOCTYPE html>
 <html>
-    <head>
-        <script>
-        </script>
-    </head>
-    <body>
+   <head>
+      <script>
+      </script>
+   </head>
+   <body>
 
-    </body>
+   </body>
 </html>
 <?php
 mysql_free_result($player_splits);

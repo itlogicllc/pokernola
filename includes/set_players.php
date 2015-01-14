@@ -1,5 +1,5 @@
 <a href="player_add.php" data-role="button" data-icon="plus" data-iconpos="notext">Add Player</a>
-<?php if ($_SESSION['player_access'] == 'admin') echo '<a href="player_delete.php" data-role="button" data-icon="minus" data-iconpos="notext">Delete Player</a>'; ?>
+<?php if (isset($_SESSION['player_access']) && $_SESSION['player_access'] == 'admin') echo '<a href="player_delete.php" data-role="button" data-icon="minus" data-iconpos="notext">Delete Player</a>'; ?>
 <nav data-role="navbar">
     <ul>
         <li><a href="index.php" data-transition="flip" data-icon="home">Home</a></li>
