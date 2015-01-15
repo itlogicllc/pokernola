@@ -49,22 +49,6 @@ if (!isset($_SESSION['to_date'])) {
     $_SESSION['to_date'] = $settings_array[0]['end_date'];
 }
 
-//if (!isset($_SESSION['MM_Username'])) {
-//    $_SESSION['MM_Username'] = "";
-//}
-//
-//if (!isset($_SESSION['player_logged_in'])) {
-//    $_SESSION['player_logged_in'] = "";
-//}
-//
-//if (!isset($_SESSION['player_first'])) {
-//    $_SESSION['player_first'] = "";
-//}
-//
-//if (!isset($_SESSION['player_access'])) {
-//    $_SESSION['player_access'] = "";
-//}
-
 setlocale(LC_MONETARY, "en_US");
 
 $date_pick_on = 0;
@@ -80,6 +64,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
         setcookie("pokernola_pass", "", time() + (86400 * 365), "/"); // 86400 = 1 day
     }
 }
+
 ?>
 <?php
 

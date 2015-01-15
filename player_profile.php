@@ -5,7 +5,8 @@
 <?php require('includes/get_players.php'); ?>
 <?php
 // *** Redirect if username exists
-if ($_POST['email'] != $_POST['email_exist']) {
+
+if (isset ($_POST['email']) && ($_POST['email'] != $_POST['email_exist'])) {
 	$MM_flag="MM_update";
 	if (isset($_POST[$MM_flag])) {
 		$MM_dupKeyRedirect="player_profile.php?add_message=" . $_POST['email'] . " already exists!";
@@ -68,7 +69,9 @@ $player_array = players_player($_SESSION['player_logged_in']);
 		<?php require('includes/set_profile.php'); ?>
 	</div>
 	<div role="main" class="ui-content">
-		<div class="alert" align="center"><?php echo $_GET['add_message'] ?></div>
+        <?php if (isset ($_GET['add_message']) && $_GET['add_message'] != "") { ?>
+		<div class="ui-body ui-body-a ui-corner-all alert" align="center"><?php echo $_GET['add_message']; ?></div>
+        <?php } ?>
 		<form action="<?php echo $editFormAction; ?>" id="profile" name="profile" method="POST">
 			<div data-role="fieldcontain">
 				<label for="first_name">First Name:</label>
