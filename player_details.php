@@ -17,7 +17,7 @@ $total_points = winner_total_points($player_id);
 $games_count = games_played_count();
 $number_played = game_players_played($player_id);
 
-if ($number_player == 0) {
+if ($number_played == 0) {
    $percent_top_10 = 0;
    $percent_top_3 = 0;
 } else{

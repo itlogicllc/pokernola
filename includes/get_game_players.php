@@ -23,7 +23,7 @@ function game_players_by_game($game) {
    global $game_players_array;
    $players_by_game_array = array();
 
-   for ($i = 0; $i <= count($game_players_array); $i++) {
+   for ($i = 0; $i <= count($game_players_array) - 1; $i++) {
       if ($game_players_array[$i]['game_id'] == $game) {
          $players_by_game_array[] = $game_players_array[$i];
       }
@@ -35,7 +35,7 @@ function game_players_by_game($game) {
 function game_players_registered($game, $player) {
    global $game_players_array;
 
-   for ($i = 0; $i <= count($game_players_array); $i++) {
+   for ($i = 0; $i <= count($game_players_array) - 1; $i++) {
       if (($game_players_array[$i]['player_id'] == $player) && ($game_players_array[$i]['game_id'] == $game)) {
          return 1;
       }
@@ -48,7 +48,7 @@ function game_players_played($player) {
    global $game_players_array;
    $count = 0;
 
-   for ($i = 0; $i <= count($game_players_array); $i++) {
+   for ($i = 0; $i <= count($game_players_array) - 1; $i++) {
       if ($game_players_array[$i]['player_id'] == $player && $game_players_array[$i]['status'] == 0) {
          $count++;
       }

@@ -21,7 +21,7 @@ while($row_rankings = mysql_fetch_assoc($rankings)) {
 function rankings_player($player) {	
 	global $rankings_array;
 	
-	for ($i=0; $i <= count($rankings_array); $i++) {
+	for ($i=0; $i <= count($rankings_array) - 1; $i++) {
 		if ($rankings_array[$i]['player_id'] == $player)
 			return ++$i; 
 	}

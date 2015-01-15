@@ -46,9 +46,9 @@ function games_count() {
 //  RETURNS THE NUMBER OF GAMES PLAYED. IT ONLY INCLUDES COMPLETED GAMES, NOT FUTURE SCHEDULED GAMES
 function games_played_count() {
     global $games_array;
-    $count = -1;
+    $count = 0;
 
-    for ($i = 0; $i <= count($games_array); $i++) {
+    for ($i = 0; $i <= count($games_array) - 1; $i++) {
         if ($games_array[$i]['status'] == 0) {
              $count++;
         }
@@ -60,7 +60,7 @@ function games_pot_sum() {
     global $games_array;
     $pot_sum = 0;
 
-    for ($i = 0; $i <= count($games_array); $i++) {
+    for ($i = 0; $i <= count($games_array) - 1; $i++) {
         $pot_sum = $games_array[$i]['total_pot'] + $pot_sum;
     }
     //return money_format('%n', $pot_sum);
@@ -71,7 +71,7 @@ function games_largest_pot() {
     global $games_array;
     $pot_amount = 0;
 
-    for ($i = 0; $i <= count($games_array); $i++) {
+    for ($i = 0; $i <= count($games_array) - 1; $i++) {
         if ($games_array[$i]['total_pot'] > $pot_amount) {
             $pot_amount = $games_array[$i]['total_pot'];
         }
@@ -84,7 +84,7 @@ function games_most_players() {
     global $games_array;
     $most_players = 0;
 
-    for ($i = 0; $i <= count($games_array); $i++) {
+    for ($i = 0; $i <= count($games_array) - 1; $i++) {
         if ($games_array[$i]['num_players'] > $most_players) {
             $most_players = $games_array[$i]['num_players'];
         }
