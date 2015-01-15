@@ -75,6 +75,11 @@ body {
 .expired {
     color:#CCC;
     text-decoration:line-through;
+    font-style: italic;
+}
+.placed {
+   font-size: small;
+   font-weight: normal;
 }
 .scoring {
     font-weight:bold;

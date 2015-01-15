@@ -37,7 +37,7 @@ function winner_game_payout($player, $game) {
       }
    }
    //return money_format('%n', $payout);
-   "$" . number_format($payout, 2);
+   return "$" . number_format($payout, 2);
 }
 
 function winner_game_points($player, $game) {
@@ -63,7 +63,7 @@ function winner_total_payout($player) {
       }
    }
    //return money_format('%n', $payout);
-   "$" . number_format($payout, 2);
+   return "$" . number_format($payout, 2);
 }
 
 function winner_total_points($player) {

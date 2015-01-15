@@ -95,7 +95,7 @@ $comp_percent_top_3 = $percent_top_3 * $percent_played;
                         if ($place_amount > 0) {
                             ?>
                             <div data-role="collapsible" data-collapsed="true">
-                                <h3>Placed <?php echo $i; ?>: <span style="font-weight:normal"><?php echo $place_amount; ?> times - <?php echo number_format($place_percent, 1) * 100; ?>% (<?php echo number_format($comp_place_percent, 1) * 100; ?>%)</span></h3>
+                                <h3>Placed <?php echo $i; ?>: <span class="placed"><?php echo $place_amount; ?> times - <?php echo number_format($place_percent, 1) * 100; ?>% (<?php echo number_format($comp_place_percent, 1) * 100; ?>%)</span></h3>
                                 <ul data-role="listview" data-inset="true">
                                             <?php for ($li = 0; $li <= $place_amount - 1; $li++) { ?>
                                         <li>
