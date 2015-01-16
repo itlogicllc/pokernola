@@ -30,7 +30,7 @@ if ($game_array['registration'] == 1) {
          <?php require('includes/set_panel_login.php'); ?>
          <div data-role="header" data-position="fixed">
             <h1>Game Details</h1>
-            <?php require('includes/set_games.php'); ?>
+            <?php require('includes/set_game_details.php'); ?>
          </div>
          <div role="main" class="ui-content">
             <div class="ui-bar ui-bar-a ui-corner-all" align="center"><h2><?php echo date_to_php($game_array['game_name']); ?></h2></div>
