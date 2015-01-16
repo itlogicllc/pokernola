@@ -4,7 +4,7 @@
 if (isset($_POST['add'])) {
   $insertSQL = sprintf("INSERT INTO game_players (game_id, player_id) VALUES (%s, %s)",
   GetSQLValueString($_GET['game_id'], "int"),
-  GetSQLValueString($_POST['players_select'], "int"));
+  GetSQLValueString($_POST['game_players_select'], "int"));
 
   mysql_select_db($database_poker_db, $poker_db);
   $Result1 = mysql_query($insertSQL, $poker_db) or die(mysql_error());

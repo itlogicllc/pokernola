@@ -86,19 +86,20 @@ $settings_array[0] = settings_current($game['settings_id']);
                     <div data-role="collapsible" data-collapsed="true">
                         <h3>Players</h3>
                         <form method="POST" name="players" id="players<?php echo $random_num; ?>" action="winners_add_players_action.php?game_id=<?php echo $game_id; ?>">
-                            <select name="players_select" id="players_select<?php echo $random_num; ?>" onFocus="set_player_select(this);" onChange="set_player_selected(this, getElementById('player<?php echo $i + 1; ?><?php echo $random_num; ?>'));" data-native-menu="true">
+                            <select name="game_players_select" id="game_players_select<?php echo $random_num; ?>" onFocus="set_player_select(this, 'game_players');" data-native-menu="true">
                                 <option value="0">Guest</option>
-                                <?php require('includes/get_player_select.php'); ?>
+                                <?php require('includes/get_game_players_select.php'); ?>
                             </select>
                             <input type="submit" name="submit" value="Add" data-inline="true" />
                             <input type="hidden" name="add" value="player_add">
                         </form>
                         <br />
                         <ul data-role="listview" data-inset="true" data-count-theme="a" data-icon="delete">
-                            <?php for ($i = 0; $i <= count($game_players_array) - 1; $i++) { ?>
+                           <?php for ($i = 0; $i <= count($game_players_array) - 1; $i++) { ?>
                                 <li>
                                     <a href="winners_delete_players_action.php?game_id=<?php echo $game_id; ?>&player_id=<?php echo $game_players_array[$i]['player_id']; ?>"> 
                                         <h3><?php echo $game_players_array[$i]['full_name']; ?></h3>
+                                        <input type="hidden" name="game_players" id="<?php echo 'game_players'.$i ?>" value="<?php echo $game_players_array[$i]['player_id']; ?>"  />
                                     </a>
                                 </li>
                             <?php } ?>
@@ -114,7 +115,7 @@ $settings_array[0] = settings_current($game['settings_id']);
                                 <input type="hidden" name="counter" id="counter<?php echo $random_num; ?>" value="<?php echo $i + 1 ?>"  />
                                 <div data-type="vertical" data-role="controlgroup">
                                     <label for="player_select<?php echo $i + 1; ?><?php echo $random_num; ?>"><strong>Winner <?php echo $i + 1; ?>:</strong></label>
-                                    <select name="player_select" id="player_select<?php echo $i + 1; ?><?php echo $random_num; ?>" onFocus="set_player_select(this);" onChange="set_player_selected(this, getElementById('player<?php echo $i + 1; ?><?php echo $random_num; ?>'));" data-native-menu="true">
+                                    <select name="player_select" id="player_select<?php echo $i + 1; ?><?php echo $random_num; ?>" onFocus="set_player_select(this, 'player_select');" onChange="set_player_selected(this, getElementById('player<?php echo $i + 1; ?><?php echo $random_num; ?>'));" data-native-menu="true">
                                         <option value="0">Guest</option>
                                         <?php require('includes/get_player_select.php'); ?>
                                     </select>
@@ -186,9 +187,9 @@ $settings_array[0] = settings_current($game['settings_id']);
     <?php } ?>
 <?php } ?>
         }
-        function set_player_select(x) {
+        function set_player_select(x,y) {
             var selected_val = x.value;
-            var remove_player = document.getElementsByName('player_select');
+            var remove_player = document.getElementsByName(y);
             var all_players = [
 <?php for ($i = 0; $i < count($players_list) - 1; $i++) { ?>
                     ["<?php echo $players_list[$i]['player_id'] ?>", "<?php echo trim($players_list[$i]['full_name']) ?>"],
