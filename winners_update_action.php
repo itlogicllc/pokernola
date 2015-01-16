@@ -4,7 +4,7 @@
 <?php require('includes/get_winners.php'); ?>
 <?php
 // UPDATE WINNERS
-if ($_GET['update_details'] != '1') {
+if (isset($_GET['update_details']) && $_GET['update_details'] != '1') {
     for ($i = 1; $i <= $_POST['counter']; $i++) {
         $updateSQL = sprintf("UPDATE winners SET player_id=%s, split=%s WHERE winner_id=%s", GetSQLValueString($_POST['player' . $i], "int"), GetSQLValueString(isset($_POST['split' . $i]) ? "true" : "", "defined", "1", "0"), GetSQLValueString($_POST['winner_id' . $i], "int"));
 
@@ -42,10 +42,10 @@ for ($i = 0; $i <= count($winners_array) - 1; $i++) {
     switch ($i) {
         case 0:
             if ($settings_array['split_type'] == 'percent') {
-                if ($_GET['update_details'] == '1') {
+                if (isset($_GET['update_details']) && $_GET['update_details'] == '1') {
                     $split_diff = $winners_array[$i]['split_diff'];
                 } else {
-                    if ($_POST['split' . ($i + 1)] == 1)
+                    if (isset($_POST['split' . ($i + 1)]) && $_POST['split' . ($i + 1)] == 1)
                         $split_diff = $winners_array[$i]['split_diff'];
                     else
                         $split_diff = $settings_array['first_pay'];
@@ -53,7 +53,11 @@ for ($i = 0; $i <= count($winners_array) - 1; $i++) {
             } else
                 $split_diff = $settings_array['first_pay'];
 
-            $updateSQL = sprintf("UPDATE winners SET points=%s, amount=%s, split_diff=%s WHERE winner_id=%s", GetSQLValueString($points[$i], "double"), GetSQLValueString($settings_array['first_pay'], "double"), GetSQLValueString($split_diff, "double"), GetSQLValueString($winners_array[$i]['winner_id']));
+            $updateSQL = sprintf("UPDATE winners SET points=%s, amount=%s, split_diff=%s WHERE winner_id=%s",
+                                    GetSQLValueString($points[$i], "double"), 
+                                    GetSQLValueString($settings_array['first_pay'], "double"), 
+                                    GetSQLValueString($split_diff, "double"),
+                                    GetSQLValueString($winners_array[$i]['winner_id'], "int"));
 
             mysql_select_db($database_poker_db, $poker_db);
             $Result1 = mysql_query($updateSQL, $poker_db) or die(mysql_error());
@@ -61,10 +65,10 @@ for ($i = 0; $i <= count($winners_array) - 1; $i++) {
 
         case 1:
             if ($settings_array['split_type'] == 'percent') {
-                if ($_GET['update_details'] == '1') {
+                if (isset($_GET['update_details']) && $_GET['update_details'] == '1') {
                     $split_diff = $winners_array[$i]['split_diff'];
                 } else {
-                    if ($_POST['split' . ($i + 1)] == 1)
+                    if (isset($_POST['split' . ($i + 1)]) && $_POST['split' . ($i + 1)] == 1)
                         $split_diff = $winners_array[$i]['split_diff'];
                     else
                         $split_diff = $settings_array['second_pay'];
@@ -72,7 +76,11 @@ for ($i = 0; $i <= count($winners_array) - 1; $i++) {
             } else
                 $split_diff = $settings_array['second_pay'];
 
-            $updateSQL = sprintf("UPDATE winners SET points=%s, amount=%s, split_diff=%s WHERE winner_id=%s", GetSQLValueString($points[$i], "double"), GetSQLValueString($settings_array['second_pay'], "double"), GetSQLValueString($split_diff, "double"), GetSQLValueString($winners_array[$i]['winner_id']));
+            $updateSQL = sprintf("UPDATE winners SET points=%s, amount=%s, split_diff=%s WHERE winner_id=%s",
+                                    GetSQLValueString($points[$i], "double"),
+                                    GetSQLValueString($settings_array['second_pay'], "double"),
+                                    GetSQLValueString($split_diff, "double"),
+                                    GetSQLValueString($winners_array[$i]['winner_id'], "int"));
 
             mysql_select_db($database_poker_db, $poker_db);
             $Result1 = mysql_query($updateSQL, $poker_db) or die(mysql_error());
@@ -80,10 +88,10 @@ for ($i = 0; $i <= count($winners_array) - 1; $i++) {
 
         case 2:
             if ($settings_array['split_type'] == 'percent') {
-                if ($_GET['update_details'] == '1') {
+                if (isset($_GET['update_details']) && $_GET['update_details'] == '1') {
                     $split_diff = $winners_array[$i]['split_diff'];
                 } else {
-                    if ($_POST['split' . ($i + 1)] == 1)
+                    if (isset($_POST['split' . ($i + 1)]) && $_POST['split' . ($i + 1)] == 1)
                         $split_diff = $winners_array[$i]['split_diff'];
                     else
                         $split_diff = $settings_array['third_pay'];
@@ -91,7 +99,11 @@ for ($i = 0; $i <= count($winners_array) - 1; $i++) {
             } else
                 $split_diff = $settings_array['third_pay'];
 
-            $updateSQL = sprintf("UPDATE winners SET points=%s, amount=%s, split_diff=%s WHERE winner_id=%s", GetSQLValueString($points[$i], "double"), GetSQLValueString($settings_array['third_pay'], "double"), GetSQLValueString($split_diff, "double"), GetSQLValueString($winners_array[$i]['winner_id']));
+            $updateSQL = sprintf("UPDATE winners SET points=%s, amount=%s, split_diff=%s WHERE winner_id=%s",
+                                    GetSQLValueString($points[$i], "double"),
+                                    GetSQLValueString($settings_array['third_pay'], "double"),
+                                    GetSQLValueString($split_diff, "double"),
+                                    GetSQLValueString($winners_array[$i]['winner_id'], "int"));
 
             mysql_select_db($database_poker_db, $poker_db);
             $Result1 = mysql_query($updateSQL, $poker_db) or die(mysql_error());
@@ -99,10 +111,10 @@ for ($i = 0; $i <= count($winners_array) - 1; $i++) {
 
         default:
             if ($settings_array['split_type'] == 'percent') {
-                if ($_GET['update_details'] == '1') {
+                if (isset($_GET['update_details']) && $_GET['update_details'] == '1') {
                     $split_diff = $winners_array[$i]['split_diff'];
                 } else {
-                    if ($_POST['split' . ($i + 1)] == 1)
+                    if (isset($_POST['split' . ($i + 1)]) && $_POST['split' . ($i + 1)] == 1)
                         $split_diff = $winners_array[$i]['split_diff'];
                     else
                         $split_diff = 0;
@@ -110,7 +122,10 @@ for ($i = 0; $i <= count($winners_array) - 1; $i++) {
             } else
                 $split_diff = 0;
 
-            $updateSQL = sprintf("UPDATE winners SET points=%s, amount=0, split_diff=%s WHERE winner_id=%s", GetSQLValueString($points[$i], "double"), GetSQLValueString($split_diff, "double"), GetSQLValueString($winners_array[$i]['winner_id']));
+            $updateSQL = sprintf("UPDATE winners SET points=%s, amount=0, split_diff=%s WHERE winner_id=%s",
+                                    GetSQLValueString($points[$i], "double"),
+                                    GetSQLValueString($split_diff, "double"),
+                                    GetSQLValueString($winners_array[$i]['winner_id'], "int"));
 
             mysql_select_db($database_poker_db, $poker_db);
             $Result1 = mysql_query($updateSQL, $poker_db) or die(mysql_error());
@@ -188,7 +203,12 @@ if ($settings_array['split_type'] == 'even') {
             $split_diff = $row_player_splits['split_diff'];
             $payout_split = $split_diff;
             $points_split = $row_split_sums['point_sum'] * $split_diff;
-            $points_split = $points_split / $row_split_sums['amount_sum'];
+            
+            if ($row_split_sums['amount_sum'] == 0) {
+               $points_split = 0;
+            } else {
+               $points_split = $points_split / $row_split_sums['amount_sum'];
+            }
         }
 
         $updateSQL = sprintf("UPDATE winners SET split_diff=%s, points=%s WHERE winner_id=%s", GetSQLValueString($payout_split, "double"), GetSQLValueString($points_split, "double"), GetSQLValueString($row_player_splits['winner_id'], "int"));

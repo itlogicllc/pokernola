@@ -88,7 +88,7 @@ $settings_array[0] = settings_current($game['settings_id']);
                         <form method="POST" name="players" id="players<?php echo $random_num; ?>" action="winners_add_players_action.php?game_id=<?php echo $game_id; ?>">
                             <select name="game_players_select" id="game_players_select<?php echo $random_num; ?>" onFocus="set_player_select(this, 'game_players');" data-native-menu="true">
                                 <option value="0">Guest</option>
-                                <?php require('includes/get_game_players_select.php'); ?>
+                                <?php //require('includes/get_game_players_select.php'); ?>
                             </select>
                             <input type="submit" name="submit" value="Add" data-inline="true" />
                             <input type="hidden" name="add" value="player_add">
