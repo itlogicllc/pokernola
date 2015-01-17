@@ -15,7 +15,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
     $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
-if ((isset($_POST["MM_insert"]))) {
+if (isset($_POST["MM_insert"])) {
     if($_POST["MM_insert"] == "register") {
         $insertSQL = sprintf("INSERT INTO game_players (game_id, player_id) VALUES (%s, %s)",
              GetSQLValueString($game_id, "int"), 
@@ -27,13 +27,8 @@ if ((isset($_POST["MM_insert"]))) {
     }
     mysql_select_db($database_poker_db, $poker_db);
     $Result1 = mysql_query($insertSQL, $poker_db) or die(mysql_error());
-
-    $insertGoTo = "game_registration.php";
-    if (isset($_SERVER['QUERY_STRING'])) {
-        $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-        $insertGoTo .= $_SERVER['QUERY_STRING'];
-    }
-    header(sprintf("Location: %s", $insertGoTo));
+    
+    echo '<script> window.location = "' . $editFormAction . '"; </script>';
 }
 ?>
 <!DOCTYPE html>
@@ -46,7 +41,7 @@ if ((isset($_POST["MM_insert"]))) {
             <?php require('includes/set_panel_login.php'); ?>
             <div data-role="header" data-position="fixed">
                 <h1>Game Registration</h1>
-                <?php require('includes/set_games.php'); ?>
+                <?php require('includes/set_game_details.php'); ?>
             </div>
             <div role="main" class="ui-content">
                 <div class="ui-bar ui-bar-a ui-corner-all" align="center"><h2><?php echo date_to_php($game_array['game_name']); ?></h2></div>

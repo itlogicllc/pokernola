@@ -31,14 +31,17 @@ $current_settings = settings_current();
                   }
                   ?>
                   <li>
-                     <a href="game_details.php?game_id=<?php echo $games_list[$i]['game_id']; ?>">
-                        <?php if ($games_list[$i]['registration'] == 1) {
-                           if (game_players_registered(($games_list[$i]['game_id']), ($_SESSION['player_logged_in'])) == 1) {
-                              ?>
-                              <img class="ui-li-icon" alt="registered" src="images/registered.png">    
+                     <a href="<?php echo ($games_list[$i]['registration'] == 1) ? 'game_registration.php' : 'game_details.php'; ?>?game_id=<?php echo $games_list[$i]['game_id']; ?>">
+                     <?php if ($games_list[$i]['registration'] == 1) {
+                              if (isset($_SESSION['player_logged_in'])) {
+                                 if (game_players_registered($games_list[$i]['game_id'], $_SESSION['player_logged_in']) == 1) { ?>
+                                    <img class="ui-li-icon" alt="registered" src="images/registered.png">
                            <?php } else { ?>
-                              <img class="ui-li-icon" alt="regonly" src="images/regonly.png"> 
+                                 <img class="ui-li-icon" alt="regonly" src="images/regonly.png">
                            <?php } ?>
+                        <?php } else { ?>
+                                 <img class="ui-li-icon" alt="regonly" src="images/regonly.png"> 
+                        <?php } ?>
    <?php } else { ?>
                            <img class="ui-li-icon" alt="open" src="images/open.png" > 
                      <?php } ?>

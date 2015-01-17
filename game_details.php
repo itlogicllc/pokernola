@@ -14,11 +14,6 @@ $first_pot = "$" . number_format($game_winners_array[0]['amount'] * $total_pot, 
 $second_pot = "$" . number_format($game_winners_array[1]['amount'] * $total_pot, 2);
 $third_pot = "$" . number_format($game_winners_array[2]['amount'] * $total_pot, 2);
 $settings_array[0] = settings_current($game_array['settings_id']);
-
-if ($game_array['registration'] == 1) {
-   header('Location: game_registration.php?game_id=' . $game_id);
-   die();
-}
 ?>
 <!DOCTYPE html>
 <html>
