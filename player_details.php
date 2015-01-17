@@ -161,7 +161,7 @@ $comp_percent_top_3 = $percent_top_3 * $percent_played;
                                 color: '#00FF00',
                                 data: [
 <?php
-$games_array = array_reverse(games_list());
+$games_array = array_reverse(games_played_list());
 
 for ($i = 0; $i <= count($games_array) - 1; $i++) {
     $rankings_history = rankings_history($games_array[$i]['game_date'], $_GET['player_id']);
