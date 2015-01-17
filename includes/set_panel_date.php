@@ -13,7 +13,8 @@ if (isset($_SERVER['QUERY_STRING'])) {
 if (isset($_POST['date_pick'])) {
     $_SESSION['from_date'] = date_to_mysql($_POST['date_pick_from']);
     $_SESSION['to_date'] = date_to_mysql($_POST['date_pick_to']);
-   // header("location: $editFormAction");
+   
+    echo '<script> window.location = "' . $editFormAction . '"; </script>';
 }
 ?>
 <script type="text/javascript">
@@ -25,7 +26,22 @@ if (isset($_POST['date_pick'])) {
                     document.getElementById('date_pick_from<?php echo $random_num; ?>').value = "<?php echo date_to_datepicker($seasons[$i]['start_date']); ?>"
                     document.getElementById('date_pick_to<?php echo $random_num; ?>').value = "<?php echo date_to_datepicker($seasons[$i]['end_date']); ?>"
                     break;
-             <?php } ?>                 
+             <?php } ?> 
+             <?php
+               $from_dates_array = array();
+               $to_dates_array = array();
+               for ($i = 0; $i <= count($seasons) - 1; $i++) {
+                  $from_dates_array[$i] = $seasons[$i]['start_date'];
+                  $to_dates_array[$i] = $seasons[$i]['end_date'];
+               }
+               
+               $min_from_date = min($from_dates_array);
+               $max_to_date = max($to_dates_array);
+             ?>
+                default:
+                    document.getElementById('date_pick_from<?php echo $random_num; ?>').value = "<?php echo date_to_datepicker($min_from_date); ?>"
+                    document.getElementById('date_pick_to<?php echo $random_num; ?>').value = "<?php echo date_to_datepicker($max_to_date); ?>"
+                   
           }
     }
 </script>
@@ -34,7 +50,8 @@ if (isset($_POST['date_pick'])) {
         <div class="label_div" style="color:#FFF">Date Range by Season:</div>
         <div data-role="controlgroup">
             <select name="date_pick" id="date_pick<?php echo $random_num; ?>" onchange="setDates(this.value);">
-                <?php for ($i = 0; $i <= count($seasons) - 1; $i++) { ?>
+               <option value="0">All</option> 
+               <?php for ($i = 0; $i <= count($seasons) - 1; $i++) { ?>
                     <option value="<?php echo $seasons[$i]['settings_id'] ?>" <?php if (($seasons[$i]['start_date'] == $_SESSION['from_date']) && ($seasons[$i]['end_date'] == $_SESSION['to_date'])) {
                     echo "selected";
                 } ?>><?php echo $seasons[$i]['season_name'] ?></option>
