@@ -43,7 +43,6 @@ $settings_array[0] = settings_current($game['settings_id']);
     </head>
     <body>
         <div data-role="page" id="winner_update" data-dom-cache="false">
-            <?php require('includes/set_panel_login.php'); ?>
             <div data-role="header" data-position="fixed">
                 <h1>Game Update</h1>
                 <?php require('includes/set_games.php'); ?>

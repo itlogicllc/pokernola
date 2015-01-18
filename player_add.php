@@ -27,6 +27,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
+// TODO add encryption and salt field to password
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "registration")) {
   $insertSQL = sprintf("INSERT INTO players (first_name, last_name, email, password, date_added) VALUES (%s, %s, %s, %s, %s)",
                        GetSQLValueString($_POST['first_name'], "text"),
@@ -53,7 +54,6 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "registration")) {
 </head>
 <body>
 <div data-role="page" id="add_player">
-	<?php require('includes/set_panel_login.php'); ?>
 	<div data-role="header" data-position="fixed">
 		<h1>Add Player</h1>
 		<?php require('includes/set_players.php'); ?>

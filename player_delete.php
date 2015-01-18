@@ -28,7 +28,6 @@ $players_list = players_list();
 </head>
 <body>
 <div data-role="page" id="delete_player">
-	<?php require('includes/set_panel_login.php'); ?>
 	<div data-role="header" data-position="fixed">
 		<h1>Delete Player</h1>
 		<?php require('includes/set_players.php'); ?>

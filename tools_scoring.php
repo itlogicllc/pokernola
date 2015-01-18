@@ -10,7 +10,6 @@ $settings_array = settings_list();
 </head>
 <body>
 <div data-role="page" id="tools">
-	<?php require('includes/set_panel_login.php'); ?>
 	<div data-role="header" data-position="fixed">
 		<h1>Season Rules</h1>
 		<?php require('includes/set_tools.php'); ?>

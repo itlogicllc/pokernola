@@ -21,7 +21,6 @@ $total_payout = games_pot_sum();
     <body>
         <div data-role="page" id="home">
             <?php require('includes/set_panel_date.php'); ?>
-            <?php require('includes/set_panel_login.php'); ?>
             <div data-role="header" data-position="fixed">
                 <h1>Home</h1>
                 <?php require('includes/set_home.php'); ?>

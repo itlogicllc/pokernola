@@ -1,3 +1,4 @@
+<a href="player_invite.php" data-role="button" data-icon="mail" data-iconpos="notext">Invite Player</a>
 <a href="logout.php" class="ui-btn-right" data-role="button" data-icon="delete" data-iconpos="notext" data-transition="fade">Log Out</a>
 <nav data-role="navbar">
 	<ul>

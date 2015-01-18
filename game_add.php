@@ -34,7 +34,6 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "add_game")) {
     </head>
     <body>
         <div data-role="page" id="add_game">
-            <?php require('includes/set_panel_login.php'); ?>
             <div data-role="header" data-position="fixed">
                 <h1>Add Game</h1>
                 <?php require('includes/set_games.php'); ?>

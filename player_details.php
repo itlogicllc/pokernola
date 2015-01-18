@@ -37,7 +37,6 @@ $comp_percent_top_3 = $percent_top_3 * $percent_played;
     </head>
     <body>
         <div data-role="page" id="player_details">
-            <?php require('includes/set_panel_login.php'); ?>
             <?php require('includes/set_panel_date.php'); ?>
             <div data-role="header" data-position="fixed">
                 <h1>Player Details</h1>

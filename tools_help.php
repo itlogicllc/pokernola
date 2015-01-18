@@ -7,7 +7,6 @@
    </head>
    <body>
       <div data-role="page" id="pokernola_help">
-         <?php require('includes/set_panel_login.php'); ?>
          <div data-role="header" data-position="fixed">
             <h1>Poker NOLA Help</h1>
             <?php require('includes/set_tools.php'); ?>

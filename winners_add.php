@@ -1,6 +1,5 @@
 <?php require_once('Connections/poker_db.php'); ?>
 <?php require('includes/set_page.php'); ?>
-<?php //require('includes/get_settings.php'); ?>
 <?php require('includes/get_games.php'); ?>
 <?php
 $game_array = games_game();

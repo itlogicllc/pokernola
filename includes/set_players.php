@@ -1,4 +1,4 @@
-<a href="player_add.php" data-role="button" data-icon="plus" data-iconpos="notext">Add Player</a>
+<a href="player_invite.php" data-role="button" data-icon="mail" data-iconpos="notext">Invite Player</a>
 <?php if (isset($_SESSION['player_access']) && $_SESSION['player_access'] == 'admin') echo '<a href="player_delete.php" data-role="button" data-icon="minus" data-iconpos="notext">Delete Player</a>'; ?>
 <nav data-role="navbar">
     <ul>

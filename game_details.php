@@ -22,7 +22,6 @@ $settings_array[0] = settings_current($game_array['settings_id']);
    </head>
    <body>
       <div data-role="page" id="game_details">
-         <?php require('includes/set_panel_login.php'); ?>
          <div data-role="header" data-position="fixed">
             <h1>Game Details</h1>
             <?php require('includes/set_game_details.php'); ?>

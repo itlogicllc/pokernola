@@ -16,7 +16,6 @@ $payouts = payout_range();
     </head>
     <body>
         <div data-role="page" id="players">
-            <?php require('includes/set_panel_login.php'); ?>
             <?php require('includes/set_panel_date.php'); ?>
             <div data-role="header" data-position="fixed">
                 <h1>Players</h1>

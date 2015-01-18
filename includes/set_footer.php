@@ -25,6 +25,6 @@
 <?php if (isset($_SESSION['player_logged_in'])) { ?>
     <a href="player_profile.php" class="ui-btn-right" data-role="button" data-icon="edit" data-iconpos="notext" data-transition="fade">Edit Profile</a>
 <?php } else { ?>
-    <a href="#login_panel" class="ui-btn-right" data-role="button" data-icon="lock" data-iconpos="notext" data-transition="fade">Log in</a>
+    <a href="login.php" class="ui-btn-right" data-role="button" data-icon="lock" data-iconpos="notext" data-transition="fade">Log in</a>
 <?php } ?>
 <?php mysql_close($poker_db); ?>

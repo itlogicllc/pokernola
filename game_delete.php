@@ -27,7 +27,6 @@ $games_list = games_list();
     </head>
     <body>
         <div data-role="page" id="delete_game">
-            <?php require('includes/set_panel_login.php'); ?>
             <div data-role="header" data-position="fixed">
                 <h1>Delete Game</h1>
                 <?php require('includes/set_games.php'); ?>

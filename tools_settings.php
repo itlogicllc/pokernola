@@ -54,7 +54,6 @@ $current_settings = settings_current();
     </head>
     <body>
         <div data-role="page" id="setings">
-<?php require('includes/set_panel_login.php'); ?>
             <div data-role="header" data-position="fixed">
                 <h1>Create New Season</h1>
 <?php require('includes/set_tools.php'); ?>
