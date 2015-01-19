@@ -12,7 +12,7 @@
 		<?php require('includes/set_home.php'); ?>
 	</div>
 	<div role="main" class="ui-content">
-		<div class="ui-body ui-body-a ui-corner-all alert" align="center"><?php echo $_GET['message'] ?></div>
+		<div class="ui-body ui-body-a ui-corner-all alert" align="center"><?php echo (isset($_GET['message'])) ? $_GET['message'] : "The message is missing"; ?></div>
 	</div>
 	<div data-role="footer" data-position="fixed">
 		<?php require('includes/set_footer.php'); ?>

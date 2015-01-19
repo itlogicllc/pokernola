@@ -19,7 +19,6 @@ $settings_array = settings_list();
 			<?php for ($i = 0; $i <= count($settings_array) - 1; $i++) { ?>
 			<div data-role="collapsible" <?php echo ($i == 0 ? 'data-collapsed="false"' : '') ?>>
 				<h3><?php echo $settings_array[$i]['season_name']; ?></h3>
-				<p class="alert">Changes in scoring are not retroactive, they will only affect scoring from the date shown above going forward until any new changes are made.</p>
 				<?php require('includes/get_scoring.php'); ?>
 			</div>
 			<?php } ?>

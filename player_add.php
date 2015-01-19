@@ -4,7 +4,7 @@
 // *** Redirect if username exists
 $MM_flag="MM_insert";
 if (isset($_POST[$MM_flag])) {
-  $MM_dupKeyRedirect="player_add.php?add_message=" . $_POST['email'] . " already exists!";
+  $MM_dupKeyRedirect="player_add.php?message=" . $_POST['email'] . " already exists!";
   $loginUsername = $_POST['email'];
   $LoginRS__query = sprintf("SELECT email FROM players WHERE email=%s", GetSQLValueString($loginUsername, "text"));
   mysql_select_db($database_poker_db, $poker_db);
@@ -18,7 +18,7 @@ if (isset($_POST[$MM_flag])) {
     if (substr_count($MM_dupKeyRedirect,"?") >=1) $MM_qsChar = "&";
     $MM_dupKeyRedirect = $MM_dupKeyRedirect . $MM_qsChar ."requsername=".$loginUsername;
     header ("Location: $MM_dupKeyRedirect");
-    exit;
+    exit();
   }
 }
 
@@ -29,7 +29,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 // TODO add encryption and salt field to password
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "registration")) {
-  $insertSQL = sprintf("INSERT INTO players (first_name, last_name, email, password, date_added) VALUES (%s, %s, %s, %s, %s)",
+  $insertSQL = sprintf("INSERT INTO players (first_name, last_name, email, password, date_added) VALUES (%s, %s, %s, SHA1(%s), %s)",
                        GetSQLValueString($_POST['first_name'], "text"),
                        GetSQLValueString($_POST['last_name'], "text"),
                        GetSQLValueString($_POST['email'], "text"),
@@ -45,6 +45,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "registration")) {
     $insertGoTo .= $_SERVER['QUERY_STRING'];
   }
   header(sprintf("Location: %s", $insertGoTo));
+  exit();
 }
 ?>
 <!DOCTYPE html>
@@ -59,7 +60,10 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "registration")) {
 		<?php require('includes/set_players.php'); ?>
 	</div>
 	<div role="main" class="ui-content">
-		<div class="alert" align="center"><?php echo $_GET['add_message'] ?></div>
+		<?php if (isset($_GET['message']) && $_GET['message'] != "") { ?>
+               <div class="ui-body ui-body-a ui-corner-all alert" align="center"><?php echo $_GET['message']; ?></div>
+               <br />
+            <?php } ?>
 		<form id="profile" name="profile" method="POST" action="<?php echo $editFormAction; ?>">
 			<div data-role="fieldcontain">
 				<label for="first_name">First Name:</label>
