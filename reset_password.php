@@ -5,17 +5,13 @@
 // *** Redirect if username exists
 $not_auth_message = "You are not authorized to reset this password! If you pasted the link you received into your browser's address bar, make sure you pasted the entire link. Otherwise, report to your local police station and surrender yourself as a cyber criminal.";
 
-if (isset($_GET['player_id']) && (isset($_GET['auth_code']) && $_GET['auth_code'] != "")) {
+if ((isset($_GET['player_id']) && $_GET['player_id'] != "") && (isset($_GET['auth_code']) && $_GET['auth_code'] != "")) {
    $player_id = $_GET['player_id'];
    $auth_code = $_GET['auth_code'];
 
-   $authcodeRS__query = sprintf("SELECT auth_code FROM players WHERE player_id=%s", GetSQLValueString($player_id, "int"));
+   $player = players_player($player_id);
 
-   mysql_select_db($database_poker_db, $poker_db);
-   $authcodeRS = mysql_query($authcodeRS__query, $poker_db) or die(mysql_error());
-   $db_auth_code = mysql_fetch_assoc($authcodeRS);
-
-   if ($auth_code != $db_auth_code['auth_code']) {
+   if ($auth_code != $player['auth_code']) {
       header("Location: access_denied.php?message=" . $not_auth_message);
       exit();
    }

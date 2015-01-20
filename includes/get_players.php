@@ -30,6 +30,43 @@ function players_player($player) {
    }
 }
 
+function players_by_email($email) {
+   global $players_array;
+   $player_array = array();
+
+   for ($i = 0; $i <= count($players_array) - 1; $i++) {
+      if ($players_array[$i]['email'] == $email) {
+         $player_array = $players_array[$i];
+         return $player_array;
+      }
+   }
+   return $player_array;
+}
+
+function players_login($email, $password) {
+   global $players_array;
+   $player_array = array();
+
+   for ($i = 0; $i <= count($players_array) - 1; $i++) {
+      if ($players_array[$i]['email'] == $email && $players_array[$i]['password'] == $password) {
+         $player_array = $players_array[$i];
+         return $player_array;
+      }
+   }
+}
+
+function players_email_duplicate($email) {
+   global $players_array;
+
+   for ($i = 0; $i <= count($players_array) - 1; $i++) {
+      if ($players_array[$i]['email'] == $email) {
+         return 1;
+      }
+   }
+   
+   return 0;
+}
+
 function players_list() {
    global $players_array;
 

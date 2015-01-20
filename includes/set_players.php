@@ -1,5 +1,11 @@
-<a href="player_invite.php" data-role="button" data-icon="mail" data-iconpos="notext">Invite Player</a>
-<?php if (isset($_SESSION['player_access']) && $_SESSION['player_access'] == 'admin') echo '<a href="player_delete.php" data-role="button" data-icon="minus" data-iconpos="notext">Delete Player</a>'; ?>
+<?php 
+if (isset($_SESSION['player_access']) && ($_SESSION['player_access'] == 'admin' || $_SESSION['player_access'] == 'player')) echo '<a href="player_invite.php" data-role="button" data-icon="mail" data-iconpos="notext">Invite Player</a>';
+
+if (isset($_SESSION['player_access']) && $_SESSION['player_access'] == 'admin') {
+   echo '<a href="player_delete.php" data-role="button" data-icon="minus" data-iconpos="notext">Delete Player</a>';
+}
+?>
+   
 <nav data-role="navbar">
     <ul>
         <li><a href="index.php" data-transition="flip" data-icon="home">Home</a></li>

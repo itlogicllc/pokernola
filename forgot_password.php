@@ -1,5 +1,6 @@
 <?php require_once('Connections/poker_db.php'); ?>
 <?php require('includes/set_page.php'); ?>
+<?php require('includes/get_players.php'); ?>
 <?php
 // *** Validate request to login to this site.
 
@@ -8,19 +9,13 @@ if (isset($_SERVER['QUERY_STRING'])) {
    $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
-if (isset($_POST['email'])) {
-   $loginUsername = $_POST['email'];
-
-   $LoginRS__query = sprintf("SELECT player_id, first_name, auth_code FROM players WHERE email=%s",
-           GetSQLValueString($loginUsername, "text"));
-
-   $LoginRS = mysql_query($LoginRS__query, $poker_db) or die(mysql_error());
-   $row_LoginRS = mysql_fetch_assoc($LoginRS);
-   $loginFoundUser = mysql_num_rows($LoginRS);
-
-   if ($loginFoundUser) {
-      $player_name = $row_LoginRS['first_name'];
-      $player_id = $row_LoginRS['player_id'];
+if (isset($_POST['email']) && $_POST['email'] != "") {
+   $loginUsername = players_by_email($_POST['email']);
+   
+   if (count($loginUsername) != 0) {
+      $player_name = $loginUsername['first_name'];
+      $player_id = $loginUsername['player_id'];
+      $player_email = $loginUsername['email'];
       $auth_code = substr(md5(mt_rand()), -20);
       
       $updateAuthCode__query = sprintf("UPDATE players SET auth_code=%s WHERE player_id=%s",
@@ -35,15 +30,15 @@ if (isset($_POST['email'])) {
       $to = "xampp@localhost.com";
       $subject = "Your Poker NOLA password";
       $link = "http://localhost/pokernola/reset_password.php?player_id=" . $player_id . "&auth_code=" . $auth_code;
-      $body = "Hey " . $row_LoginRS['first_name'] . ",<br \><br \>So, you forgot your Poker NOLA password did you? No problem!<br \><br \>Just click the link below or paste it into your browser's address bar. You will then be taken to a form where you can reset your password.<br \><br \>" . $link . "<br \><br \>Thanks for playing,<br \>Poker NOLA<br \><img height='80' width='80' src='http://pokernola.com/images/pokernola_logo.png'>";
+      $body = "Hey " . $loginUsername['first_name'] . ",<br \><br \>So, you forgot your Poker NOLA password did you? No problem!<br \><br \>Just click the link below or paste it into your browser's address bar. You will then be taken to a form where you can reset your password.<br \><br \>" . $link . "<br \><br \>Thanks for playing,<br \>Poker NOLA<br \><img height='80' width='80' src='http://pokernola.com/images/pokernola_logo.png'>";
       $body = wordwrap($body, 70);
 
       mail($to, $subject, $body, $headers);
 
-      echo '<script> window.location = "forgot_password.php?message=An email with instruction for resetting your password has been sent to ' . $loginUsername . '. Don\'t forget to check your spam folder if it\'s not in your inbox."; </script>';
+      echo '<script> window.location = "forgot_password.php?message=An email with instruction for resetting your password has been sent to ' . $player_email . '. Don\'t forget to check your spam folder if it\'s not in your inbox."; </script>';
       exit();
    } else {
-      echo '<script> window.location = "forgot_password.php?message=The email address ' . $loginUsername . ' does not exist! Please try again."; </script>';
+      echo '<script> window.location = "forgot_password.php?message=The email address ' . $_POST['email'] . ' does not exist! Please try again."; </script>';
       exit();
    }
 }

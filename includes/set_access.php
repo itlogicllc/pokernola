@@ -1,7 +1,7 @@
 <?php
 function get_access($admin = 0) {
 	if (!isset($_SESSION['player_logged_in'])) {
-		$insertGoTo = "access_denied.php?message=You must be logged in to access this page! Please log in and try again, or <a href=player_add.php>click here</a> to register as a new player.";
+		$insertGoTo = "access_denied.php?message=You must be logged in to access this page! Please log in and try again.";
   		if (isset($_SERVER['QUERY_STRING'])) {
     		$insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     		$insertGoTo .= $_SERVER['QUERY_STRING'];

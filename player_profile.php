@@ -6,26 +6,11 @@
 <?php
 // *** Redirect if username exists
 
-if (isset($_POST['email']) && ($_POST['email'] != $_POST['email_exist'])) {
-   $MM_flag = "MM_update";
-   if (isset($_POST[$MM_flag])) {
-      $MM_dupKeyRedirect = "player_profile.php?message=" . $_POST['email'] . " already exists!";
-      $loginUsername = $_POST['email'];
-      $LoginRS__query = sprintf("SELECT email FROM players WHERE email=%s", GetSQLValueString($loginUsername, "text"));
-      mysql_select_db($database_poker_db, $poker_db);
-      $LoginRS = mysql_query($LoginRS__query, $poker_db) or die(mysql_error());
-      $loginFoundUser = mysql_num_rows($LoginRS);
-
-      //if there is a row in the database, the username was found - can not add the requested username
-      if ($loginFoundUser) {
-         $MM_qsChar = "?";
-         //append the username to the redirect page
-         if (substr_count($MM_dupKeyRedirect, "?") >= 1)
-            $MM_qsChar = "&";
-         $MM_dupKeyRedirect = $MM_dupKeyRedirect . $MM_qsChar . "requsername=" . $loginUsername;
-         header("Location: $MM_dupKeyRedirect");
-         exit();
-      }
+if (isset($_POST['email']) && ($_POST['email'] != "")) {
+   //if there is a row in the database, the username was found - can not add the requested username
+   if (players_email_duplicate($_POST['email']) && $_POST['email'] != $_POST['email_exist']) {
+      header("Location: player_profile.php?message=The email " . $_POST['email'] . " already exists!");
+      exit();
    }
 }
 
@@ -66,6 +51,7 @@ $player_array = players_player($_SESSION['player_logged_in']);
          <div role="main" class="ui-content">
 <?php if (isset($_GET['message']) && $_GET['message'] != "") { ?>
                <div class="ui-body ui-body-a ui-corner-all alert" align="center"><?php echo $_GET['message']; ?></div>
+               <br />
             <?php } ?>
             <form action="<?php echo $editFormAction; ?>" id="profile" name="profile" method="POST">
                <label for="first_name">First Name:</label>

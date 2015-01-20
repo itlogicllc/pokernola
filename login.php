@@ -1,5 +1,6 @@
 <?php require_once('Connections/poker_db.php'); ?>
 <?php require('includes/set_page.php'); ?>
+<?php require('includes/get_players.php'); ?>
 <?php
 // *** Validate request to login to this site.
 
@@ -8,25 +9,17 @@ if (isset($_SERVER['QUERY_STRING'])) {
    $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
-if (isset($_POST['email'])) {
+if (isset($_POST['email']) && $_POST['email'] != "") {
    $loginUsername = $_POST['email'];
    $password = $_POST['password'];
-   $MM_fldUserAuthorization = "access_level";
-
-   $LoginRS__query = sprintf("SELECT email, password, access_level, player_id, first_name FROM players WHERE email=%s AND password=SHA1(%s)",
-           GetSQLValueString($loginUsername, "text"),
-           GetSQLValueString($password, "text"));
-
-   $LoginRS = mysql_query($LoginRS__query, $poker_db) or die(mysql_error());
-   $row_LoginRS = mysql_fetch_assoc($LoginRS);
-   $loginFoundUser = mysql_num_rows($LoginRS);
+   $logged_in = players_login($loginUsername, sha1($password));
    
-   if ($loginFoundUser) {
+   if (count($logged_in) != 0) {
 
       $_SESSION['MM_Username'] = $loginUsername;
-      $_SESSION['player_logged_in'] = $row_LoginRS['player_id'];
-      $_SESSION['player_first'] = $row_LoginRS['first_name'];
-      $_SESSION['player_access'] = $row_LoginRS['access_level'];
+      $_SESSION['player_logged_in'] = $logged_in['player_id'];
+      $_SESSION['player_first'] = $logged_in['first_name'];
+      $_SESSION['player_access'] = $logged_in['access_level'];
 
       echo '<script> window.location = "index.php"; </script>';
       exit();
@@ -69,5 +62,6 @@ if (isset($_POST['email'])) {
                <?php require('includes/set_footer.php'); ?>
             </div>
          </div>
+      </div>
    </body>
 </html>

@@ -56,7 +56,7 @@ $date_pick_on = 0;
 <?php
 
 if (isset($_POST['email']) && isset($_POST['password'])) {
-    if ($_POST['remember'] == "yes") {
+    if (isset($_POST['remember']) && $_POST['remember'] == "yes") {
         setcookie("pokernola_player", $_POST['email'], time() + (86400 * 365), "/"); // 86400 = 1 day
         setcookie("pokernola_pass", $_POST['password'], time() + (86400 * 365), "/"); // 86400 = 1 day
     } else {
