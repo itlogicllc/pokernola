@@ -45,7 +45,8 @@ if ((isset($_POST['MM_update']) && $_POST['MM_update'] == "invite") && isset($_S
    $headers = "MIME-Version: 1.0" . "\r\n";
    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
    $headers .= "From: info@pokernola.com";
-   $to = "xampp@localhost.com";
+   $to = "xampp@localhost.com"; // uncomment for testing
+   //$to = $_POST['email']; // uncomment for production
    $subject = "Invitation to join Poker NOLA";
    $link = "http://localhost/pokernola/player_add.php?player_id=" . $player_id . "&invitation_code=" . $invitation_code;
    $body = "Welcome " . $_POST['first_name'] . ",<br \><br \>Good news! " . $inviter['full_name'] . " would like to invite you to join Poker NOLA. New members are always appreciated and we hope you accept this invitation to join. To do so, simply click on or paste the link below into your browser's address bar. You will then be taken to a new player registration form. Fill it out, submit it and then just like that, you will become a Poker NOLA member. As soon as you are registered you will be able to log in, register for games, have your performance tracked and score points to compete against other members. We would be happy to have you, so join today and good luck!<br \><br \>" . $link . "<br \><br \>Thanks for playing,<br \>Poker NOLA<br \><img height='80' width='80' src='http://pokernola.com/images/pokernola_logo.png'>";

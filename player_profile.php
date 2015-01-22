@@ -20,10 +20,17 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "profile")) {
-   $updateSQL = sprintf("UPDATE players SET first_name=%s, last_name=%s, email=%s, password=SHA1(%s), `comment`=%s WHERE player_id=%s", GetSQLValueString($_POST['first_name'], "text"), GetSQLValueString($_POST['last_name'], "text"), GetSQLValueString($_POST['email'], "text"), GetSQLValueString($_POST['password1'], "text"), GetSQLValueString($_POST['textarea'], "text"), GetSQLValueString($_POST['player_id'], "int"));
+   $updateSQL = sprintf("UPDATE players SET first_name=%s, last_name=%s, email=%s, `comment`=%s WHERE player_id=%s", GetSQLValueString($_POST['first_name'], "text"), GetSQLValueString($_POST['last_name'], "text"), GetSQLValueString($_POST['email'], "text"), GetSQLValueString($_POST['textarea'], "text"), GetSQLValueString($_POST['player_id'], "int"));
 
    mysql_select_db($database_poker_db, $poker_db);
    $Result1 = mysql_query($updateSQL, $poker_db) or die(mysql_error());
+   
+   if ($_POST['password1'] != "") {
+      $updateSQL = sprintf("UPDATE players SET password=%s WHERE player_id=%s", GetSQLValueString(sha1($_POST['password1']), "text"), GetSQLValueString($_POST['player_id'], "int"));
+   
+      mysql_select_db($database_poker_db, $poker_db);
+      $Result1 = mysql_query($updateSQL, $poker_db) or die(mysql_error());
+   }
 
    $updateGoTo = "player_profile.php";
    if (isset($_SERVER['QUERY_STRING'])) {
@@ -61,9 +68,9 @@ $player_array = players_player($_SESSION['player_logged_in']);
                <label for="email">Email:</label>
                <input name="email" type="email" id="email" value="<?php echo $player_array['email']; ?>" maxlength="30" required  />
                <label for="password1">Password:</label>
-               <input name="password1" type="password" id="password1" value="<?php echo $player_array['password']; ?>" required />
+               <input name="password1" type="password" id="password1" value="" placeholder="Leave blank to keep current password" />
                <label for="password2">Verify Password:</label>
-               <input name="password2" type="password" id="password2" value="<?php echo $player_array['password']; ?>" required />
+               <input name="password2" type="password" id="password2" value="" />
                <label for="textarea">Comment:</label>
                <textarea cols="40" rows="8" name="textarea" id="textarea"><?php echo $player_array['comment']; ?></textarea>
                <label for="player_id" class="ui-hidden-accessible">Text Input:</label>
@@ -85,7 +92,7 @@ $player_array = players_player($_SESSION['player_logged_in']);
                   var pass1_num = pass1_val.length;
                   var pass2_val = pass2.value;
 
-                  if (pass1_num < min_num) {
+                  if (pass1_num < min_num && pass1_num > 0) {
                      alert("Password must be at least " + min_num + " characters");
                      return false;
                   }

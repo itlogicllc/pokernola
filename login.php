@@ -21,7 +21,7 @@ if (isset($_POST['email']) && $_POST['email'] != "") {
       $_SESSION['player_first'] = $logged_in['first_name'];
       $_SESSION['player_access'] = $logged_in['access_level'];
 
-      echo '<script> window.location = "index.php"; </script>';
+      echo '<script> window.location = "home.php"; </script>';
       exit();
    } else {
       echo '<script> window.location = "login.php?message=Invalid email or password!"; </script>';
@@ -53,9 +53,9 @@ if (isset($_POST['email']) && $_POST['email'] != "") {
                <label for="remember">Remember Me</label>
                <input name="remember" id="remember" type="checkbox" data-mini="true" value="yes" <?php echo (isset($_COOKIE['pokernola_player']) ? 'checked' : ''); ?> />
                <br />
-               <div data-role="controlgroup" data-type="horizontal">
+               <div data-role="controlgroup" data-type="">
                   <input name="submit" type="submit" value="Log In" />
-                  <a class="ui-btn" href="forgot_password.php">Forgot Password</a>
+                  <a class="ui-btn" href="forgot_password.php">Forgot Password?</a>
                </div>
             </form>
             <div data-role="footer" data-position="fixed">
