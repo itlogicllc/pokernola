@@ -1,8 +1,8 @@
 <?php
 
 mysql_select_db($database_poker_db, $poker_db);
-$query_invitations =  "SELECT *
-                  FROM invitations";
+$query_invitations =   "SELECT *
+                        FROM invitations";
 
 $invitations = mysql_query($query_invitations, $poker_db) or die(mysql_error());
 $totalRows_invitations = mysql_num_rows($invitations);
@@ -52,6 +52,26 @@ function invitations_by_email($email) {
    }
    return $invitation_array;
 }
+
+function invitations_last() {
+   global $database_poker_db;
+   global $poker_db;
+   
+   $invitations_array = array();
+   
+   mysql_select_db($database_poker_db, $poker_db);
+   $query_invitations =   "SELECT *
+                           FROM invitations
+                           ORDER BY invitation_id DESC
+                           LIMIT 1";
+
+   $invitations = mysql_query($query_invitations, $poker_db) or die(mysql_error());
+
+   $invitations_array[] = mysql_fetch_assoc($invitations);
+   
+   return $invitations_array;
+}
+
 ?>
 <?php
 

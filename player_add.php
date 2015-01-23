@@ -21,13 +21,14 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "registration")) {
    
    if (isset($_GET['player_id'])) {$player_id = $_GET['player_id'];}
    if (isset($_GET['invitation_code'])) {$auth_code = $_GET['invitation_code'];}
+   if (isset($_GET['invitation_id'])) {$invitation_id = $_GET['invitation_id'];}
 
-   $insertSQL = sprintf("INSERT INTO players (first_name, last_name, email, password, date_added) VALUES (%s, %s, %s, SHA1(%s), %s)", GetSQLValueString($_POST['first_name'], "text"), GetSQLValueString($_POST['last_name'], "text"), GetSQLValueString($_POST['email'], "text"), GetSQLValueString($_POST['password1'], "text"), GetSQLValueString($_POST['add_date'], "date"));
+   $insertSQL = sprintf("INSERT INTO players (invitation_id, first_name, last_name, email, password, date_added) VALUES (%s, %s, %s, %s, SHA1(%s), %s)", GetSQLValueString($invitation_id, "int"), GetSQLValueString($_POST['first_name'], "text"), GetSQLValueString($_POST['last_name'], "text"), GetSQLValueString($_POST['email'], "text"), GetSQLValueString($_POST['password1'], "text"), GetSQLValueString($_POST['add_date'], "date"));
 
    mysql_select_db($database_poker_db, $poker_db);
    $Result1 = mysql_query($insertSQL, $poker_db) or die(mysql_error());
 
-   $updateSQL = sprintf("UPDATE invitations SET accepted=1, invitation_code=NULL WHERE player_id=%s AND invitation_code=%s", GetSQLValueString($player_id, "int"), GetSQLValueString($auth_code, "text"));
+   $updateSQL = sprintf("UPDATE invitations SET invitation_code=NULL, pending=0 WHERE player_id=%s AND invitation_code=%s", GetSQLValueString($player_id, "int"), GetSQLValueString($auth_code, "text"));
 
    mysql_select_db($database_poker_db, $poker_db);
    $Result2 = mysql_query($updateSQL, $poker_db) or die(mysql_error());

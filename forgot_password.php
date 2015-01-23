@@ -32,7 +32,7 @@ if (isset($_POST['email']) && $_POST['email'] != "") {
       $subject = "Your Poker NOLA password";
       //$link = "http://localhost/pokernola/reset_password.php?player_id=" . $player_id . "&auth_code=" . $auth_code; // uncomment for testing
       $link = "http://www.pokernola.com/reset_password.php?player_id=" . $player_id . "&auth_code=" . $auth_code; // uncomment for production
-      $body = "Hey " . $loginUsername['first_name'] . ",<br \><br \>So, you forgot your Poker NOLA password did you? No problem!<br \><br \>Just click the link below or paste it into your browser's address bar. You will then be taken to a form where you can reset your password.<br \><br \>" . $link . "<br \><br \>Thanks for playing,<br \>Poker NOLA<br \><img height='100' width='100' src='http://pokernola.com/images/pokernola_logo.png'>";
+      $body = "Hey " . $loginUsername['first_name'] . ",<p>So, you forgot your Poker NOLA password did you?</p><p>No problem! Just click the link below or paste it into your browser's address bar. You will then be taken to a form where you can reset it.</p><p>" . $link . "</p><br /><br />Thanks for playing,<br />Poker NOLA<br /><img height='100' width='100' src='http://pokernola.com/images/pokernola_logo.png'>";
       $body = wordwrap($body, 70);
 
       mail($to, $subject, $body, $headers);

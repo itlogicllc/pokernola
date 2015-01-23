@@ -68,7 +68,7 @@ $player_array = players_player($_SESSION['player_logged_in']);
                <label for="email">Email:</label>
                <input name="email" type="email" id="email" value="<?php echo $player_array['email']; ?>" maxlength="30" required  />
                <label for="password1">Password:</label>
-               <input name="password1" type="password" id="password1" value="" placeholder="Leave blank to keep current password" />
+               <input name="password1" type="password" id="password1" value="" placeholder="Leave this blank to keep current password" />
                <label for="password2">Verify Password:</label>
                <input name="password2" type="password" id="password2" value="" />
                <label for="textarea">Comment:</label>

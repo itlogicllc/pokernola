@@ -53,7 +53,7 @@ if (isset($_POST['email']) && $_POST['email'] != "") {
                <label for="remember">Remember Me</label>
                <input name="remember" id="remember" type="checkbox" data-mini="true" value="yes" <?php echo (isset($_COOKIE['pokernola_player']) ? 'checked' : ''); ?> />
                <br />
-               <div data-role="controlgroup" data-type="">
+               <div data-role="controlgroup" data-type="horizontal">
                   <input name="submit" type="submit" value="Log In" />
                   <a class="ui-btn" href="forgot_password.php">Forgot Password?</a>
                </div>

@@ -20,26 +20,32 @@ if ((isset($_POST['MM_update']) && $_POST['MM_update'] == "invite") && isset($_S
    
    if ($invited_before) {
       $invitation = invitations_by_email($_POST['email']);
-      
-      $inviter = players_player($invitation['player_id']);
       $invitation_code = $invitation['invitation_code'];
       $player_id = $invitation['player_id'];
-      $message = "A previous invitation was already sent to " . $_POST['email'] . " and is still pending. That previous invitation will be sent again.";
+      $invitation_id = $invitation['invitation_id'];
+      
+      $inviter = players_player($invitation['player_id']);
+      
+      $message = "A previous invitation was already sent to " . $_POST['email'] . " and is still pending. That previous invitation was just sent again.";
    } else {
       $inviter = players_player($_SESSION['player_logged_in']);
       $invitation_code = substr(md5(mt_rand()), -20);
       $player_id = $inviter['player_id'];
-      $message = "You have just sent an email invitation to " . $_POST['first_name'] . " at " . $_POST['email'] . " to join Poker NOLA.";
-
+      $message = "You have just sent an email invitation for " . $_POST['first_name'] . " at " . $_POST['email'] . " to join Poker NOLA.";
+      $invitation_email = $_POST['email'];
+      
       $insertSQL = sprintf("INSERT INTO invitations (player_id, invitation_first, invitation_last, invitation_email, invitation_code) VALUES (%s, %s, %s, %s, %s)",
             GetSQLValueString($player_id, "int"),
             GetSQLValueString($_POST['first_name'], "text"),
             GetSQLValueString($_POST['last_name'], "text"),
-            GetSQLValueString($_POST['email'], "text"),
+            GetSQLValueString($invitation_email, "text"),
             GetSQLValueString($invitation_code, "text"));
 
      mysql_select_db($database_poker_db, $poker_db);
      $Result1 = mysql_query($insertSQL, $poker_db) or die(mysql_error());
+     
+     $invitation = invitations_last();
+     $invitation_id = $invitation[0]['invitation_id'];
    }
    
    $headers = "MIME-Version: 1.0" . "\r\n";
@@ -48,9 +54,9 @@ if ((isset($_POST['MM_update']) && $_POST['MM_update'] == "invite") && isset($_S
    //$to = "xampp@localhost.com"; // uncomment for testing
    $to = $_POST['email']; // uncomment for production
    $subject = "Invitation to join Poker NOLA";
-   //$link = "http://localhost/pokernola/player_add.php?player_id=" . $player_id . "&invitation_code=" . $invitation_code;  // uncomment for testing
-   $link = "http://www.pokernola.com/player_add.php?player_id=" . $player_id . "&invitation_code=" . $invitation_code;  // uncomment for production
-   $body = "Welcome " . $_POST['first_name'] . ",<br \><br \>Good news! " . $inviter['full_name'] . " would like to invite you to join Poker NOLA. New members are always appreciated and we hope you accept this invitation to join. To do so, simply click on or paste the link below into your browser's address bar. You will then be taken to a new player registration form. Fill it out, submit it and then just like that, you will become a Poker NOLA member. As soon as you are registered you will be able to log in, register for games, have your performance tracked and score points to compete against other members. We would be happy to have you, so join today and good luck!<br \><br \>" . $link . "<br \><br \>Thanks for playing,<br \>Poker NOLA<br \><img height='100' width='100' src='http://pokernola.com/images/pokernola_logo.png'>";
+   //$link = "http://localhost/pokernola/player_add.php?player_id=" . $player_id . "&invitation_code=" . $invitation_code . "&invitation_id=" . $invitation_id;  // uncomment for testing
+   $link = "http://www.pokernola.com/player_add.php?player_id=" . $player_id . "&invitation_code=" . $invitation_code . "&invitation_id=" . $invitation_id;  // uncomment for production
+   $body = "Welcome " . $_POST['first_name'] . ",<p>Good news! " . $inviter['full_name'] . " would like to invite you to join Poker NOLA. New members are always welcome and we hope you accept this invitation to join. To do so, simply click on or paste the link at the end of this email into your browser's address bar. You will then be taken to a new player registration form. Fill it out, submit it and then just like that, you will become a Poker NOLA member.</p><p>As soon as you are registered you will be able to log in, register for games, have your performance tracked, score points, get ranked and be able to send others invitations just like this one.</p><p>We would be happy to have you, so join today and good luck!</p><p>" . $link . "</p><br /><br />Thanks for playing,<br />Poker NOLA<br /><img height='100' width='100' src='http://pokernola.com/images/pokernola_logo.png'>";
    $body = wordwrap($body, 70);
 
    mail($to, $subject, $body, $headers);
