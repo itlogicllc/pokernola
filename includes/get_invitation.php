@@ -1,7 +1,7 @@
 <?php
 
 mysql_select_db($database_poker_db, $poker_db);
-$query_invitations =   "SELECT *
+$query_invitations =   "SELECT *, CONCAT(invitation_first,' ',invitation_last) full_name
                         FROM invitations";
 
 $invitations = mysql_query($query_invitations, $poker_db) or die(mysql_error());
@@ -29,6 +29,18 @@ function invitations_invitation($player, $code) {
    }
 }
 
+function invitations_invited($player) {
+   global $invitations_array;
+   $invitation_array = array();
+
+   for ($i = 0; $i <= count($invitations_array) - 1; $i++) {
+      if ($invitations_array[$i]['player_id'] == $player) {
+         $invitation_array[] = $invitations_array[$i];
+      }
+   }
+    return $invitation_array;
+}
+
 function invitations_email_duplicate($email) {
    global $invitations_array;
 
@@ -46,6 +58,19 @@ function invitations_by_email($email) {
 
    for ($i = 0; $i <= count($invitations_array) - 1; $i++) {
       if ($invitations_array[$i]['invitation_email'] == $email) {
+         $invitation_array = $invitations_array[$i];
+         return $invitation_array;
+      }
+   }
+   return $invitation_array;
+}
+
+function invitations_by_id($invitation_id) {
+   global $invitations_array;
+   $invitation_array = array();
+
+   for ($i = 0; $i <= count($invitations_array) - 1; $i++) {
+      if ($invitations_array[$i]['invitation_id'] == $invitation_id) {
          $invitation_array = $invitations_array[$i];
          return $invitation_array;
       }

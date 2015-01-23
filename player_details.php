@@ -44,7 +44,7 @@ $comp_percent_top_3 = $percent_top_3 * $percent_played;
             </div>
             <div role="main" class="ui-content">
                 <div class="ui-bar ui-bar-a ui-corner-all" align="center"><h2><?php echo $player['full_name']; ?></h2></div>
-                <div class="comment ui-bar ui-bar-b ui-corner-all"><?php echo $player['comment']; ?></div>
+                <div class="comment ui-bar ui-bar-b ui-corner-all"><?php echo $player['nickname']; ?></div>
                 <div class="grid_container">
                     <div class="ui-grid-b">
                         <div class="ui-block-a grid1"><h4><a href="#rank" data-transition="pop" data-rel="popup">Rank</a></h4><p><?php echo $player_rank;  ?></p></div>
