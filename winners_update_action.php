@@ -1,17 +1,29 @@
 <?php require_once('Connections/poker_db.php'); ?>
 <?php require('includes/set_page.php'); ?>
-<?php require('includes/get_games.php'); ?>
-<?php require('includes/get_winners.php'); ?>
 <?php
 // UPDATE WINNERS
-if (isset($_GET['update_details']) && $_GET['update_details'] != '1') {
+if (!isset($_GET['update_details']) || $_GET['update_details'] != '1') {
     for ($i = 1; $i <= $_POST['counter']; $i++) {
         $updateSQL = sprintf("UPDATE winners SET player_id=%s, split=%s WHERE winner_id=%s", GetSQLValueString($_POST['player' . $i], "int"), GetSQLValueString(isset($_POST['split' . $i]) ? "true" : "", "defined", "1", "0"), GetSQLValueString($_POST['winner_id' . $i], "int"));
 
         mysql_select_db($database_poker_db, $poker_db);
         $Result1 = mysql_query($updateSQL, $poker_db) or die(mysql_error());
     }
+} else {
+    $updateSQL = sprintf("UPDATE games SET status=%s, registration=%s, game_name=%s, num_players=%s, total_pot=%s WHERE game_id=%s",
+            GetSQLValueString(isset($_POST['status']) ? "true" : "", "defined", "1", "0"),
+            GetSQLValueString(isset($_POST['registration']) ? "true" : "", "defined", "1", "0"),
+            GetSQLValueString(date_to_mysql($_POST['game_name']), "date"),
+            GetSQLValueString($_POST['total_players'], "int"),
+            GetSQLValueString($_POST['total_pot'], "int"),
+            GetSQLValueString($_POST['game_id'], "int"));
+
+    mysql_select_db($database_poker_db, $poker_db);
+    $Result1 = mysql_query($updateSQL, $poker_db) or die(mysql_error());
 }
+
+require('includes/get_games.php');
+require('includes/get_winners.php');
 
 $game_id = $_GET['game_id'];
 $game_array = games_game($game_id);
@@ -188,16 +200,31 @@ if ($settings_array['split_type'] == 'even') {
                 case 1:
                     break;
                 case 2:
+                   if($game_pot == 0) {
+                      $payout_split = 0;
+                   } else {
                     $payout_split = (($B * $game_pot) + (($A - $B) * ($game_pot * $split_diff))) / $game_pot;
+                   }
+                   
                     $points_split = ($BP * $game_points) + (($AP - $BP) * ($game_points * $split_diff));
                     break;
                 case 3:
+                   if($game_pot == 0) {
+                      $payout_split = 0;
+                   } else {
                     $payout_split = (($C * $game_pot) + ((1 - (3 * $C)) * ($game_pot * $split_diff))) / $game_pot;
+                   }
+                    
                     $points_split = $row_split_sums['point_sum'] * $payout_split;
                     break;
                 default:
+                   if($game_pot == 0) {
+                      $payout_split = 0;
+                   } else {
                     $payout_split = ($game_pot * $split_diff) / $game_pot;
-                    $points_split = $row_split_sums['point_sum'] * $payout_split;
+                   }
+                   
+                   $points_split = $row_split_sums['point_sum'] * $payout_split;
             }
         } else {
             $split_diff = $row_player_splits['split_diff'];
@@ -220,7 +247,7 @@ if ($settings_array['split_type'] == 'even') {
     } while ($row_player_splits = mysql_fetch_assoc($player_splits));
 }
 
-$updateGoTo = "games.php";
+$updateGoTo = "winners_update.php";
 if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
     $updateGoTo .= $_SERVER['QUERY_STRING'];

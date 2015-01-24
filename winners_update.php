@@ -9,24 +9,32 @@
 <?php
 $random_num = mt_rand(1, 10000);
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-    $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+//$editFormAction = $_SERVER['PHP_SELF'];
+//if (isset($_SERVER['QUERY_STRING'])) {
+//    $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
+//}
+//
+//if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "game_update")) {
+//    $updateSQL = sprintf("UPDATE games SET status=%s, registration=%s, game_name=%s, num_players=%s, total_pot=%s WHERE game_id=%s",
+//            GetSQLValueString(isset($_POST['status']) ? "true" : "", "defined", "1", "0"),
+//            GetSQLValueString(isset($_POST['registration']) ? "true" : "", "defined", "1", "0"),
+//            GetSQLValueString(date_to_mysql($_POST['game_name']), "date"),
+//            GetSQLValueString($_POST['total_players'], "int"),
+//            GetSQLValueString($_POST['total_pot'], "int"),
+//            GetSQLValueString($_POST['game_id'], "int"));
+//
+//    mysql_select_db($database_poker_db, $poker_db);
+//    $Result1 = mysql_query($updateSQL, $poker_db) or die(mysql_error());
 
-if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "game_update")) {
-    $updateSQL = sprintf("UPDATE games SET status=%s, registration=%s, game_name=%s, num_players=%s, total_pot=%s WHERE game_id=%s", GetSQLValueString(isset($_POST['status']) ? "true" : "", "defined", "1", "0"), GetSQLValueString(isset($_POST['registration']) ? "true" : "", "defined", "1", "0"), GetSQLValueString(date_to_mysql($_POST['game_name']), "date"), GetSQLValueString($_POST['total_players'], "int"), GetSQLValueString($_POST['total_pot'], "int"), GetSQLValueString($_POST['game_id'], "int"));
+//    $updateGoTo = "winners_update_action.php?game_id=" . $_POST['game_id'] . '&update_details=1';
+//    if (isset($_SERVER['QUERY_STRING'])) {
+//        $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
+//        $updateGoTo .= $_SERVER['QUERY_STRING'];
+//    }
+//    header(sprintf("Location: %s", $updateGoTo));
+//    exit();
 
-    mysql_select_db($database_poker_db, $poker_db);
-    $Result1 = mysql_query($updateSQL, $poker_db) or die(mysql_error());
-
-    $updateGoTo = "winners_update_action.php?game_id=" . $game_id . '&update_details=1';
-    if (isset($_SERVER['QUERY_STRING'])) {
-        $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-        $updateGoTo .= $_SERVER['QUERY_STRING'];
-    }
-    header(sprintf("Location: %s", $updateGoTo));
-}
+//}
 
 $game_id = $_GET['game_id'];
 $winners_list = winners_by_game($game_id);
@@ -45,14 +53,14 @@ $settings_array[0] = settings_current($game['settings_id']);
         <div data-role="page" id="winner_update" data-dom-cache="false">
             <div data-role="header" data-position="fixed">
                 <h1>Game Update</h1>
-                <?php require('includes/set_games.php'); ?>
+                <?php require('includes/set_winners_update.php'); ?>
             </div>
             <div role="main" class="ui-content">
                 <div class="ui-bar ui-bar-a ui-corner-all" align="center"><h2><?php echo date_to_php($game['game_name']); ?></h2></div>
                 <div data-role="collapsible-set">
                     <div data-role="collapsible" data-collapsed="true">
                         <h3>Game Details</h3>
-                        <form action="<?php echo $editFormAction; ?>" method="POST" name="game_update" id="game_update<?php echo $random_num; ?>">
+                        <form action="<?php echo 'winners_update_action.php?game_id=' . $game_id . '&update_details=1' //echo $editFormAction; ?>" method="POST" name="game_update" id="game_update<?php echo $random_num; ?>">
                             <label for="status<?php echo $random_num; ?>">Game Status:</label>
                             <input name="status" id="status<?php echo $random_num; ?>" type="checkbox" data-role="flipswitch" <?php
                             if ($game['status'] == 1) {
@@ -124,7 +132,7 @@ $settings_array[0] = settings_current($game['settings_id']);
                                     <input type="checkbox" name="split<?php echo $i + 1; ?>" id="split<?php echo $i + 1; ?><?php echo $random_num; ?>" class="custom" value="<?php echo $winners_list[$i]['split']; ?>" <?php if ($winners_list[$i]['split'] == 1 && $settings_array[0]['split_type'] == 'even') echo 'checked' ?> <?php echo ($settings_array[0]['split_type'] == 'percent' ? 'onClick="setSplitPercent(this, getElementById(\'split_percent' . ($i + 1) . $random_num . '\'));" ' : ''); ?>/>
                                     <?php if ($settings_array[0]['split_type'] == 'percent') { ?>
                                         <label for="split_percent<?php echo $i + 1; ?><?php echo $random_num; ?>">&nbsp;% of remaining:</label>
-                                        <input type="range" name="split_percent<?php echo $i + 1; ?>" id="split_percent<?php echo $i + 1; ?><?php echo $random_num; ?>" value="<?php echo $winners_list[$i]['split_diff'] * 100; ?>" min="1" max="100" />
+                                        <input type="text" name="split_percent<?php echo $i + 1; ?>" id="split_percent<?php echo $i + 1; ?><?php echo $random_num; ?>" value="<?php echo $winners_list[$i]['split_diff'] * 100; ?>" />
                                         <br />
                                     <?php } ?> 
                                 </div>
@@ -166,15 +174,15 @@ $settings_array[0] = settings_current($game['settings_id']);
                     return false;
                     break;
                 default:
-                    if (sum == 100) {
-                        return true;
-                    }
-                    else {
-                        alert("The sum of splits does not equal 100%");
-                        return false;
-                    }
+                    <?php for ($i = 0; $i <= count($winners_list) - 1; $i++) { ?>
+                     if (document.getElementById("split<?php echo($i + 1); ?><?php echo $random_num; ?>").checked) {
+                        document.getElementById("split_percent<?php echo($i + 1); ?><?php echo $random_num; ?>").value = (document.getElementById("split_percent<?php echo($i + 1); ?><?php echo $random_num; ?>").value / sum) * 100;
+                     }
+                     <?php } ?>
+                     return true;
             }
-        }
+         }
+            
         function disableSplits() {
 <?php if ($settings_array[0]['split_type'] == 'percent') { ?>
                 var y = 0;

@@ -106,7 +106,7 @@ $comp_percent_top_3 = $percent_top_3 * $percent_played;
                                                     <?php
                                                     if ($place[$li]['split'] == 1) {
                                                         $split_percentage = $place[$li]['split_diff'] * 100;
-                                                        echo '<span class="alert"> (split ' . $split_percentage . '%)</span>';
+                                                        echo '<span class="alert"> (split ' . number_format($split_percentage, 2) . '%)</span>';
                                                     }
                                                     ?>
                                                 </p>

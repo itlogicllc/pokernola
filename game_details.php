@@ -81,7 +81,7 @@ $settings_array[0] = settings_current($game_array['settings_id']);
                                  <?php
                                  if ($game_winners_array[$i]['split'] == 1) {
                                     $split_percentage = $game_winners_array[$i]['split_diff'] * 100;
-                                    echo '<span class="alert"> (split ' . $split_percentage . '%)</span>';
+                                    echo '<span class="alert"> (split ' . number_format($split_percentage, 2) . '%)</span>';
                                  }
                                  ?>
                               </p>
