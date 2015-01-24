@@ -13,6 +13,10 @@
          </div>
          <div role="main" class="ui-content">
             <div class="ui-corner-all custom-corners">
+                <div class="ui-bar ui-bar-a">
+                  <h1>Poker NOLA v1.1.0</h1>
+               </div>
+               <br />
                <div class="ui-bar ui-bar-a">
                   <h2><img src="jquery-mobile/images/icons-png/info-white.png" /> Overview</h2>
                </div>
