@@ -9,33 +9,6 @@
 <?php
 $random_num = mt_rand(1, 10000);
 
-//$editFormAction = $_SERVER['PHP_SELF'];
-//if (isset($_SERVER['QUERY_STRING'])) {
-//    $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-//}
-//
-//if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "game_update")) {
-//    $updateSQL = sprintf("UPDATE games SET status=%s, registration=%s, game_name=%s, num_players=%s, total_pot=%s WHERE game_id=%s",
-//            GetSQLValueString(isset($_POST['status']) ? "true" : "", "defined", "1", "0"),
-//            GetSQLValueString(isset($_POST['registration']) ? "true" : "", "defined", "1", "0"),
-//            GetSQLValueString(date_to_mysql($_POST['game_name']), "date"),
-//            GetSQLValueString($_POST['total_players'], "int"),
-//            GetSQLValueString($_POST['total_pot'], "int"),
-//            GetSQLValueString($_POST['game_id'], "int"));
-//
-//    mysql_select_db($database_poker_db, $poker_db);
-//    $Result1 = mysql_query($updateSQL, $poker_db) or die(mysql_error());
-
-//    $updateGoTo = "winners_update_action.php?game_id=" . $_POST['game_id'] . '&update_details=1';
-//    if (isset($_SERVER['QUERY_STRING'])) {
-//        $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-//        $updateGoTo .= $_SERVER['QUERY_STRING'];
-//    }
-//    header(sprintf("Location: %s", $updateGoTo));
-//    exit();
-
-//}
-
 $game_id = $_GET['game_id'];
 $winners_list = winners_by_game($game_id);
 $ko_list = winners_ko_by_game($game_id);
@@ -130,9 +103,11 @@ $settings_array[0] = settings_current($game['settings_id']);
                                     <input type="hidden" name="player<?php echo $i + 1; ?>" id="player<?php echo $i + 1; ?><?php echo $random_num; ?>" value="<?php echo $winners_list[$i]['player_id']; ?>"  />
                                     <label for="split<?php echo $i + 1; ?><?php echo $random_num; ?>">Split: Winner <?php echo $i + 1; ?></label>
                                     <input type="checkbox" name="split<?php echo $i + 1; ?>" id="split<?php echo $i + 1; ?><?php echo $random_num; ?>" class="custom" value="<?php echo $winners_list[$i]['split']; ?>" <?php if ($winners_list[$i]['split'] == 1 && $settings_array[0]['split_type'] == 'even') echo 'checked' ?> <?php echo ($settings_array[0]['split_type'] == 'percent' ? 'onClick="setSplitPercent(this, getElementById(\'split_percent' . ($i + 1) . $random_num . '\'));" ' : ''); ?>/>
-                                    <?php if ($settings_array[0]['split_type'] == 'percent') { ?>
+<!--TODO make so that chip count of splits cannot be greater than the previous one-->
+<!--TODO make so that only whole numbers can be input-->
+                                       <?php if ($settings_array[0]['split_type'] == 'percent') { ?>
                                         <label for="split_percent<?php echo $i + 1; ?><?php echo $random_num; ?>">&nbsp;% of remaining:</label>
-                                        <input type="text" name="split_percent<?php echo $i + 1; ?>" id="split_percent<?php echo $i + 1; ?><?php echo $random_num; ?>" value="<?php echo $winners_list[$i]['split_diff'] * 100; ?>" />
+                                        <input type="number" step="0.0001" name="split_percent<?php echo $i + 1; ?>" id="split_percent<?php echo $i + 1; ?><?php echo $random_num; ?>" value="<?php echo $winners_list[$i]['split_diff'] * 100; ?>" />
                                         <br />
                                     <?php } ?> 
                                 </div>
@@ -176,7 +151,11 @@ $settings_array[0] = settings_current($game['settings_id']);
                 default:
                     <?php for ($i = 0; $i <= count($winners_list) - 1; $i++) { ?>
                      if (document.getElementById("split<?php echo($i + 1); ?><?php echo $random_num; ?>").checked) {
-                        document.getElementById("split_percent<?php echo($i + 1); ?><?php echo $random_num; ?>").value = (document.getElementById("split_percent<?php echo($i + 1); ?><?php echo $random_num; ?>").value / sum) * 100;
+                        var split_percent = (document.getElementById("split_percent<?php echo($i + 1); ?><?php echo $random_num; ?>").value / sum) * 100;
+                        
+                        split_percent = split_percent.toFixed(4);
+                        
+                        document.getElementById("split_percent<?php echo($i + 1); ?><?php echo $random_num; ?>").value = split_percent;
                      }
                      <?php } ?>
                      return true;
