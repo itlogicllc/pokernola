@@ -33,7 +33,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "registration")) {
    mysql_select_db($database_poker_db, $poker_db);
    $Result2 = mysql_query($updateSQL, $poker_db) or die(mysql_error());
 
-   header(sprintf("Location: login.php?message=Welcome to Poker NOLA! You are now officially a member and can log in with your new credentials."));
+   header(sprintf("Location: index.php?message=Welcome to Poker NOLA! You are now officially a member and can log in with your new credentials."));
    exit();
 }
 

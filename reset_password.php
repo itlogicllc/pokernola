@@ -33,7 +33,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "password")) {
    mysql_select_db($database_poker_db, $poker_db);
    $Result1 = mysql_query($updateSQL, $poker_db) or die(mysql_error());
 
-   header(sprintf("Location: login.php?message=You have successfully reset your password! You may now log in with your new credentials."));
+   header(sprintf("Location: index.php?message=You have successfully reset your password! You may now log in with your new credentials."));
    exit();
 }
 ?>
