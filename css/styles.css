@@ -64,9 +64,17 @@ body {
 }
 .info {
     color:#6CF;
+	 text-align: center;
 }
 .alert {
     color:#FFCCC4;
+	 text-align: center;
+}
+.normal {
+	 text-align: center;
+}
+.copyright {
+	 font-size: x-small;
 }
 .expired {
     color:#CCC;

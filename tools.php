@@ -17,7 +17,8 @@
                     <a href="tools_settings.php" data-role="button" data-transition="fade">Create New Season</a>
                 <?php } ?>
 		<a href="tools_scoring.php" data-role="button" data-transition="fade">Season Rules</a>
-		<a href="tools_help.php" data-role="button" data-transition="fade">Poker NOLA Help</a>
+		<a href="tools_help.php" data-role="button" data-transition="fade">Help</a>
+		<a href="tools_about.php" data-role="button" data-transition="fade">About</a>
 	</div>
 	<div data-role="footer" data-position="fixed">
 		<?php require('includes/set_footer.php'); ?>
