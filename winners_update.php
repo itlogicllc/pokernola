@@ -109,7 +109,7 @@ $settings_array[0] = settings_current($game['settings_id']);
                                         <label for="split_percent<?php echo $i + 1; ?><?php echo $random_num; ?>">&nbsp;% of remaining:</label>
                                         <input type="number" step="0.0001" name="split_percent<?php echo $i + 1; ?>" id="split_percent<?php echo $i + 1; ?><?php echo $random_num; ?>" value="<?php echo $winners_list[$i]['split_diff'] * 100; ?>" />
                                         <br />
-                                    <?php } ?> 
+                                    <?php } //TODO make so that chip count of splits cannot be greater than the previous one, make so that only whole numbers can be input ?> 
                                 </div>
                             <?php } ?>
                             <input type="submit" name="submit" value="Update" data-inline="true" onClick="return addSplits();"/>
