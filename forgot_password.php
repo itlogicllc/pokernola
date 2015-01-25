@@ -62,7 +62,7 @@ if (isset($_POST['email']) && $_POST['email'] != "") {
                <br />
             <?php } ?>
             <form action="<?php echo $editFormAction; ?>" id="forgot_pass" name="forgot_pass" method="POST">
-               <label for="email">Enter Your Registered Email Address:</label>
+               <label for="email">Enter Your Login Email Address:</label>
                <input name="email" type="email" id="email" value="" maxlength="30"  />
                <br />
                <div data-role="controlgroup" data-type="horizontal">
