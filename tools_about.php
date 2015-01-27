@@ -34,6 +34,7 @@
 							<li>Added invitation system</li>
 							<li>Added password reset system</li>
 							<li>Added overall ranking by payout</li>
+							<li>Added game icon notifications</li>
 							<li>Added concept of games belonging to seasons</li>
 							<li>Changed date picker to select seasons to view, all season or custom dates</li>
 							<li>Changed split calculation to be based on each splitting player's chip count instead of percentage of chips owned</li>

@@ -71,7 +71,7 @@
                   <p>The Games page shows the game schedule. It is a list of dates that represents when each game is to be, or has been played.</p>
                   <p>There are two types of games, open and private. An open game is one in which anyone can play up to the maximum amount of players allowed. A private game must be registered for prior to it starting. Only players registered in Poker NOLA are able to register for these games. The type of game is indicated by an icon in the game schedule:</p>
 
-                  <p><img alt="Open Game" src="images/open.png"> - Open Game<br /><img alt="Open Game" src="images/regonly.png"> - Private Game<br /><img alt="Open Game" src="images/registered.png"> - Private Game that the currently logged in user has already registered for</p>
+                  <p><img alt="Open Game" src="images/open.png"> - Open Game<br /><img alt="Open Game" src="images/regonly.png"> - Private Game<br /><img alt="Open Game" src="images/registered.png"> - Private Game that the currently logged in user has already registered for<br /><img alt="Played Game" src="images/played.png"> - Games the currently logged in player has played in</p>
 
                   <p>Games that have already been played in the schedule will be grayed out and stricken through, but are still able to be clicked on for more information.</p>
 
