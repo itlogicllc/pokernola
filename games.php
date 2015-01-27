@@ -33,16 +33,22 @@ $current_settings = settings_current();
                      <a href="<?php echo ($games_list[$i]['registration'] == 1) ? 'game_registration.php' : 'game_details.php'; ?>?game_id=<?php echo $games_list[$i]['game_id']; ?>">
                      <?php if ($games_list[$i]['registration'] == 1) {
                               if (isset($_SESSION['player_logged_in'])) {
-                                 if (game_players_registered($games_list[$i]['game_id'], $_SESSION['player_logged_in']) == 1) { ?>
-                                    <img class="ui-li-icon" alt="registered" src="images/registered.png">
-                           <?php } else { ?>
+                                 if (game_players_registered($games_list[$i]['game_id'], $_SESSION['player_logged_in']) == 1) {
+												if ($expired) { ?>
+													<img class="ui-li-icon" alt="open" src="images/played.png" >
+												<?php } else { ?>
+													<img class="ui-li-icon" alt="registered" src="images/registered.png">
+												<?php } ?>
+											<?php } else { ?>
                                  <img class="ui-li-icon" alt="regonly" src="images/regonly.png">
-                           <?php } ?>
-                        <?php } else { ?>
+											<?php } ?>
+										<?php } else { ?>
                                  <img class="ui-li-icon" alt="regonly" src="images/regonly.png"> 
-                        <?php } ?>
-   <?php } else { ?>
-                           <img class="ui-li-icon" alt="open" src="images/open.png" > 
+										<?php } ?>
+							<?php } elseif($expired && isset($_SESSION['player_logged_in']) && game_players_registered($games_list[$i]['game_id'], $_SESSION['player_logged_in']) == 1) { ?>
+										<img class="ui-li-icon" alt="open" src="images/played.png" >
+							<?php } else { ?>
+										<img class="ui-li-icon" alt="open" src="images/open.png" > 
                      <?php } ?>
                         <span <?php if ($expired) {
                      echo 'class="expired"';
