@@ -36,6 +36,16 @@ if (isset($_POST['email']) && $_POST['email'] != "") {
       $body = wordwrap($body, 70);
 
       mail($to, $subject, $body, $headers);
+		
+		$headers = "MIME-Version: 1.0" . "\r\n";
+      $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+      $headers .= "From: info@pokernola.com";
+      //$to = "xampp@localhost.com"; // uncomment for testing
+      $to = "info@pokernola.com"; // uncomment for production
+      $subject = "Poker NOLA Password Change";
+      $body = $loginUsername['full_name'] . " just changed their password.";
+		
+		 mail($to, $subject, $body, $headers);
 
       echo '<script> window.location = "forgot_password.php?message=An email with instruction for resetting your password has been sent to ' . $player_email . '. Don\'t forget to check your spam folder if it\'s not in your inbox."; </script>';
       exit();
