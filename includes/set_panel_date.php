@@ -15,6 +15,7 @@ if (isset($_POST['date_pick'])) {
     $_SESSION['to_date'] = date_to_mysql($_POST['date_pick_to']);
    
     echo '<script> window.location = "' . $editFormAction . '"; </script>';
+	 exit();
 }
 ?>
 <script type="text/javascript">

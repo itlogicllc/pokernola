@@ -20,15 +20,27 @@ if (isset($_POST["MM_insert"])) {
         $insertSQL = sprintf("INSERT INTO game_players (game_id, player_id) VALUES (%s, %s)",
              GetSQLValueString($game_id, "int"), 
              GetSQLValueString($player_id, "int"));
+		  
+		  $updateSQL = sprintf("UPDATE games SET num_players=%s WHERE game_id=%s",
+            GetSQLValueString(count($game_players_array) + 1, "int"),
+			   GetSQLValueString($game_id, "int"));
     } else {
         $insertSQL = sprintf("DELETE FROM game_players WHERE game_id=%s AND player_id=%s",
              GetSQLValueString($game_id, "int"), 
              GetSQLValueString($player_id, "int"));
+		  
+		   $updateSQL = sprintf("UPDATE games SET num_players=%s WHERE game_id=%s",
+            GetSQLValueString(count($game_players_array) - 1, "int"),
+			   GetSQLValueString($game_id, "int"));
     }
     mysql_select_db($database_poker_db, $poker_db);
     $Result1 = mysql_query($insertSQL, $poker_db) or die(mysql_error());
+	 
+	  mysql_select_db($database_poker_db, $poker_db);
+    $Result2 = mysql_query($updateSQL, $poker_db) or die(mysql_error());
     
     echo '<script> window.location = "' . $editFormAction . '"; </script>';
+	 exit();
 }
 ?>
 <!DOCTYPE html>

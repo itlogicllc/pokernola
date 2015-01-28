@@ -24,7 +24,7 @@ if (isset($_POST['email']) && $_POST['email'] != "") {
 		echo '<script> window.location = "home.php"; </script>';
 		exit();
 	} else {
-		echo '<script> window.location = "login.php?message=Invalid email or password!"; </script>';
+		echo '<script> window.location = "index.php?message=Invalid email or password!"; </script>';
 		exit();
 	}
 }
