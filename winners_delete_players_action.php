@@ -7,9 +7,8 @@ if(!empty($_GET['game_id'])) {
 	$game_id = $_GET['game_id'];
 }
 $game_players_array = $game_players_array = game_players_by_game($game_id);
-  $insertSQL = sprintf("DELETE FROM game_players WHERE game_id=%s AND player_id=%s",
-				GetSQLValueString($_GET['game_id'], "int"),
-				GetSQLValueString($_GET['player_id'], "int"));
+  $insertSQL = sprintf("DELETE FROM game_players WHERE game_players_id=%s",
+				GetSQLValueString($_GET['game_players_id'], "int"));
 
   mysql_select_db($database_poker_db, $poker_db);
   $Result1 = mysql_query($insertSQL, $poker_db) or die(mysql_error());

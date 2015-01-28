@@ -1,5 +1,6 @@
 <?php require_once('Connections/poker_db.php'); ?>
 <?php require('includes/set_page.php'); ?>
+<?php require('includes/get_game_players.php'); ?>
 <?php
 // UPDATE WINNERS
 if (!isset($_GET['update_details']) || $_GET['update_details'] != '1') {
@@ -10,16 +11,30 @@ if (!isset($_GET['update_details']) || $_GET['update_details'] != '1') {
         $Result1 = mysql_query($updateSQL, $poker_db) or die(mysql_error());
     }
 } else {
-    $updateSQL = sprintf("UPDATE games SET status=%s, registration=%s, game_name=%s, num_players=%s, total_pot=%s WHERE game_id=%s",
-            GetSQLValueString(isset($_POST['status']) ? "true" : "", "defined", "1", "0"),
-            GetSQLValueString(isset($_POST['registration']) ? "true" : "", "defined", "1", "0"),
-            GetSQLValueString(date_to_mysql($_POST['game_name']), "date"),
-            GetSQLValueString($_POST['total_players'], "int"),
-            GetSQLValueString($_POST['total_pot'], "int"),
-            GetSQLValueString($_POST['game_id'], "int"));
+	$num_players = count(game_players_by_game($_POST['game_id']));
+	
+	$updateSQL = sprintf("UPDATE games SET status=%s, registration=%s, game_name=%s, num_players=%s, total_pot=%s WHERE game_id=%s",
+				GetSQLValueString(isset($_POST['status']) ? "true" : "", "defined", "1", "0"),
+				GetSQLValueString(isset($_POST['registration']) ? "true" : "", "defined", "1", "0"),
+				GetSQLValueString(date_to_mysql($_POST['game_name']), "date"),
+				GetSQLValueString($_POST['total_players'], "int"),
+				GetSQLValueString($_POST['total_pot'], "int"),
+				GetSQLValueString($_POST['game_id'], "int"));
 
-    mysql_select_db($database_poker_db, $poker_db);
-    $Result1 = mysql_query($updateSQL, $poker_db) or die(mysql_error());
+	mysql_select_db($database_poker_db, $poker_db);
+	$Result1 = mysql_query($updateSQL, $poker_db) or die(mysql_error());
+	
+	if($_POST['total_players'] > $num_players) {
+		$player_diff = $_POST['total_players'] - $num_players;
+		
+		for($i=0; $i <= $player_diff - 1; $i++) {
+			$insertSQL = sprintf("INSERT INTO game_players (game_id, player_id) VALUES (%s, %s)",
+				GetSQLValueString($_POST['game_id'], "int"), 0);
+
+			mysql_select_db($database_poker_db, $poker_db);
+			$Result1 = mysql_query($insertSQL, $poker_db) or die(mysql_error());	
+		}
+	}
 }
 
 require('includes/get_games.php');
@@ -252,7 +267,8 @@ if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
     $updateGoTo .= $_SERVER['QUERY_STRING'];
 }
-header(sprintf("Location: %s", $updateGoTo));
+echo '<script> window.location = "' . $updateGoTo . '"; </script>';
+exit();
 ?>
 <!DOCTYPE html>
 <html>
