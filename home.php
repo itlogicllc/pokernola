@@ -13,7 +13,9 @@ $number_registered = players_count();
 $number_players_played = game_players_count();
 $largest_pot = games_largest_pot();
 $total_payout = games_pot_sum();
+$total_payout_format = "$" . number_format($total_payout, 2);
 $avg_players = number_format($number_players_played / $number_games_played, 0);
+$avg_pot = "$" . number_format($total_payout / $number_games_played, 2);
 ?>
 <!DOCTYPE html>
 <html>
@@ -34,9 +36,10 @@ $avg_players = number_format($number_players_played / $number_games_played, 0);
                         <div class="ui-block-b grid2"><h4><a href="#total_players" data-transition="pop" data-rel="popup">Registered</a></h4><p><?php echo $number_registered; ?></p></div>
                         <div class="ui-block-c grid3"><h4><a href="#avg_players" data-transition="pop" data-rel="popup">Avg. Players</a></h4><p><?php echo $avg_players; ?></p></div>
                     </div>
-                    <div class="ui-grid-a">
-                        <div class="ui-block-a grid1"><h4><a href="#largest_pot" data-transition="pop" data-rel="popup">Largest Pot</a></h4><p><?php echo $largest_pot; ?></p></div>
-                        <div class="ui-block-b grid3"><h4><a href="#total_payout" data-transition="pop" data-rel="popup">Total Payout</a></h4><p><?php echo $total_payout; ?></p></div>
+                    <div class="ui-grid-b">
+                        <div class="ui-block-a grid3"><h4><a href="#largest_pot" data-transition="pop" data-rel="popup">Largest Pot</a></h4><p><?php echo $largest_pot; ?></p></div>
+								 <div class="ui-block-b grid1"><h4><a href="#avg_pot" data-transition="pop" data-rel="popup">Average Pot</a></h4><p><?php echo $avg_pot; ?></p></div>
+                        <div class="ui-block-c grid2"><h4><a href="#total_payout" data-transition="pop" data-rel="popup">Total Payout</a></h4><p><?php echo $total_payout_format; ?></p></div>
                     </div>
                 </div>
                 <div id="largest_pot" data-role="popup" data-arrow="true">
