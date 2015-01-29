@@ -55,6 +55,19 @@ function game_players_played($player) {
    }
    return $count;
 }
+
+//  RETURNS THE NUMBER OF PLAYERS WHO HAVE PLAYED IN ALL GAMES
+function game_players_count() {
+   global $game_players_array;
+   $count = 0;
+
+   for ($i = 0; $i <= count($game_players_array) - 1; $i++) {
+      if ($game_players_array[$i]['status'] == 0) {
+         $count++;
+      }
+   }
+   return $count;
+}
 ?>
 
 <?php

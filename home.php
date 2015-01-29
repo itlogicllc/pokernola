@@ -4,14 +4,16 @@
 <?php require('includes/get_players.php'); ?>
 <?php require('includes/get_rankings.php'); ?>
 <?php require('includes/get_payouts.php'); ?>
+<?php require('includes/get_game_players.php'); ?>
 <?php
 $top_3 = rankings_range(1, 3);
 $money_makers = payout_range(1, 3);
 $number_games_played = games_played_count();
 $number_registered = players_count();
-$most_players = games_most_players();
+$number_players_played = game_players_count();
 $largest_pot = games_largest_pot();
 $total_payout = games_pot_sum();
+$avg_players = number_format($number_players_played / $number_games_played, 0);
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,7 +32,7 @@ $total_payout = games_pot_sum();
                     <div class="ui-grid-b">
                         <div class="ui-block-a grid1"><h4><a href="#total_games" data-transition="pop" data-rel="popup">Games</a></h4><p><?php echo $number_games_played; ?></p></div>
                         <div class="ui-block-b grid2"><h4><a href="#total_players" data-transition="pop" data-rel="popup">Registered</a></h4><p><?php echo $number_registered; ?></p></div>
-                        <div class="ui-block-c grid3"><h4><a href="#most_players" data-transition="pop" data-rel="popup">Most Players</a></h4><p><?php echo $most_players; ?></p></div>
+                        <div class="ui-block-c grid3"><h4><a href="#avg_players" data-transition="pop" data-rel="popup">Avg. Players</a></h4><p><?php echo $avg_players; ?></p></div>
                     </div>
                     <div class="ui-grid-a">
                         <div class="ui-block-a grid1"><h4><a href="#largest_pot" data-transition="pop" data-rel="popup">Largest Pot</a></h4><p><?php echo $largest_pot; ?></p></div>
@@ -40,8 +42,8 @@ $total_payout = games_pot_sum();
                 <div id="largest_pot" data-role="popup" data-arrow="true">
                     <p>This is the largest pot to date of all games played</p>
                 </div>
-                <div id="most_players" data-role="popup" data-arrow="true">
-                    <p>This is the most players in any one game to date of all games played</p>
+                <div id="avg_players" data-role="popup" data-arrow="true">
+                    <p>The average amount of players per game</p>
                 </div>
                 <div id="total_payout" data-role="popup" data-arrow="true">
                     <p>This is a cumulative sum of all pots per game</p>

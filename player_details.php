@@ -52,9 +52,9 @@ $comp_percent_top_3 = $percent_top_3 * $percent_played;
                         <div class="ui-block-c grid3"><h4><a href="#total_payouts" data-transition="pop" data-rel="popup">Total Payout</a></h4><p><?php echo $total_payout; ?></p></div>
                     </div>
                     <div class="ui-grid-b">
-                        <div class="ui-block-a grid3"><h4><a href="#played" data-transition="pop" data-rel="popup">Played</a></h4><p><?php echo number_format($percent_played, 1) * 100 . '%'; ?></p></div>
-                        <div class="ui-block-b grid1"><h4><a href="#top_10" data-transition="pop" data-rel="popup">Scored</a></h4><p><?php echo number_format($percent_top_10, 1) * 100 . '% (' . number_format($comp_percent_top_10, 1) * 100 . '%)'; ?></p></div>
-                        <div class="ui-block-c grid2"><h4><a href="#itm" data-transition="pop" data-rel="popup">Paid</a></h4><p><?php echo number_format($percent_top_3, 1) * 100 . '% (' . number_format($comp_percent_top_3, 1) * 100 . '%)'; ?></p></div>
+                        <div class="ui-block-a grid3"><h4><a href="#played" data-transition="pop" data-rel="popup">Played</a></h4><p><?php echo number_format($percent_played * 100, 0) . '%'; ?></p></div>
+                        <div class="ui-block-b grid1"><h4><a href="#top_10" data-transition="pop" data-rel="popup">Scored</a></h4><p><?php echo number_format($percent_top_10 * 100, 0) . '% (' . number_format($comp_percent_top_10 * 100, 0) . '%)'; ?></p></div>
+                        <div class="ui-block-c grid2"><h4><a href="#itm" data-transition="pop" data-rel="popup">Paid</a></h4><p><?php echo number_format($percent_top_3 * 100, 0) . '% (' . number_format($comp_percent_top_3 * 100, 0) . '%)'; ?></p></div>
                     </div>
                 </div>
                 <div id="rank" data-role="popup" data-arrow="true">
@@ -94,7 +94,7 @@ $comp_percent_top_3 = $percent_top_3 * $percent_played;
                         if ($place_amount > 0) {
                             ?>
                             <div data-role="collapsible" data-collapsed="true">
-                                <h3>Placed <?php echo $i; ?>: <span class="placed"><?php echo $place_amount; ?> times - <?php echo number_format($place_percent, 1) * 100; ?>% (<?php echo number_format($comp_place_percent, 1) * 100; ?>%)</span></h3>
+                                <h3>Placed <?php echo $i; ?>: <span class="placed"><?php echo $place_amount; ?> times - <?php echo number_format($place_percent * 100, 0); ?>% (<?php echo number_format($comp_place_percent * 100, 0); ?>%)</span></h3>
                                 <ul data-role="listview" data-inset="true">
                                             <?php for ($li = 0; $li <= $place_amount - 1; $li++) { ?>
                                         <li>
