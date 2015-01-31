@@ -1,6 +1,7 @@
 <?php require_once('Connections/poker_db.php'); ?>
 <?php require('includes/set_page.php'); ?>
 <?php require('includes/get_players.php'); ?>
+<?php require('includes/set_emails.php'); ?>
 <?php
 // *** Redirect if username exists
 $not_auth_message = "You are not authorized to reset this password! If you pasted the link you received into your browser's address bar, make sure you pasted the entire link. Otherwise, report to your local police station and surrender yourself as a cyber criminal.";
@@ -32,6 +33,9 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "password")) {
 
    mysql_select_db($database_poker_db, $poker_db);
    $Result1 = mysql_query($updateSQL, $poker_db) or die(mysql_error());
+	
+	$system_arg_array = array($player['full_name'], "", "", "", "", "");
+	system_emails($system_arg_array, "password_changed");
 
    header(sprintf("Location: index.php?message=You have successfully reset your password! You may now log in with your new credentials."));
    exit();

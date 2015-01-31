@@ -1,6 +1,7 @@
 <?php require_once('Connections/poker_db.php'); ?>
 <?php require('includes/set_page.php'); ?>
 <?php require('includes/get_players.php'); ?>
+<?php require('includes/set_emails.php'); ?>
 <?php
 // *** Validate request to login to this site.
 
@@ -24,30 +25,14 @@ if (isset($_POST['email']) && $_POST['email'] != "") {
        
       $updateAuthCode = mysql_query($updateAuthCode__query, $poker_db) or die(mysql_error());
               
-      $headers = "MIME-Version: 1.0" . "\r\n";
-      $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-      $headers .= "From: info@pokernola.com";
-      //$to = "xampp@localhost.com"; // uncomment for testing
-      $to = $loginUsername['email']; // uncomment for production
-      $subject = "Your Poker NOLA password";
-      //$link = "http://localhost/pokernola/reset_password.php?player_id=" . $player_id . "&auth_code=" . $auth_code; // uncomment for testing
-      $link = "http://www.pokernola.com/reset_password.php?player_id=" . $player_id . "&auth_code=" . $auth_code; // uncomment for production
-      $body = "Hey " . $loginUsername['first_name'] . ",<p>So, you forgot your Poker NOLA password did you?</p><p>No problem! Just click the link below or paste it into your browser's address bar. You will then be taken to a form where you can reset it.</p><p>" . $link . "</p><br /><br />Thanks for playing,<br />Poker NOLA<br /><img height='100' width='100' src='http://pokernola.com/images/pokernola_logo.png'>";
-      $body = wordwrap($body, 70);
-
-      mail($to, $subject, $body, $headers);
+		$to_array = array($loginUsername['email']);
+		$player_arg_array = array($loginUsername['first_name'], $player_id, $auth_code, "", "", "");
+		player_emails($to_array, $player_arg_array, "password");
 		
-		$headers = "MIME-Version: 1.0" . "\r\n";
-      $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-      $headers .= "From: info@pokernola.com";
-      //$to = "xampp@localhost.com"; // uncomment for testing
-      $to = "info@pokernola.com"; // uncomment for production
-      $subject = "Poker NOLA Password Change";
-      $body = $loginUsername['full_name'] . " just changed their password.";
-		
-		 mail($to, $subject, $body, $headers);
+		$system_arg_array = array($loginUsername['full_name'], "", "", "", "", "");
+		system_emails($system_arg_array, "password_request");
 
-      echo '<script> window.location = "forgot_password.php?message=An email with instruction for resetting your password has been sent to ' . $player_email . '. Don\'t forget to check your spam folder if it\'s not in your inbox."; </script>';
+      echo '<script> window.location = "forgot_password.php?message=An email with instruction for resetting your password has been sent to ' . $player_email . '. Don\'t forget to check your spam folder if it\'s not in your inbox. It could take up to 24 hours to receive."; </script>';
       exit();
    } else {
       echo '<script> window.location = "forgot_password.php?message=The email address ' . $_POST['email'] . ' does not exist! Please try again."; </script>';

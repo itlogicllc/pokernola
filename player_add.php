@@ -2,6 +2,7 @@
 <?php require('includes/set_page.php'); ?>
 <?php require('includes/get_players.php'); ?>
 <?php require('includes/get_invitation.php'); ?>
+<?php require('includes/set_emails.php'); ?>
 <?php
 $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
@@ -22,6 +23,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "registration")) {
    if (isset($_GET['player_id'])) {$player_id = $_GET['player_id'];}
    if (isset($_GET['invitation_code'])) {$auth_code = $_GET['invitation_code'];}
    if (isset($_GET['invitation_id'])) {$invitation_id = $_GET['invitation_id'];}
+	
+	$player = players_player($_GET['player_id']);
 
    $insertSQL = sprintf("INSERT INTO players (invitation_id, first_name, last_name, email, password, date_added) VALUES (%s, %s, %s, %s, SHA1(%s), %s)", GetSQLValueString($invitation_id, "int"), GetSQLValueString($_POST['first_name'], "text"), GetSQLValueString($_POST['last_name'], "text"), GetSQLValueString($_POST['email'], "text"), GetSQLValueString($_POST['password1'], "text"), GetSQLValueString($_POST['add_date'], "date"));
 
@@ -32,6 +35,9 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "registration")) {
 
    mysql_select_db($database_poker_db, $poker_db);
    $Result2 = mysql_query($updateSQL, $poker_db) or die(mysql_error());
+	
+	$system_arg_array = array($_POST['first_name'], $_POST['last_name'], $player['full_name'], "", "", "");
+	system_emails($system_arg_array, "invitation_accepted");
 
    header(sprintf("Location: index.php?message=Welcome to Poker NOLA! You are now officially a member and can log in with your new credentials."));
    exit();
