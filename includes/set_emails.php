@@ -83,11 +83,20 @@ function system_emails($arg_array, $type) {
 	
 	$body = wordwrap($body, 70);
 	
-	$system_headers = $headers . "From: info@pokernola.com\r\n" ;
+	$system_headers = $headers . "From: info@pokernola.com\r\n";
 	
 	mail($to, $subject, $body, $system_headers);
 }
 
-function contact_emails($from, $to_array, $subject) {
+function contact_emails($from, $name, $body) {
+	global $to;
 	
+	$subject = "Message From Poker NOLA Contact Form";
+	
+	$body = "Message from " . $name . ":\n\n" . $body;
+	$body = wordwrap($body, 70);
+	
+	$contact_headers = "From: " . $from . "\r\n";
+	
+	mail($to, $subject, $body, $contact_headers);
 }
