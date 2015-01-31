@@ -238,11 +238,6 @@ $settings_array[0] = settings_current($game['settings_id']);
 							</div>
 						</form>
 					</div>
-					<div data-role="collapsible" data-collapsed="true">
-						<h3>Season Rules</h3>
-						<?php $i = 0; ?>
-						<?php require('includes/get_scoring.php'); ?>
-					</div>
 				</div>
 			</div>
 			<div data-role="footer" data-position="fixed">

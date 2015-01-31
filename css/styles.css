@@ -59,6 +59,9 @@ body {
 	padding-bottom:10px;
 	font-weight:bold;
 }
+.admin {
+	color: red;
+}
 .comment {
 	text-align:center;
 }
@@ -99,4 +102,15 @@ body {
 .ranking {
 	font-size:small;
 	font-weight:normal;
-}  
+} 
+.ui-icon-adminadd:after {
+	background-image: url("../images/admin_add.png") !important;
+}
+.ui-icon-admindelete:after {
+	background-image: url("../images/admin_delete.png") !important;
+}
+.ui-icon-adminedit:after {
+	background-image: url("../images/admin_edit.png") !important;
+}
+
+

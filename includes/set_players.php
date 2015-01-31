@@ -2,7 +2,7 @@
 if (isset($_SESSION['player_access']) && ($_SESSION['player_access'] == 'admin' || $_SESSION['player_access'] == 'player')) echo '<a href="player_invite.php" data-role="button" data-icon="mail" data-iconpos="notext">Invite Player</a>';
 
 if (isset($_SESSION['player_access']) && $_SESSION['player_access'] == 'admin') {
-   echo '<a href="player_delete.php" data-role="button" data-icon="minus" data-iconpos="notext">Delete Player</a>';
+   echo '<a href="player_delete.php" data-role="button" data-icon="admindelete" data-iconpos="notext">Delete Player</a>';
 }
 ?>
    
