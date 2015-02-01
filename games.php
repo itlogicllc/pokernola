@@ -19,7 +19,7 @@ $current_settings = settings_current();
             <?php require('includes/set_games.php'); ?>
          </div>
          <div role="main" class="ui-content">
-            <ul data-role="listview" data-inset="true" data-split-icon="adminedit">
+            <ul data-role="listview" data-inset="true" data-split-icon="edit">
                <li data-role="list-divider">Game Schedule</li>
                <?php
                for ($i = 0; $i <= count($games_list) - 1; $i++) {

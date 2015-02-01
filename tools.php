@@ -13,10 +13,10 @@
 			</div>
 			<div role="main" class="ui-content">
 				<?php if (isset($_SESSION['player_access']) && $_SESSION['player_access'] == 'admin') { ?>
-					<a href="tools_settings.php" data-role="button" data-transition="fade" style="color: #FFCCC4;">Create New Season</a>
+					<a href="tools_settings.php" data-role="button" data-transition="fade">Create New Season</a>
 				<?php } ?>
 			   <?php if (isset($_SESSION['player_access']) && $_SESSION['player_access'] == 'admin') { ?>
-					<a href="tools_emails.php" data-role="button" data-transition="fade" style="color: #FFCCC4;">Email Distribution</a>
+					<a href="tools_emails.php" data-role="button" data-transition="fade">Email Distribution</a>
 				<?php } ?>
 				 <?php if (isset($_SESSION['player_access'])) { ?>
 					<a href="tools_contact.php" data-role="button" data-transition="fade">Contact</a>
