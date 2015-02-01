@@ -11,8 +11,10 @@
 	if (!empty($_POST['message'])) {
 		if ($_POST['send_to'] == "everyone") {
 			$bcc = players_list();
+			$sent_to = "everyone.";
 		} else {
 			$bcc = players_admins();
+			$sent_to = "admins only.";
 		}
 		
 		foreach($bcc as $value) {
@@ -23,7 +25,7 @@
 
 		player_emails($bcc_array, $arg_array, "distribution");
 
-		echo '<script> window.location = "tools_emails.php?message=Your distribution has been sent."; </script>';
+		echo '<script> window.location = "tools_emails.php?message=Your distribution has been sent to ' . $sent_to . '"; </script>';
 		exit();
 	}
 ?>
