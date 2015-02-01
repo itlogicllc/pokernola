@@ -67,6 +67,18 @@ function players_email_duplicate($email) {
    return 0;
 }
 
+function players_admins() {
+   global $players_array;
+   $player_array = array();
+
+   for ($i = 0; $i <= count($players_array) - 1; $i++) {
+      if ($players_array[$i]['access_level'] == "admin") {
+         $player_array[$i] = $players_array[$i];
+      }
+   }
+	return $player_array;
+}
+
 function players_list() {
    global $players_array;
 

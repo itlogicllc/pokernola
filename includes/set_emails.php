@@ -1,6 +1,6 @@
 <?php
-//$testing = true;
-$testing = false;
+$testing = true;
+//$testing = false;
 
 $headers = "MIME-Version: 1.0\r\n";
 $headers .= "Content-type:text/html;charset=UTF-8\r\n";
@@ -31,6 +31,12 @@ function player_emails($to_array, $arg_array, $type) {
 			$body .= sprintf("<p>Good news! %s would like to invite you to join Poker NOLA. New members are always welcome and we hope you accept this invitation to join us. To do so, simply click on or paste the link at the end of this email into your browser's address bar. You will be taken to a new player registration form. Fill it out, submit it and just like that, you will be a Poker NOLA member.</p><p>As soon as you are registered you will be able to log in, register for games, have your performance tracked, score points, get ranked and send invitations to others just like this one.</p><p>We would be happy to have you, so join today and good luck!</p><p>" . $link . "player_add.php?player_id=%s&invitation_code=%s&invitation_id=%s</p>", $arg_array[1], $arg_array[2], $arg_array[3], $arg_array[4], $arg_array[5]);
 			break;
 		
+		case "distribution":
+			$subject = "A Message From Poker NOLA";
+			$body = "Dear player,";
+			$body .= sprintf("<p>%s</p>", $arg_array[0], $arg_array[1], $arg_array[2], $arg_array[3], $arg_array[4], $arg_array[5]);
+			break;
+		
 		default:
 	}
 	
@@ -43,7 +49,7 @@ function player_emails($to_array, $arg_array, $type) {
 	}
 	
 	$player_headers = $headers . "From: info@pokernola.com\r\n" ;
-	$player_headers .= "Cc:" . $bcc;
+	$player_headers .= "Bcc:" . $bcc;
 	
 	mail($to, $subject, $body, $player_headers);
 }
