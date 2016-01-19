@@ -1,29 +1,26 @@
 <?php
-// *** Logout the current user.
-$logoutGoTo = "index.php";
-if (!isset($_SESSION)) {
-  session_start();
-}
-$_SESSION['MM_Username'] = NULL;
-$_SESSION['MM_UserGroup'] = NULL;
-$_SESSION['player_first'] = NULL;
-$_SESSION['player_id'] = NULL;
-unset($_SESSION['MM_Username']);
-unset($_SESSION['MM_UserGroup']);
-unset($_SESSION['player_first']);
-unset($_SESSION['player_logged_in']);
-unset($_SESSION['player_access']);
-if ($logoutGoTo != "") {header("Location: $logoutGoTo");
-exit;
-}
-?>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<title></title>
-</head>
+	require('../db_connections/pokernola.php');
+	require('includes/set_page.php');
+	require('includes/set_access.php');
+	//get_access();
 
-<body>
-</body>
-</html>
+	// *** Logout the current user.
+	if (!isset($_SESSION)) {
+		session_start();
+	}
+	$_SESSION['from_date'] = NULL;
+	$_SESSION['to_date'] = NULL;
+	$_SESSION['player_email'] = NULL;
+	$_SESSION['player_logged_in'] = NULL;
+	$_SESSION['player_first'] = NULL;
+	$_SESSION['player_access'] = NULL;
+	
+	unset($_SESSION['from_date']);
+	unset($_SESSION['to_date']);
+	unset($_SESSION['player_email']);
+	unset($_SESSION['player_logged_in']);
+	unset($_SESSION['player_first']);
+	unset($_SESSION['player_access']);
+	
+	header("Location: index.php");
+	exit();

@@ -1,98 +1,112 @@
 <?php
 
-mysql_select_db($database_poker_db, $poker_db);
-$query_players =  "SELECT *, CONCAT(first_name,' ',last_name) full_name
-                  FROM players
-                  WHERE player_id > 0
-                  ORDER BY full_name";
-$players = mysql_query($query_players, $poker_db) or die(mysql_error());
-$totalRows_players = mysql_num_rows($players);
-?>
-<?php
+	// Select all the players ordered by their full name
+	$players_query = "SELECT *, CONCAT(first_name,' ',last_name) full_name
+				 FROM players
+				 WHERE player_id > 0
+				 ORDER BY full_name";
 
-$players_array = array();
+	$records = mysqli_query($db_connect, $players_query);
 
-while ($row_players = mysql_fetch_assoc($players)) {
-   $players_array[] = $row_players;
-}
-?>
-<?php
+	while ($record = mysqli_fetch_array($records)) {
+		$players_array[] = $record;
+	}
 
-function players_player($player) {
-   global $players_array;
-   $player_array = array();
+	mysqli_free_result($records);
+	
+	// Refresh the recordset by rerunning the query and resetting the players_array
+	// to the new recordset. Use after database transactions.
+	function players_refresh() {
+		global $db_connect;
+		global $players_query;
 
-   for ($i = 0; $i <= count($players_array) - 1; $i++) {
-      if ($players_array[$i]['player_id'] == $player) {
-         $player_array = $players_array[$i];
-         return $player_array;
-      }
-   }
-}
+		$records = mysqli_query($db_connect, $players_query);
 
-function players_by_email($email) {
-   global $players_array;
-   $player_array = array();
+		while ($record = mysqli_fetch_array($records)) {
+			$players_array[] = $record;
+		}
 
-   for ($i = 0; $i <= count($players_array) - 1; $i++) {
-      if ($players_array[$i]['email'] == $email) {
-         $player_array = $players_array[$i];
-         return $player_array;
-      }
-   }
-   return $player_array;
-}
+		$GLOBALS['players_array'] = $players_array;
+		
+		mysqli_free_result($records);
+	}
 
-function players_login($email, $password) {
-   global $players_array;
-   $player_array = array();
+	// formerly Players_player
+	// Return an array of the player associated with the given player ID.
+	function players_by_id($player_id) {
+		global $players_array;
 
-   for ($i = 0; $i <= count($players_array) - 1; $i++) {
-      if ($players_array[$i]['email'] == $email && $players_array[$i]['password'] == $password) {
-         $player_array = $players_array[$i];
-         return $player_array;
-      }
-   }
-}
+		for ($i = 0; $i <= count($players_array) - 1; $i++) {
+			if ($players_array[$i]['player_id'] == $player_id) {
+				return $players_array[$i];
+			}
+		}
+		
+		return false;
+	}
 
-function players_email_duplicate($email) {
-   global $players_array;
+	// Return an array of the player associated with the given email.
+	function players_by_email($email) {
+		global $players_array;
 
-   for ($i = 0; $i <= count($players_array) - 1; $i++) {
-      if ($players_array[$i]['email'] == $email) {
-         return 1;
-      }
-   }
-   
-   return 0;
-}
+		for ($i = 0; $i <= count($players_array) - 1; $i++) {
+			if ($players_array[$i]['email'] == $email) {
+				return $players_array[$i];
+			}
+		}
+		
+		return false;
+	}
 
-function players_admins() {
-   global $players_array;
-   $player_array = array();
+	// Return an array of the player associated with the given email and password.
+	function players_login($email, $password) {
+		global $players_array;
 
-   for ($i = 0; $i <= count($players_array) - 1; $i++) {
-      if ($players_array[$i]['access_level'] == "admin") {
-         $player_array[$i] = $players_array[$i];
-      }
-   }
-	return $player_array;
-}
+		for ($i = 0; $i <= count($players_array) - 1; $i++) {
+			if ($players_array[$i]['email'] == $email && $players_array[$i]['password'] == $password) {
+				return $players_array[$i];
+			}
+		}
+		
+		return false;
+	}
 
-function players_list() {
-   global $players_array;
+	// Check if the given email already exists in the database.
+	// Return 1 if true, otherwise 0 if false.
+	function players_email_duplicate($email) {
+		global $players_array;
 
-   return $players_array;
-}
+		for ($i = 0; $i <= count($players_array) - 1; $i++) {
+			if ($players_array[$i]['email'] == $email) {
+				return true;
+			}
+		}
 
-function players_count() {
-   global $players_array;
+		return false;
+	}
 
-   return count($players_array);
-}
+	// Return an array of players with admin access
+	function players_admins() {
+		global $players_array;
 
-?>
-<?php
+		for ($i = 0; $i <= count($players_array) - 1; $i++) {
+			if ($players_array[$i]['access_level'] == "admin") {
+				$admin_array[] = $players_array[$i];
+			}
+		}
+		
+		if (!empty($admin_array)) {
+			return $admin_array;
+		} else {
+			return false;
+		}
+	}
 
-mysql_free_result($players);
-?>
+	// formerly players_list,
+	// Returnes an array of all players.
+	function players_all() {
+		global $players_array;
+
+		return $players_array;
+	}
+	

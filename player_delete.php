@@ -1,57 +1,63 @@
-<?php require_once('Connections/poker_db.php'); ?>
-<?php require('includes/set_page.php'); ?>
-<?php require('includes/set_access.php'); ?>
-<?php get_access(1); ?>
-<?php require('includes/get_players.php'); ?>
 <?php
-if ((isset($_POST['player_id'])) && ($_POST['player_id'] != "")) {
-   $player = players_player($_POST['player_id']);
+	require('../db_connections/pokernola.php');
+	require('includes/set_page.php');
+	require('includes/set_access.php');
+	get_access(1);
+	require('includes/get_players.php');
+	
+	// Get list of all players
+	$players_list = players_all();
 
-   $deleteInvitation = sprintf("DELETE FROM invitations WHERE invitation_id=%s", GetSQLValueString($player['invitation_id'], "int"));
+	// If form is submitted
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		// Get the select players details
+		$player = players_by_id($_POST['player_id']);
 
-   mysql_select_db($database_poker_db, $poker_db);
-   $Result1 = mysql_query($deleteInvitation, $poker_db) or die(mysql_error());
+		// Delete the select players invitation from the database
+		$query1 = "DELETE FROM invitations
+					 WHERE invitation_id='" . $player['invitation_id'] . "'";
 
-   $deletePlayer = sprintf("DELETE FROM players WHERE player_id=%s", GetSQLValueString($player['player_id'], "int"));
+		$db_action1 = mysqli_query($db_connect, $query1);
 
-   mysql_select_db($database_poker_db, $poker_db);
-   $Result2 = mysql_query($deletePlayer, $poker_db) or die(mysql_error());
+		// Delete the selected player from the database
+		$query2 = "DELETE FROM players
+					  WHERE player_id='" . $player['player_id'] . "'";
 
-   $deleteGoTo = "players.php";
-   if (isset($_SERVER['QUERY_STRING'])) {
-      $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
-      $deleteGoTo .= $_SERVER['QUERY_STRING'];
-   }
-   header(sprintf("Location: %s", $deleteGoTo));
-}
+		$db_action2 = mysqli_query($db_connect, $query2);
 
-$players_list = players_list();
+		// Redirect to the players page
+		header("Location: players.php");
+		exit();
+	}
 ?>
 <!DOCTYPE html>
 <html>
    <head>
-<?php require('includes/set_head.php'); ?>
+		<?php require('includes/set_head.php'); ?>
+		<title>Poker NOLA Delete PLayer</title>
    </head>
    <body>
       <div data-role="page" id="delete_player">
          <div data-role="header" data-position="fixed">
             <h1>Delete Player</h1>
-<?php require('includes/set_players.php'); ?>
+				<?php require('includes/set_players.php'); ?>
          </div>
          <div role="main" class="ui-content">
-            <form id="delete_player" name="delete_player" method="POST" action="">
+            <form action="player_delete.php" id="delete_player_form" name="delete_player_form" method="POST">
                <label for="player_id">Select Player to Delete:</label>
                <select name="player_id" id="player_id" data-native-menu="true">
-<?php for ($i = 0; $i <= count($players_list) - 1; $i++) { ?>
-                     <option value="<?php echo $players_list[$i]['player_id'] ?>"><?php echo $players_list[$i]['full_name'] ?></option>
-                  <?php } ?>
+					<?php for ($i = 0; $i <= count($players_list) - 1; $i++) { ?>
+						<option value="<?php echo $players_list[$i]['player_id'] ?>">
+						<?php echo $players_list[$i]['full_name'] ?>
+						</option>
+					<?php } ?>
                </select>
                <br />
                <input type="submit" value="Delete Player" data-inline="true" />		
             </form>
          </div>
          <div data-role="footer" data-position="fixed">
-<?php require('includes/set_footer.php'); ?>
+				<?php require('includes/set_footer.php'); ?>
          </div>
       </div>
    </body>

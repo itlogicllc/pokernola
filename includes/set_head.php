@@ -6,7 +6,7 @@
 <link href="scripts/datebox/jqm-datebox.min.css" rel="stylesheet" type="text/css" media="all">
 <link href="css/styles.css" rel="stylesheet" type="text/css" media="all">
 
-<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script>
     $(document).bind('mobileinit', function () {
         $.mobile.ajaxEnabled = false;
@@ -19,16 +19,12 @@
     });
 </script>
 <script src="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-<script type="text/javascript" src="scripts/datebox/jqm-datebox.core.min.js"></script>
-<script type="text/javascript" src="scripts/datebox/jqm-datebox.mode.calbox.min.js"></script>
-<script type="text/javascript" src="scripts/datebox/jquery.mobile.datebox.i18n.en_US.utf8.js"></script>
-<script type="text/javascript" src="scripts/highcharts.js"></script>
-<script type="text/javascript" src="scripts/gray.js"></script>
-<script type="text/javascript">
-    $(document).on('pagecreate', '#winner_update', function () {
-        disableSplits();
-    });
-</script>
+<script src="scripts/datebox/jqm-datebox.core.min.js"></script>
+<script src="scripts/datebox/jqm-datebox.mode.calbox.min.js"></script>
+<script src="scripts/datebox/jquery.mobile.datebox.i18n.en_US.utf8.js"></script>
+<script src="scripts/highcharts.js"></script>
+<script src="scripts/gray.js"></script>
+<script src="scripts/custom.js"></script>
 
 
 

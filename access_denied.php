@@ -1,9 +1,13 @@
-<?php require_once('Connections/poker_db.php'); ?>
-<?php require('includes/set_page.php'); ?>
+<?php 
+	require('../db_connections/pokernola.php');
+	require('includes/set_page.php');
+	require('includes/get_messages.php');
+?>
 <!DOCTYPE html>
 <html>
 <head>
-<?php require('includes/set_head.php'); ?>
+	<?php require('includes/set_head.php'); ?>
+	<title>Poker NOLA Access Denied</title>
 </head>
 <body>
 <div data-role="page" id="access_denied">
@@ -12,7 +16,7 @@
 		<?php require('includes/set_home.php'); ?>
 	</div>
 	<div role="main" class="ui-content">
-		<div class="ui-body ui-body-a ui-corner-all alert" align="center"><?php echo (isset($_GET['message'])) ? $_GET['message'] : "The message is missing"; ?></div>
+		<?php require('includes/set_messages.php'); ?>
 	</div>
 	<div data-role="footer" data-position="fixed">
 		<?php require('includes/set_footer.php'); ?>

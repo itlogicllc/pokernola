@@ -1,38 +1,43 @@
-<?php require_once('Connections/poker_db.php'); ?>
-<?php require('includes/set_page.php'); ?>
-<?php require('includes/get_players.php'); ?>
 <?php
-// *** Validate request to login to this site.
-
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-	$editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
-
-if (isset($_POST['email']) && $_POST['email'] != "") {
-	$loginUsername = $_POST['email'];
-	$password = $_POST['password'];
-	$logged_in = players_login($loginUsername, sha1($password));
-
-	if (count($logged_in) != 0) {
-
-		$_SESSION['MM_Username'] = $loginUsername;
-		$_SESSION['player_logged_in'] = $logged_in['player_id'];
-		$_SESSION['player_first'] = $logged_in['first_name'];
-		$_SESSION['player_access'] = $logged_in['access_level'];
-
-		echo '<script> window.location = "home.php"; </script>';
-		exit();
-	} else {
-		echo '<script> window.location = "index.php?message=Invalid email or password!"; </script>';
+	require('../db_connections/pokernola.php');
+	require('includes/set_page.php');
+	require('includes/get_players.php');
+	require('includes/get_messages.php');
+	
+	// If the player is already logged in, redirect to home.php
+	if (isset($_SESSION['player_logged_in'])) {
+		header("Location: home.php");
 		exit();
 	}
-}
+
+	// If the form was submitted, check the email and
+	// password against the database. If a match is found, set the
+	// session and redirect to home. Otherwise, report invalid credentials
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		$login_email = trim($_POST['email']);
+		$login_password = trim($_POST['password']);
+		
+		$logged_in = players_login($login_email, sha1($login_password));
+
+		// If an array is returned, user is authenticated
+		if ($logged_in) {
+			$_SESSION['player_email'] = $login_email;
+			$_SESSION['player_logged_in'] = $logged_in['player_id'];
+			$_SESSION['player_first'] = $logged_in['first_name'];
+			$_SESSION['player_access'] = $logged_in['access_level'];
+			
+			header("Location: home.php");
+			exit();
+		} else {
+			$messages[] = get_message("invalid_credentials");
+		}
+	}
 ?>
 <!DOCTYPE html>
 <html>
    <head>
 		<?php require('includes/set_head.php'); ?>
+		<title>PokerNOLA Login</title>
    </head>
    <body>
       <div data-role="page" id="login">
@@ -42,18 +47,8 @@ if (isset($_POST['email']) && $_POST['email'] != "") {
          </div>
          <div role="main" class="ui-content">
 				<div role="main" class="ui-content">
-					<div class="ui-body ui-body-a ui-corner-all info">
-						<p>If you are a currently registered player with Poker NOLA, please email your first and last names to player@pokernola.com</p>
-						<p>You will receive a reply with instruction on setting up your new password and why it is necessary to do so. If you know other registered players, please pass this message on to them.</p>
-						<p>To continue on to Poker NOLA, click one of the menu buttons above.</p>
-						<p>Thanks!</p>
-					</div>
-					<br />
-					<?php if (isset($_GET['message']) && $_GET['message'] != "") { ?>
-	               <div class="ui-body ui-body-a ui-corner-all alert" align="center"><?php echo $_GET['message']; ?></div>
-	               <br />
-					<?php } ?>
-					<form action="<?php echo $editFormAction; ?>" id="login" name="login" method="POST">
+					<?php require('includes/set_messages.php'); ?>
+					<form action="index.php" id="login_form" name="login_form" method="POST">
 						<label for="email">Email:</label>
 						<input name="email" type="email" id="email" value="<?php echo (isset($_COOKIE['pokernola_player']) ? $_COOKIE['pokernola_player'] : ''); ?>" maxlength="30"  />
 						<label for="password">Password:</label>
@@ -63,7 +58,7 @@ if (isset($_POST['email']) && $_POST['email'] != "") {
 						<br />
 						<div data-role="controlgroup" data-type="horizontal">
 							<input name="submit" type="submit" value="Log In" />
-							<a class="ui-btn" href="forgot_password.php">Forgot Password?</a>
+							<a class="ui-btn" href="password_send.php">Forgot Password?</a>
 						</div>
 					</form>
 					<div data-role="footer" data-position="fixed">
@@ -71,5 +66,6 @@ if (isset($_POST['email']) && $_POST['email'] != "") {
 					</div>
 				</div>
 			</div>
+		</div>
    </body>
 </html>

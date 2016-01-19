@@ -1,9 +1,34 @@
-<?php require('Connections/poker_db.php'); ?>
-<?php require('includes/set_page.php'); ?>
+<?php 
+	require('../db_connections/pokernola.php');
+	require('includes/set_page.php');
+	
+	$todays_date = date("Y-m-d");
+	$current_settings = settings_current();
+	$settings_id = $current_settings['settings_id'];
+	$end_date = $current_settings['end_date'];
+	
+	// If the end current season form was posted, set the end_early date to today's date
+	// to signify the current season has ended. Refresh the settings array and reprocess the page
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		$query =	"UPDATE settings SET
+						ended_early='$todays_date'
+					 WHERE settings_id='$settings_id'";
+
+		$db_action = mysqli_query($db_connect, $query);
+		
+		settings_refresh();
+	}
+	
+	$current_settings = settings_current();
+	
+	$end_date = $current_settings['end_date'];
+	$ended_early_date = $current_settings['ended_early'];
+?>
 <!DOCTYPE html>
 <html>
 	<head>
 		<?php require('includes/set_head.php'); ?>
+		<title>Poker NOLA Tools</title>
 	</head>
 	<body>
 		<div data-role="page" id="tools">
@@ -12,18 +37,31 @@
 				<?php require('includes/set_tools.php'); ?>
 			</div>
 			<div role="main" class="ui-content">
-				<?php if (isset($_SESSION['player_access']) && $_SESSION['player_access'] == 'admin') { ?>
-					<a href="tools_settings.php" data-role="button" data-transition="fade">Create New Season</a>
+				<?php if (isset($_SESSION['player_access']) && $_SESSION['player_access'] == 'admin') {
+					// If the season end date is less than today's date or the eand_early date has a value
+					// then show the Create new season button because the latest season has ended. Otherwise show the
+					// End Season Now button because the latest season is still active.
+					if ($end_date < $todays_date || $ended_early_date != '0000-00-00') { ?>
+						<a href="tool_settings.php" data-role="button" data-transition="fade">Create New Season</a>
+					<?php } else { ?>
+						<form action="tools.php" id="end_date_form" name="end_date_form" method="POST">
+							<input name="Submit" type="submit" value="End Current Season" onclick="return getSeasonEndVerify();" />
+						</form>
+					<?php }
+				} ?>
+				<?php if (isset($_SESSION['player_access'])) { ?>
+					<a href="tool_scoring.php" data-role="button" data-transition="fade">Season Rules</a>
 				<?php } ?>
 			   <?php if (isset($_SESSION['player_access']) && $_SESSION['player_access'] == 'admin') { ?>
-					<a href="tools_emails.php" data-role="button" data-transition="fade">Email Distribution</a>
+					<a href="tool_distribution.php" data-role="button" data-transition="fade">Email Distribution</a>
 				<?php } ?>
 				 <?php if (isset($_SESSION['player_access'])) { ?>
-					<a href="tools_contact.php" data-role="button" data-transition="fade">Contact</a>
+					<a href="tool_contact.php" data-role="button" data-transition="fade">Contact</a>
 				<?php } ?>
-				<a href="tools_scoring.php" data-role="button" data-transition="fade">Season Rules</a>
-				<a href="tools_help.php" data-role="button" data-transition="fade">Help</a>
-				<a href="tools_about.php" data-role="button" data-transition="fade">About</a>
+				<?php if (isset($_SESSION['player_access'])) { ?>
+					<a href="tool_help.php" data-role="button" data-transition="fade">Help</a>
+				<?php } ?>
+				<a href="tool_about.php" data-role="button" data-transition="fade">About</a>
 			</div>
 			<div data-role="footer" data-position="fixed">
 				<?php require('includes/set_footer.php'); ?>

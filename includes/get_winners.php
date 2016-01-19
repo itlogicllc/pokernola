@@ -1,164 +1,245 @@
 <?php
 
-mysql_select_db($database_poker_db, $poker_db);
-$query_winners = "SELECT *, CONCAT(players.first_name,' ',players.last_name) full_name
-		  FROM winners, games, players
-		  WHERE winners.game_id = games.game_id AND winners.player_id = players.player_id AND games.game_date BETWEEN '" . $_SESSION['from_date'] . "' AND '" . $_SESSION['to_date'] . "'
-		  ORDER BY games.game_name DESC,winners.place";
-$winners = mysql_query($query_winners, $poker_db) or die(mysql_error());
-$totalRows_winners = mysql_num_rows($winners);
+	// Select all winners joing the players and games between the session from date and session to date.
+	// They are ordered by the game name in descending order then by each winners place.
+	$winners_query = "SELECT *, CONCAT(p.first_name,' ',p.last_name) full_name
+				 FROM winners AS w
+					INNER JOIN players AS p USING (player_id)
+					INNER JOIN games AS g USING (game_id)
+				 WHERE g.game_name BETWEEN '" . $_SESSION['from_date'] . "' AND '" . $_SESSION['to_date'] . "'
+				 ORDER BY g.game_name DESC, w.place";
 
-$winners_array = array();
+	$records = mysqli_query($db_connect, $winners_query);
 
-while ($row_winners = mysql_fetch_assoc($winners)) {
-   $winners_array[] = $row_winners;
-}
+	while ($record = mysqli_fetch_array($records)) {
+		$winners_array[] = $record;
+	}
 
-function winner_range_count($player, $from, $to) {
-   global $winners_array;
-   $win_count = 0;
+	mysqli_free_result($records);
+	
+	// Refresh the recordset by rerunning the query and resetting the winners_array
+	// to the new recordset. Use after database transactions.
+	function winners_refresh() {
+		global $db_connect;
+		global $winners_query;
 
-   for ($i = 0; $i <= count($winners_array) - 1; $i++) {
-      if ($winners_array[$i]['player_id'] == $player && $winners_array[$i]['place'] >= $from && $winners_array[$i]['place'] <= $to) {
-         $win_count++;
-      }
-   }
-   return $win_count;
-}
+		$records = mysqli_query($db_connect, $winners_query);
 
-function winner_game_payout($player, $game) {
-   global $winners_array;
-   $payout = 0;
+		while ($record = mysqli_fetch_array($records)) {
+			$winners_array[] = $record;
+		}
 
-   for ($i = 0; $i <= count($winners_array) - 1; $i++) {
-      if ($winners_array[$i]['player_id'] == $player && $winners_array[$i]['game_id'] == $game) {
-         $payout = ($winners_array[$i]['total_pot'] * $winners_array[$i]['split_diff']);
-         break;
-      }
-   }
-   //return money_format('%n', $payout);
-   return "$" . number_format($payout, 2);
-}
+		$GLOBALS['winners_array'] = $winners_array;
+		
+		mysqli_free_result($records);
+	}
 
-function winner_game_points($player, $game) {
-   global $winners_array;
-   $points = 0;
+	// This returns a count of how many times the given player has placed between the
+	// given from and to places. For example It is used to find how many time a player has been 
+	// in the top 10 places.
+	function winner_range_count($player_id, $from_place, $to_place) {
+		global $winners_array;
+		$win_count = 0;
 
-   for ($i = 0; $i <= count($winners_array) - 1; $i++) {
-      if ($winners_array[$i]['player_id'] == $player && $winners_array[$i]['game_id'] == $game) {
-         $points = $winners_array[$i]['points'];
-         break;
-      }
-   }
-   return $points;
-}
+		for ($i = 0; $i <= count($winners_array) - 1; $i++) {
+			if ($winners_array[$i]['player_id'] == $player_id && $winners_array[$i]['place'] >= $from_place && $winners_array[$i]['place'] <= $to_place) {
+				$win_count++;
+			}
+		}
+		
+		return $win_count;
+	}
 
-function winner_total_payout($player) {
-   global $winners_array;
-   $payout = 0;
+	// Return the payout a given player recieved in a given game
+	function winner_game_payout($player_id, $game_id) {
+		global $winners_array;
+		$payout = 0;
 
-   for ($i = 0; $i <= count($winners_array) - 1; $i++) {
-      if ($winners_array[$i]['player_id'] == $player) {
-         $payout = ($winners_array[$i]['total_pot'] * $winners_array[$i]['split_diff']) + $payout;
-      }
-   }
-   //return money_format('%n', $payout);
-   return "$" . number_format($payout, 2);
-}
+		for ($i = 0; $i <= count($winners_array) - 1; $i++) {
+			if ($winners_array[$i]['player_id'] == $player_id && $winners_array[$i]['game_id'] == $game_id) {
+				// Take the total pot of the game * the split difference the player had in that game
+				$payout = ($winners_array[$i]['total_pot'] * $winners_array[$i]['split_diff']);
+				return $payout;
+			}
+		}
+		
+		// If the above statement fails, return 0.
+		return $payout;
+	}
 
-function winner_total_points($player) {
-   global $winners_array;
-   $points = 0;
+	// Return the points a given player received in a given game
+	function winner_game_points($player_id, $game_id) {
+		global $winners_array;
+		$points = 0;
 
-   for ($i = 0; $i <= count($winners_array) - 1; $i++) {
-      if ($winners_array[$i]['player_id'] == $player) {
-         $points = $winners_array[$i]['points'] + $points;
-      }
-   }
-   return number_format($points, 2);
-}
+		for ($i = 0; $i <= count($winners_array) - 1; $i++) {
+			if ($winners_array[$i]['player_id'] == $player_id && $winners_array[$i]['game_id'] == $game_id) {
+				$points = $winners_array[$i]['points'];
+				return $points;
+			}
+		}
+		
+		// If the above statement fails, return 0.
+		return $points;
+	}
+	
+	// Returns the total payout a given player has won in all games
+	function winner_total_payout($player_id) {
+		global $winners_array;
+		$payout = 0;
 
-function winner_by_place($player, $place) {
-   global $winners_array;
-   $winner_place_array = array();
-   $pointer = 0;
+		for ($i = 0; $i <= count($winners_array) - 1; $i++) {
+			if ($winners_array[$i]['player_id'] == $player_id) {
+				// Take the total pot of the game * the split difference the player had in a game and + it to any previous payout
+				$payout = ($winners_array[$i]['total_pot'] * $winners_array[$i]['split_diff']) + $payout;
+			}
+		}
+		
+		return $payout;
+	}
 
-   for ($i = 0; $i <= count($winners_array) - 1; $i++) {
-      if ($winners_array[$i]['player_id'] == $player && $winners_array[$i]['place'] == $place) {
-         $winner_place_array[$pointer] = $winners_array[$i];
-         $pointer++;
-      }
-   }
-   return $winner_place_array;
-}
+	// Returns the total amount of points a given player has won in all games.
+	function winner_total_points($player_id) {
+		global $winners_array;
+		$points = 0;
 
-function winners_by_game($game) {
-   global $winners_array;
-   $winners_game_array = array();
-   $pointer = 0;
+		for ($i = 0; $i <= count($winners_array) - 1; $i++) {
+			if ($winners_array[$i]['player_id'] == $player_id) {
+				$points = $winners_array[$i]['points'] + $points;
+			}
+		}
+		
+		return $points;
+	}
 
-   for ($i = 0; $i <= count($winners_array) - 1; $i++) {
-      if ($winners_array[$i]['game_id'] == $game && $winners_array[$i]['place'] != 0) {
-         $winners_game_array[$pointer] = $winners_array[$i];
-         $pointer++;
-      }
-   }
-   return $winners_game_array;
-}
+	// Returns an array of each time a given player has placed in a given place
+	function winner_by_place($player_id, $place) {
+		global $winners_array;
 
-function winners_split_players_by_game($game) {
-   global $winners_array;
-   $split_players = array();
-   $pointer = 0;
+		for ($i = 0; $i <= count($winners_array) - 1; $i++) {
+			if ($winners_array[$i]['player_id'] == $player_id && $winners_array[$i]['place'] == $place) {
+				$winner_place_array[] = $winners_array[$i];
+			}
+		}
+		
+		if (!empty($winner_place_array)) {
+			return $winner_place_array;
+		} else {
+			return false;
+		}
+	}
 
-   for ($i = 0; $i <= count($winners_array) - 1; $i++) {
-      if ($winners_array[$i]['game_id'] == $game && $winners_array[$i]['split'] == 1) {
-         $split_players[$pointer] = $winners_array[$i];
-         $pointer++;
-      }
-   }
-   return $split_players;
-}
+	// Returns an array of all players who have placed in a given game
+	function winners_by_game($game_id) {
+		global $winners_array;
 
-function winners_split_even_payout_by_game($game) {
-   global $winners_array;
-   $split_payout = 0;
-   $split_amount = count(winners_split_players_by_game($game));
+		for ($i = 0; $i <= count($winners_array) - 1; $i++) {
+			if ($winners_array[$i]['game_id'] == $game_id && $winners_array[$i]['place'] != 0) {
+				$winners_game_array[] = $winners_array[$i];
+			}
+		}
+		
+		if (!empty($winners_game_array)) {
+			return $winners_game_array;
+		} else {
+			return false;
+		}
+	}
 
-   for ($i = 0; $i <= count($winners_array) - 1; $i++) {
-      if ($winners_array[$i]['game_id'] == $game && $winners_array[$i]['split'] == 1) {
-         $split_payout = $split_payout + $winners_array[$i]['split_diff'];
-      }
-   }
-   return $split_payout / $split_amount;
-}
+	// Returns an array of all players who split in a given game
+	function winners_split_players_by_game($game_id) {
+		global $winners_array;
 
-function winners_split_even_points_by_game($game) {
-   global $winners_array;
-   $split_points = 0;
-   $split_amount = count(winners_split_players_by_game($game));
+		for ($i = 0; $i <= count($winners_array) - 1; $i++) {
+			if ($winners_array[$i]['game_id'] == $game_id && $winners_array[$i]['split'] == 1) {
+				$split_players[] = $winners_array[$i];
+			}
+		}
+		
+		if (!empty($split_players)) {
+			return $split_players;
+		} else {
+			return false;
+		}
+	}
 
-   for ($i = 0; $i <= count($winners_array) - 1; $i++) {
-      if ($winners_array[$i]['game_id'] == $game && $winners_array[$i]['split'] == 1) {
-         $split_points = $split_points + $winners_array[$i]['points'];
-      }
-   }
-   return $split_points / $split_amount;
-}
+	// TODO: This function may no longer be needed
+	// Returns a payout amount each player gets when split evenly in a given game.
+	// The number of splitting players is gotten by calling the above function.
+	function winners_split_even_payout_by_game($game_id) {
+		global $winners_array;
+		$split_payout = 0;
+		$split_amount = count(winners_split_players_by_game($game));
 
-function winners_ko_by_game($game) {
-   global $winners_array;
-   $winners_game_array = array();
-   $pointer = 0;
+		for ($i = 0; $i <= count($winners_array) - 1; $i++) {
+			if ($winners_array[$i]['game_id'] == $game_id && $winners_array[$i]['split'] == 1) {
+				$split_payout = $split_payout + $winners_array[$i]['split_diff'];
+			}
+		}
+		
+		return $split_payout / $split_amount;
+	}
+	
+	// Returns the count of splitting players.
+	function winners_split_count($game_id) {
+		global $winners_array;
+		$split_count = 0;
 
-   for ($i = 0; $i <= count($winners_array) - 1; $i++) {
-      if ($winners_array[$i]['game_id'] == $game && $winners_array[$i]['place'] == 0) {
-         $winners_game_array[$pointer] = $winners_array[$i];
-         $pointer++;
-      }
-   }
-   return $winners_game_array;
-}
+		for ($i = 0; $i <= count($winners_array) - 1; $i++) {
+			if ($winners_array[$i]['game_id'] == $game_id && $winners_array[$i]['split'] == 1) {
+				$split_count = $split_count + 1;
+			}
+		}
+		
+		return $split_count;
+	}
+	
+	// Returns the sum of points of each splitting player.
+	function winners_split_points_sum($game_id) {
+		global $winners_array;
+		$split_sum = 0;
 
-mysql_free_result($winners);
-?>
+		for ($i = 0; $i <= count($winners_array) - 1; $i++) {
+			if ($winners_array[$i]['game_id'] == $game_id && $winners_array[$i]['split'] == 1) {
+				$split_sum = $split_sum + $winners_array[$i]['points'];
+			}
+		}
+		
+		return $split_sum;
+	}
+
+	// TODO: This function may not be needed
+	// Returns the points each player gets when split evenly in a given game.
+	// The number of splitting players is gotten by calling the above function.
+	function winners_split_even_points_by_game($game_id) {
+		global $winners_array;
+		$split_points = 0;
+		$split_amount = count(winners_split_players_by_game($game_id));
+
+		for ($i = 0; $i <= count($winners_array) - 1; $i++) {
+			if ($winners_array[$i]['game_id'] == $game_id && $winners_array[$i]['split'] == 1) {
+				$split_points = $split_points + $winners_array[$i]['points'];
+			}
+		}
+		
+		return $split_points / $split_amount;
+	}
+
+	// TODO: Complete the KO system. This fuction probably isn't correct.
+	// Returns an array of all players who did not place in a given game
+	function winners_ko_by_game($game_id) {
+		global $winners_array;
+
+		for ($i = 0; $i <= count($winners_array) - 1; $i++) {
+			if ($winners_array[$i]['game_id'] == $game_id && $winners_array[$i]['place'] == 0) {
+				$winners_game_array[] = $winners_array[$i];
+			}
+		}
+		
+		if (!empty($winners_game_array)) {
+			return $winners_game_array;
+		} else {
+			return false;
+		}
+	}
+	

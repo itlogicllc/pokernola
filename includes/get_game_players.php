@@ -1,76 +1,101 @@
 <?php
 
-mysql_select_db($database_poker_db, $poker_db);
-$query_game_players =   "SELECT *, CONCAT(players.first_name,' ',players.last_name) full_name
-                         FROM game_players, players, games
-                         WHERE game_players.player_id = players.player_id AND game_players.game_id = games.game_id AND games.game_date BETWEEN '" . $_SESSION['from_date'] . "' AND '" . $_SESSION['to_date'] . "'
-                         ORDER BY games.game_date, full_name";
-$game_players = mysql_query($query_game_players, $poker_db) or die(mysql_error());
-$totalRows_game_players = mysql_num_rows($game_players);
-?>
-<?php
+	// Select all game_player records and joining players and games records
+	// that are between the dates selected in the session variables.
+	// The records are orderd by the game dates and then the full name of the players.
+	$game_players_query = "SELECT gp.game_players_id, gp.player_id, gp.game_id, g.game_date, g.status, CONCAT(p.first_name,' ',p.last_name) AS full_name
+								  FROM game_players AS gp 
+										INNER JOIN players AS p USING (player_id)
+										INNER JOIN games AS g USING (game_id)
+								  WHERE g.game_name BETWEEN '" . $_SESSION['from_date'] . "' AND '" . $_SESSION['to_date'] . "'
+								  ORDER BY g.game_date, full_name";
 
-$game_players_array = array();
+	$records = mysqli_query($db_connect, $game_players_query);
 
-while ($row_game_players = mysql_fetch_assoc($game_players)) {
-   $game_players_array[] = $row_game_players;
-}
-?>
-<?php
+	while ($record = mysqli_fetch_array($records)) {
+		$game_players_array[] = $record;
+	}
+	
+	mysqli_free_result($records);
+	
+	// Refresh the recordset by rerunning the query and resetting the players_array
+	// to the new recordset. Use after database transactions.
+	function game_players_refresh() {
+		global $db_connect;
+		global $game_players_query;
 
-//  RETURNS AN ARRAY OF PLAYERS WHO HAVE PLAYED IN A GIVEN GAME
-function game_players_by_game($game) {
-   global $game_players_array;
-   $players_by_game_array = array();
+		$records = mysqli_query($db_connect, $game_players_query);
 
-   for ($i = 0; $i <= count($game_players_array) - 1; $i++) {
-      if ($game_players_array[$i]['game_id'] == $game) {
-         $players_by_game_array[] = $game_players_array[$i];
-      }
-   }
-   return $players_by_game_array;
-}
+		while ($record = mysqli_fetch_array($records)) {
+			$game_players_array[] = $record;
+		}
 
-//  RETURNS  1 IF A GIVEN PLAYER IS REGISTERED FOR A GIVEN GAME, 0 IF NOT
-function game_players_registered($game, $player) {
-   global $game_players_array;
+		$GLOBALS['game_players_array'] = $game_players_array;
+		
+		mysqli_free_result($records);
+	}
 
-   for ($i = 0; $i <= count($game_players_array) - 1; $i++) {
-      if (($game_players_array[$i]['player_id'] == $player) && ($game_players_array[$i]['game_id'] == $game)) {
-         return 1;
-      }
-   }
-   return 0;
-}
+	// Returns an array of players who have played in the given game.
+	function game_players_by_game($game_id) {
+		global $game_players_array;
 
-//  RETURNS THE NUMBER OF TIMES A GIVEN PLAYER HAS PLAYED. IT ONLY INCLUDES COMPLETED GAMES, NOT FUTURE SCHEDULED GAMES
-function game_players_played($player) {
-   global $game_players_array;
-   $count = 0;
+		for ($i = 0; $i <= count($game_players_array) - 1; $i++) {
+			if ($game_players_array[$i]['game_id'] == $game_id) {
+				$players_by_game_array[] = $game_players_array[$i];
+			}
+		}
+		
+		if (!empty($players_by_game_array)) {
+			return $players_by_game_array;
+		} else {
+			return false;
+		}
+	}
 
-   for ($i = 0; $i <= count($game_players_array) - 1; $i++) {
-      if ($game_players_array[$i]['player_id'] == $player && $game_players_array[$i]['status'] == 0) {
-         $count++;
-      }
-   }
-   return $count;
-}
+	// Checks to see if a given player is registered for a given game.
+	// If they are the game_player _id of the record is returned,
+	// otherwise it returns false.
+	function game_players_get_id($game_id, $player_id) {
+		global $game_players_array;
 
-//  RETURNS THE NUMBER OF PLAYERS WHO HAVE PLAYED IN ALL GAMES
-function game_players_count() {
-   global $game_players_array;
-   $count = 0;
+		for ($i = 0; $i <= count($game_players_array) - 1; $i++) {
+			if (($game_players_array[$i]['player_id'] == $player_id) && ($game_players_array[$i]['game_id'] == $game_id)) {
+				return $game_players_array[$i]['game_players_id'];
+			}
+		}
+		
+		return false;
+	}
 
-   for ($i = 0; $i <= count($game_players_array) - 1; $i++) {
-      if ($game_players_array[$i]['status'] == 0) {
-         $count++;
-      }
-   }
-   return $count;
-}
-?>
+	// Returns the amount of times a player has played in games.
+	// Only games with a completed status (0) are counted, not future
+	// scheduled games.
+	function game_players_played($player_id) {
+		global $game_players_array;
+		$count = 0;
 
-<?php
+		for ($i = 0; $i <= count($game_players_array) - 1; $i++) {
+			if ($game_players_array[$i]['player_id'] == $player_id && $game_players_array[$i]['status'] == 0) {
+				$count++;
+			}
+		}
+		
+		return $count;
+	}
 
-mysql_free_result($game_players);
-?>
+	// Returns the total number of all players who have played in all games.
+	// Only games with a completed status (0) are counted, not future
+	// scheduled games.
+	function game_players_count() {
+		global $game_players_array;
+		$count = 0;
+
+		for ($i = 0; $i <= count($game_players_array) - 1; $i++) {
+			if ($game_players_array[$i]['status'] == 0) {
+				$count++;
+			}
+		}
+		
+		return $count;
+	}
+	
