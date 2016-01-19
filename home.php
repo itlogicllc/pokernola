@@ -21,7 +21,7 @@
 	if ($number_games_played > 0) {
 		$avg_players = number_format($number_players_played / $number_games_played, 0);
 		$avg_pot = "$" . number_format($total_payout / $number_games_played, 2);
-		$largest_pot = max(games_pots());
+		$largest_pot = "$" . number_format(max(games_pots()), 2);
 	} else {
 		$avg_players = 0;
 		$avg_pot = "$0.00";
