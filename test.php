@@ -26,15 +26,9 @@
 		exit();
 	}
 	
-	$game_pagation = games_played_all();
-	$i = 0;
-	while ($game_pagation[$i]['game_id'] != $game_id) {
-		$i++;
-	}
-	$next_game_id = $game_pagation[$i + 1]['game_id'];
-	$previous_game_id = $game_pagation[$i - 1]['game_id'];
+	//$game_pagation = games_played_all();
+	var_dump(rankings_range());
 	
-	echo $next_game_id . " " . $game_id . " " , $previous_game_id;
 ?>
 </div>
 </body>
