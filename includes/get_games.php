@@ -60,10 +60,12 @@
 	function games_played_all() {
 		global $games_array;
 		$games_played = array();
+		$i2 = 0;
 
 		for ($i = 0; $i <= count($games_array) - 1; $i++) {
 			if ($games_array[$i]['status'] == 0) {
-				$games_played[$i] = $games_array[$i];
+				$games_played[$i2] = $games_array[$i];
+				$i2 = $i2 + 1;
 			}
 		}
 		
@@ -76,10 +78,12 @@
 	function games_pots() {
 		global $games_array;
 		$pots = array();
+		$i2 = 0;
 
 		for ($i = 0; $i <= count($games_array) - 1; $i++) {
 			if ($games_array[$i]['status'] == 0) {
-				$pots[$i] = $games_array[$i]['total_pot'];
+				$pots[$i2] = $games_array[$i]['total_pot'];
+				$i2 = $i2 + 1;
 			}
 		}
 		
@@ -92,10 +96,12 @@
 	function games_num_players() {
 		global $games_array;
 		$num_players = array();
+		$i2 = 0;
 
 		for ($i = 0; $i <= count($games_array) - 1; $i++) {
 			if ($games_array[$i]['status'] == 0) {
-				$num_players[$i] = $games_array[$i]['num_players'];
+				$num_players[$i2] = $games_array[$i]['num_players'];
+				$i2 = $i2 + 1;
 			}
 		}
 		
