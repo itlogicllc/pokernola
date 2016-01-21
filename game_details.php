@@ -21,9 +21,10 @@
 	// if there is a next element in the array set the next_game_id to the next game id
 	// If there is a previous element in the array set the previous_game_id to the previous game _id.
 	$game_pagation = games_played_all();
-	$i = 0;
-	while ($game_pagation[$i]['game_id'] != $game_id) {
-		$i++;
+	for ($i = 0; $i <= count($game_pagation) - 1; $i++) {
+		if ($game_pagation[$i]['game_id'] == $game_id) {
+			break;
+		}
 	}
 	
 	if ($i < count($game_pagation) - 1) {
@@ -52,7 +53,7 @@
 		$second_pot = "$" . number_format($game_winners_array[1]['amount'] * $total_pot, 2);
 		$third_pot = "$" . number_format($game_winners_array[2]['amount'] * $total_pot, 2);
 		
-		$settings_array[0] = settings_current($game_array['settings_id']);
+		$settings_array[0] = settings_by_id($game_array['settings_id']);
 	} else {
 		header("Location: access_denied.php?message=unauthorized");
 		exit();
@@ -72,11 +73,11 @@
          </div>
          <div role="main" class="ui-content">
             <div class="ui-bar ui-bar-a ui-corner-all normal">
-					<?php if ($next_game_id) { ?>
+					<?php if ($next_game_id && $game_array['status'] == 0) { ?>
 						<div style="float:left"><a href="game_details.php?game_id=<?php echo $next_game_id ?>"><img src="images/icons/carat-l-white.png" alt="next game"/></a></div>
 					<?php } ?>
 					<h2><?php echo date_to_php($game_array['game_name']); ?></h2>
-					<?php if ($previous_game_id) { ?> 
+					<?php if ($previous_game_id && $game_array['status'] == 0) { ?> 
 						<div style="float:right"><a href="game_details.php?game_id=<?php echo $previous_game_id ?>"><img src="images/icons/carat-r-white.png" alt="previous game" /></a></div>
 					<?php } ?>
 				</div>
