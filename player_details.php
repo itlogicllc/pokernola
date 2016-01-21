@@ -24,9 +24,10 @@
 	// if there is a next element in the array set the next_player_id to the next game id
 	// If there is a previous element in the array set the previous_player_id to the previous game _id.
 	$player_pagation = rankings_range();
-	$i = 0;
-	while ($player_pagation[$i]['player_id'] != $player_id) {
-		$i++;
+	for ($i = 0; $i <= count($player_pagation) - 1; $i++) {
+		if ($player_pagation[$i]['player_id'] == $player_id) {
+			break;
+		}
 	}
 	
 	if ($i < count($player_pagation) - 1) {
