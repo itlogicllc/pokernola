@@ -65,7 +65,7 @@
 	$invited = invitations_invited($_SESSION['player_logged_in']);
 
 	if ($player_array['invitation_id'] == 0) {
-		$inviter_name = "Poker NOLA";
+		$inviter_name = "PokerNOLA";
 	} else {
 		$invitation = invitations_by_id($player_array['invitation_id']);
 		$inviter_id = $invitation['player_id'];

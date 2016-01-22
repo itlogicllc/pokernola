@@ -28,7 +28,7 @@
 <html>
 	<head>
 		<?php require('includes/set_head.php'); ?>
-		<title>Poker NOLA Tools</title>
+		<title>PokerNOLA Tools</title>
 	</head>
 	<body>
 		<div data-role="page" id="tools">

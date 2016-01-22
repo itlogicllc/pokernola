@@ -49,7 +49,7 @@
 <html>
 	<head>
 		<?php require('includes/set_head.php'); ?>
-		<title>Poker NOLA Game Registration</title>
+		<title>PokerNOLA Game Registration</title>
 	</head>
 	<body>
 		<div data-role="page" id="game_registration">

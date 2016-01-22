@@ -12,7 +12,7 @@
 <html>
 	<head>
 		<?php require('includes/set_head.php'); ?>
-		<title>Poker NOLA Scoring</title>
+		<title>PokerNOLA Scoring</title>
 	</head>
 	<body>
 		<div data-role="page" id="tools">

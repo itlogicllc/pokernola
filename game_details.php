@@ -63,7 +63,7 @@
 <html>
    <head>
 		<?php require('includes/set_head.php'); ?>
-		<title>Poker NOLA Game Details</title>
+		<title>PokerNOLA Game Details</title>
    </head>
    <body>
       <div data-role="page" id="game_details">

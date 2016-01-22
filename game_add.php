@@ -122,7 +122,7 @@
 <html>
 	<head>
 		<?php require('includes/set_head.php'); ?>
-		<title>Poker NOLA Add Game</title>
+		<title>PokerNOLA Add Game</title>
 	</head>
 	<body>
 		<div data-role="page" id="add_game">

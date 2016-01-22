@@ -30,7 +30,7 @@
 <html>
 	<head>
 		<?php require('includes/set_head.php'); ?>
-		<title>Poker NOLA Players</title>
+		<title>PokerNOLA Players</title>
 	</head>
 	<body>
 		<div data-role="page" id="players">

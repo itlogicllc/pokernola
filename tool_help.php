@@ -8,7 +8,7 @@
 <html>
    <head>
       <?php require('includes/set_head.php'); ?>
-		<title>Poker NOLA Help</title>
+		<title>PokerNOLA Help</title>
    </head>
    <body>
       <div data-role="page" id="pokernola_help">

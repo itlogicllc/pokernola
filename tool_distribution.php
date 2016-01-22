@@ -34,7 +34,7 @@
 <html>
 	<head>
 		<?php require('includes/set_head.php'); ?>
-		<title>Poker NOLA Email Distribution</title>
+		<title>PokerNOLA Email Distribution</title>
 	</head>
 	<body>
 		<div data-role="page" id="tools">

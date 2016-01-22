@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Poker NOLA Mobile Web App</title>
+<title>PokerNOLA Mobile Web App</title>
 <link rel="stylesheet" href="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
 <link href="css/green.min.css" rel="stylesheet" type="text/css" media="all" />
 <link href="scripts/datebox/jqm-datebox.min.css" rel="stylesheet" type="text/css" media="all">

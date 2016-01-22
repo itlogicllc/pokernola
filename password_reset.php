@@ -52,7 +52,7 @@
 <html>
    <head>
 		<?php require('includes/set_head.php'); ?>
-		<title>Poker NOLA Reset Password</title>
+		<title>PokerNOLA Reset Password</title>
    </head>
    <body>
       <div data-role="page" id="reset_password">

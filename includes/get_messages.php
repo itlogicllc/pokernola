@@ -18,7 +18,7 @@
 				break;
 			
 			case "not_updated":
-				$message = "<p class='alert'>Sorry, the update failed! Please try again. If the problem persists, please contact Poker NOLA using the contact form under Tools</p>";
+				$message = "<p class='alert'>Sorry, the update failed! Please try again. If the problem persists, please contact PokerNOLA using the contact form under Tools</p>";
 				break;
 			
 			case "unauthorized":
@@ -38,15 +38,15 @@
 				break;
 			
 			case "invitation_email":
-				$message = "<p class='info'>You have just sent an email invitation for $args_array[0] at $args_array[1] to join Poker NOLA.</p>";
+				$message = "<p class='info'>You have just sent an email invitation for $args_array[0] at $args_array[1] to join PokerNOLA.</p>";
 				break;
 			
 			case "welcome":
-				$message = "<p class='info'>Welcome to Poker NOLA! You are now officially a member and can log in with your new credentials.</p>";
+				$message = "<p class='info'>Welcome to PokerNOLA! You are now officially a member and can log in with your new credentials.</p>";
 				break;
 			
 			case "contact_sent":
-				$message = "<p class='info'>You've just sent your message to Poker NOLA from $args_array[0] at $args_array[1]. We will respond ASAP!</p>";
+				$message = "<p class='info'>You've just sent your message to PokerNOLA from $args_array[0] at $args_array[1]. We will respond ASAP!</p>";
 				break;
 			
 			case "distribution_sent":

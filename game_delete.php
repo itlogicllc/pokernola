@@ -24,7 +24,7 @@
 <html>
    <head>
 		<?php require('includes/set_head.php'); ?>
-		<title>Poker NOLA Delete Game</title>
+		<title>PokerNOLA Delete Game</title>
    </head>
    <body>
       <div data-role="page" id="delete_game">

@@ -7,7 +7,7 @@
 <html>
 <head>
 	<?php require('includes/set_head.php'); ?>
-	<title>Poker NOLA Access Denied</title>
+	<title>PokerNOLA Access Denied</title>
 </head>
 <body>
 <div data-role="page" id="access_denied">

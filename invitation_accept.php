@@ -76,7 +76,7 @@
 <html>
 	<head>
 		<?php require('includes/set_head.php'); ?>
-		<title>Poker NOLA Accept Invitation</title>
+		<title>PokerNOLA Accept Invitation</title>
 	</head>
 	<body>
 		<div data-role="page" id="add_player">

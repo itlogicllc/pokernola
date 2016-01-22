@@ -6,7 +6,7 @@
 <html>
    <head>
 		<?php require('includes/set_head.php'); ?>
-		<title>About Poker NOLA</title>
+		<title>About PokerNOLA</title>
    </head>
    <body>
       <div data-role="page" id="tools_about">
@@ -17,7 +17,7 @@
          <div role="main" class="ui-content">
             <div data-role="collapsible-set">
 					<div class="ui-body ui-body-a ui-corner-all normal">
-						<img src="images/pokernola_logo.png" width="150" height="150" alt="Poker NOLA logo" />
+						<img src="images/pokernola_logo.png" width="150" height="150" alt="PokerNOLA logo" />
 						<h1>PokerNOLA</h1>
 						<p>Designed and developed by ITLogic LLC with the help of some friends</p>
 						<p class="copyright">Copyright &copy; 2013

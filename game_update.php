@@ -41,7 +41,7 @@
 <html>
 	<head>
 		<?php require('includes/set_head.php'); ?>
-		<title>Poker NOLA Game Update</title>
+		<title>PokerNOLA Game Update</title>
 	</head>
 	<body onload="setChipcountEnabled(<?php echo ($settings_array[0]['split_type'] == 'even' ? '1' : ''); ?>);">
 		<div data-role="page" id="winner_update" data-dom-cache="false">

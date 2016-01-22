@@ -53,7 +53,7 @@
 <html>
 	<head>
 		<?php require('includes/set_head.php'); ?>
-		<title>Poker NOLA Season Settings</title>
+		<title>PokerNOLA Season Settings</title>
 	</head>
 	<body>
 		<div data-role="page" id="setings">

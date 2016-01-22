@@ -80,7 +80,7 @@
 <html>
    <head>
 		<?php require('includes/set_head.php'); ?>
-		<title>Poker NOLA Invitation to Join</title>
+		<title>PokerNOLA Invitation to Join</title>
    </head>
    <body>
       <div data-role="page" id="player_invite">

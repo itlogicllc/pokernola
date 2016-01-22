@@ -34,7 +34,7 @@
 <html>
    <head>
 		<?php require('includes/set_head.php'); ?>
-		<title>Poker NOLA Delete PLayer</title>
+		<title>PokerNOLA Delete PLayer</title>
    </head>
    <body>
       <div data-role="page" id="delete_player">

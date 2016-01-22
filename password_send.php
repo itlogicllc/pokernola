@@ -45,7 +45,7 @@
 <html>
    <head>
 		<?php require('includes/set_head.php'); ?>
-		<title>Poker NOLA Forgotten Password</title>
+		<title>PokerNOLA Forgotten Password</title>
    </head>
    <body>
       <div data-role="page" id="forgot_password">

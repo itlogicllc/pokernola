@@ -29,7 +29,7 @@
 <html>
 	<head>
 		<?php require('includes/set_head.php'); ?>
-		<title>Poker NOLA Contact Form</title>
+		<title>PokerNOLA Contact Form</title>
 	</head>
 	<body>
 		<div data-role="page" id="tools">
@@ -40,7 +40,7 @@
 			<div role="main" class="ui-content">
 				<?php require('includes/set_messages.php'); ?>
 				<form action="tools_contact.php" id="contact" name="contact" method="POST">
-					<label for="message">Type a message to Poker NOLA below:</label>
+					<label for="message">Type a message to PokerNOLA below:</label>
 					<textarea name="message" id="message" rows="10"></textarea>
 					<br />
 					<div data-role="controlgroup" data-type="horizontal">
