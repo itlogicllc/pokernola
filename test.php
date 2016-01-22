@@ -18,16 +18,7 @@
 <body>
 <div data-role="page" id="test">
 <?php 
-	// Make sure the query string has a game_id, if not redirect to access denied.
-	if (!empty($_GET['game_id'])) {
-		$game_id = trim($_GET['game_id']);
-	} else {
-		header("Location: access_denied.php?message=unauthorized");
-		exit();
-	}
-	
-	//$game_pagation = games_played_all();
-	var_dump(rankings_range());
+	var_dump($_SERVER['REQUEST_URI']);
 	
 ?>
 </div>

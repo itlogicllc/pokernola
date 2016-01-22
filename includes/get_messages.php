@@ -10,7 +10,7 @@
 				break;
 			
 			case "email_not_exists":
-				$messages = "<p class='alert'>The email address $args_array[0] does not exist! Please try again.</p>";
+				$message = "<p class='alert'>The email address $args_array[0] does not exist! Please try again.</p>";
 				break;
 
 			case "updated":
