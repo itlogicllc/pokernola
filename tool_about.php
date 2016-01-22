@@ -30,6 +30,14 @@
 					</div>
 					<br />
 					 <div data-role="collapsible" data-collapsed="false">
+						<h3>v1.2.1 - 1/21/2016</h3>
+							<ul>
+								<li>Fixed pagination for Players and Games</li>
+								<li>Updated help file</li>
+								<li>minor bug fixes</li>
+							</ul>
+               </div>
+					 <div data-role="collapsible" data-collapsed="">
 						<h3>v1.2.0 - 1/18/2016</h3>
 							<ul>
 								<li>Enhanced the seasons system</li>
