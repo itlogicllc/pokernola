@@ -18,66 +18,85 @@
          </div>
          <div role="main" class="ui-content">
             <div data-role="collapsible-set">
-<!--               <div data-role="collapsible" data-iconpos="right">
-                  <h3><img src="images/icons/info-white.png" alt="Overview"/> Overview</h3>
-                  <p>Poker NOLA is a scoring system for poker tournaments. It is a mobile application accessed at http://www.pokernola.com. It is a rules based program that keeps track of points and payouts of players as defined by the rules for that season of play. Only players who register with Poker NOLA will be tracked. Players may also play as guest but, their statistics will not be maintained.</p>
-
-                  <p>It begins by the administrator creating a season. The season has a start and end date along with other various options that control the rules of play during that time frame. Once a season is defined, the administrator creates games to be played in that season. The games can be open or private. Open games are open to anyone who comes to play. Private games are only for registered players who register for those games before hand.</p>
-
-                  <p>As games are completed and winners recorded they collect points based on their finishing positions. Those points are used to rank each player until the end of the season when the player with the most points wins. Poker NOLA is the tool that shows and keeps track of players ranking during the season as points are accumulated, along with various other statistics and charts that show the players progress.</p>
-               </div>-->
                <div data-role="collapsible" data-iconpos="right">
                   <h3><img src="images/icons/calendar-white.png" alt="Date Picker"/> Date Picker</h3>
                   <p>Clicking or tapping on the calendar icon at the bottom left opens the date range picker. By default all data shown is for the current season. You can also see previous seasons by selecting them from the menu provided. If you wish to view all data between any custom dates you can enter those dates in the date pickers below the menu.</p>
-
                   <p>The currently displayed time frame is shown at the bottom of the footer. If you are viewing a season, the season name will be shown. If you are viewing custom dates, they will be shown as "from" and "to" dates.</p>
-
                   <p>Depending on where you are in the program, the calendar icon may change to a forbidden <img src="images/icons/forbidden-white.png" alt="Forbidden" /> icon. The date picker is unavailable while the forbidden icon is shown.</p>
                </div>
+					
+					
+					<div data-role="collapsible" data-iconpos="right">
+                  <h3><img src="images/icons/lock-white.png" alt="Invitations"/> Login</h3>
+                  <p>If the player has not already been forced to log in, they may do so by selecting the login button. This button will take them to the login page where the player will enter their email address and password to login.</p>
+						<p>By selecting the Remember Me option, the player will not need to enter their credentials every time they want to login to PokerNOLA. PokerNOLA will remember their information and the appropriate fields will already be filled out. Then, the player only needs to select the login button.</p>
+						<p>In the event the player forgets their password, or just chooses to change it, they can select the Forgot Password button. A form will be shown that simply asks for the player's email address. The email address the player is registered in PokerNOLA with must be used. A link will be sent to the given email address and, when followed, the player will be able to choose a new password.</p> 
+               </div>
+					
+					
+					<div data-role="collapsible" data-iconpos="right">
+                  <h3><img src="images/icons/mail-white.png" alt="Invitations"/> Send Invitation</h3>
+                  <p>Invitations are how new members join PokerNOLA. As a member of PokerNOLA, you have the ability to send invitations to other friends who you feel would be good additions to the poker house.</p>
+						<p>The Send Invitation button can be found in the player's Profile and on the Players page. When selected, a form will be shown. Simply enter the invitee's first name, last name and email address in the fields provided. When the form is submitted an email invitation will be sent to the given email address. The invitee will receive the invitation and be provided a link. Once they follow the link they will be able to create a password to PokerNOLA and become new registered members.</p>
+						<p>Within the player's profile, they can view and manage a list of invitations that they have sent.</p> 
+               </div>
+					
+					
                <div data-role="collapsible" data-iconpos="right">
                   <h3><img src="images/icons/bars-white.png" alt="Profile" /> Profile</h3>
-                  <p>A player, once registered, can log in and change their profile. When the icon at the bottom right is a lock <img src="images/icons/lock-white.png" alt="Log In" /> it means the user is not logged in. Clicking or tapping on the lock opens the log in panel where they can enter their email address and password to log in. By clicking or tapping on the &quot;Remember Me&quot; checkbox, their credentials will remembered for next time they want to log in on that same device. Un-checking the box will cause that device to forget your credentials.</p>
-
-                  <p>After a user has successfully logged in, the icon changes to an edit <img src="images/icons/edit-white.png" alt="Edit"/> icon. Also, there will be a welcome message in the footer, above the time frame of data being viewed, using the logged in user's first name. Clicking or tapping on the edit icon will bring up that user's profile where they can update any of their information.</p>
-
-                  <p>In the header of the player's profile is the <img src="images/icons/delete-white.png" alt="Log Out"/> icon. Clicking or tapping on this icon will log the user out of the system.</p>
+						<p>This brings the player to their profile page. The player's profile includes a Details page and an Invitations page.</p>
+						<p>In the header of the Profile page are the send invitation <img src="images/icons/mail-white.png" alt="mail"/> and logout <img src="images/icons/power-white.png" alt="logout"/> icons.</p>
+                  <p>On the Details page the player can view and edit their profile. If the player changes their email address, that new email address will be used next time they log in.</p>
+						<p>On the Invitations page, the player can view and manage invitations they have sent. The header above the list of invitations says who invited them. In the invitations list, invitations with a check <img src="images/icons/check-white.png" alt="check" /> are ones that have been accepted. Invitations with a clock <img src="images/icons/clock-white.png" alt="check" /> are ones that are still pending. If a pending invitation is selected, that invitation will be canceled and the invitee will no longer be able to accept it.
                </div>
+					
+					
               <div data-role="collapsible" data-iconpos="right">
                   <h3><img src="images/icons/home-white.png" alt="Home" /> Home</h3>
-                  <p>The home page simply shows some general statistics concerning the overall program along with some lists of top players.</p>
-                  <p class="info">Note: Click or tap on a statistic label to get its definition.</p> 
+                  <p>The Home page simply shows some general statistics concerning the overall program along with some lists of top players. If the header above a statistic is selected, a tool tip will pop up and define what that statistic means.</p>
                </div>
+					
+					
                <div data-role="collapsible" data-iconpos="right">
                   <h3><img src="images/icons/user-white.png" alt="Players" /> Players</h3>
-                  <p>The Players page shows all ranked players and their points or payouts. The rankings are based on the sum of all points or monies earned cumulatively during the time frame being viewed. You can find a specific player using the search box above the list.</p>
-
-                  <p>Clicking or tapping on a player brings you to that player's details page</p>
-
-                  <p>On the player's details page, The View Ranking History Chart button shows a line chart of the player's ranking as it was at the end of each game in time frame being viewed. Below that is a list showing how many games the player won in each given place. Clicking or tapping on a list items causes it to expand and show each of those specific games. Each game listed shows the game name, payout, split status and points awarded. Clicking or tapping on the game will take you to that game's details.</p>
-
-                  <p>By clicking or tapping on the plus <img src="images/icons/plus-white.png" alt="Add Player" /> icon at the top left in the header, a new player can register with Poker NOLA.</p>
-
-                  <p class="info">Note: Click or tap on a statistic label to get its definition.</p>
+                  <p>The Players page shows all players who have won points. There is a By Points page and a By Payouts page.</p>
+						<p>In the header of the Player page is the send invitation <img src="images/icons/mail-white.png" alt="mail"/> icon.</p>
+						<p>The By Points page shows a list of players ranked by the overall sum of points they have won.</p>
+						<p>The By Payouts page shows a list of players ranked by the overall sum of payouts they have won.</p>
+                  <p>If you select a player on either page, you will be takes to the details page for that player.</p>
+                  <p>On the player's details page, there is a header with the player's name. If there are arrows on either side of the player's name, they can be selected to quickly move to the next or previous player's details in the points ranking list. There are also statistics shown concerning that player. If the header above a statistic is selected, a tool tip will pop up and define what that statistic means.</p>
+						<p>Below the statistics is a View Rankings History Chart button. When selected, a line graph will pop up showing the player's ranking history by points. Each data point on the graph indicates where that player ranked at the end of each game played. This allows the player to see their ranking progress over a range of time.</p>
+						<p>Finally, there is a list of each time that player has placed. It shows which place they came in and how many times they did it. When selecting one of the list item, it opens to show the specific games in which that player placed and some details about that game and their winnings. If that game is selected, it will display that game's details.</p>
                </div>
+					
+					
                <div data-role="collapsible" data-iconpos="right">
                   <h3><img src="images/icons/grid-white.png" alt="Games" /> Games</h3>
                   <p>The Games page shows the game schedule. It is a list of dates that represents when each game is to be, or has been played.</p>
-                  <p>There are two types of games, open and private. An open game is one in which anyone can play up to the maximum amount of players allowed. A private game must be registered for prior to it starting. Only players registered in Poker NOLA are able to register for these games. The type of game is indicated by an icon in the game schedule:</p>
-
-                  <p><img alt="Open Game" src="images/open.png"> - Open Game<br /><img alt="Open Game" src="images/private.png"> - Private Game<br /><img alt="Open Game" src="images/registered.png"> - Private Game that the currently logged in user has already registered for<br /><img alt="Played Game" src="images/played.png"> - Games the currently logged in player has played in</p>
-
-                  <p>Games that have already been played in the schedule will be grayed out and stricken through, but are still able to be clicked on for more information.</p>
-
-                  <p>When it is an open game, clicking or tapping on the game will bring you to the game's details. On the Game Details page are Winners, Players and Season Rules. The Winners list shows the winners for that game. Each list item shows the player's name, payout, split status and points earned for that game. The Player's list of all players who played in that game. In both cases, clicking or tapping on the player will bring you to that player's details. Season Rules show the season rules that dictate that game.</p>
-
-                  <p>When it is a private game, clicking or tapping on the game will bring you to the Game Registration. If you are not logged in, you will get a notice that you must be logged in to register. If you are logged in and have not previously registered for the game, you will be presented with a button to select and register for that game. If you are logged in and have previously registered for that game, you will be presented with a button to select to unregister from that game.</P>
-
-                  <p>Below the button is a list of players who have registered for the game. Above the list is a count of how many players have registered as opposed to how many players are allowed to play. Once that maximum number has been met, no new registrants are allowed. However, at that point, registration is still open. If an existing registrant unregisters, a new spot will open for another player. Once the game starts, the registration period will have ended and it will be treated as an open game, even though no new players will be allowed.</p>
-                  <p class="info">Note: Click or tap on a statistic label to get its definition.</p>
+                  <p>There are two types of games, open and closed. An open game is one in which anyone can play up to the maximum amount of players allowed. A closed game must be registered for prior to playing. Only players registered with PokerNOLA are able to register for closed games. The type of game is indicated by an icon in the game schedule:</p>
+                  <p>
+							<img alt="Open Game" src="images/open.png"> - Open Game<br />
+							<img alt="Closed Game" src="images/private.png"> - Closed Game<br />
+							<img alt="Registered Game" src="images/registered.png"> - Closed Game the logged in player has registered for<br />
+							<img alt="Played Game" src="images/played.png"> - Game the logged in player has played in
+						</p>
+                  <p>Games in the schedule that have already been completed will be grayed out and stricken through.</p>
+						<p>When selecting completed or open games, the game's details will be shown</p>
+                  <p>On the games's details page, there is a header with the games's date. If there are arrows on either side of the game date, they can be selected to quickly move to the next or previous game details in the schedule of games that have been completed. There are also statistics shown concerning that game. If the header above a statistic is selected, a tool tip will pop up and define what that statistic means.</p>
+						<p>Below the statistics are a list of Winners of that game, a list of Players who played in that game and the Season Rules that governed that game. When selecting the Winners list, it will open to show each player who won, which place they were in, how many points they won and the amount of any payouts they received. If there was a split between players, that will be indicated on the list item along with what percentage of the total pot they won. If the player is selected, that player's details page will be shown. If the Players list is selected, it will open to show all the players who played in that game. If the player is selected, that player's details page will be shown. If the Season Rules list is selected, it will open to show what rules governed the game played in that season.</p>
+                  <p>When selecting a closed game, the game Registration page will be shown.</p> 
+						<p>If the player is logged in and has not previously registered for the game, they will see a button to select and register for that game. When selected, their name will be added to the list of registered players, provided that the game has not already reached its maximum allowed players. The number of maximum allowed players is indicated above the registered players list. If that number has already been reached, the player will be given a message that no new players may register unless a currently registered player unregisters from the game.</p>
+						<p>If the player has already registered for the game, they will see a button to unregister from that game which will removed their name from the registered players list when selected. Once it has been decided that the registration time has ended, the game will be treated as an open game and selecting the game in the game schedule will show the game's details.</P>
                </div>
+					
+					
                <div data-role="collapsible" data-iconpos="right">
                   <h3><img src="images/icons/gear-white.png" alt="Tools" /> Tools</h3>
-                  <p>Season Rules shows a list of rules that dictate how play is to be done for each game in that season. The first item in the list is the current season rules. Any new game created will use those rules until a new season is created.</p>
+                  <p>The Tools page shows buttons to access other functions of PokerNOLA.</p>
+						<p>The Season Rules button will show a page that lists all of the seasons played by the poker house. Each list item has an icon. The Ended <img src="images/icons/forbidden-white.png" alt="Forbidden" /> icon signifies seasons that have ended and the current <img src="images/icons/check-white.png" alt="Forbidden" /> icon signifies which season is the season currently being played. Selecting one of the seasons list items opens to show the rules of that season.</p>
+						<p>The contact button opens a form where the player can compose and submit a simple email to PokerNOLA to ask questions, make comments, get help or any other reason they should need to contact PokerNOLA.</p>
+						<p>The Help button is where you are now.</p>
+						<p>The About button simply shows some copyright and version information about PokerNOLA</p>
                </div>
             </div>
          </div>

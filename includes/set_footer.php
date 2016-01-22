@@ -13,7 +13,7 @@
 		if (isset($_SESSION['player_first'])) {
 			echo "Welcome " . $_SESSION['player_first'] . "!";
 		} else {
-			echo "Poker NOLA";
+			echo "PokerNOLA";
 		}
 	?>
 	<br />
