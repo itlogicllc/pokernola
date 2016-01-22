@@ -114,22 +114,22 @@
 					</div>
 				</div>
 				<div id="rank" data-role="popup" data-arrow="true">
-					<p>This is the player's overall ranking based on the sum of all points earned</p>
+					<p>The player's overall ranking based on the sum of all points earned</p>
 				</div>
 				<div id="played" data-role="popup" data-arrow="true">
-					<p>This is the percentage of times the player has played</p>
+					<p>The percentage of times the player has played</p>
 				</div>
 				<div id="top_10" data-role="popup" data-arrow="true">
-					<p>This is the percentage of times the player has scored points based on how many times they have played. The percentage in parentheses is the percentage of times points have been scored based on the percentage of total games they played in.</p>
+					<p>The percentage of times the player has scored points based on the number of games they have played.</p><p>The percentage in parentheses is the percentage of times the player has scored points based on the total number of games played overall.</p>
 				</div>
 				<div id="itm" data-role="popup" data-arrow="true">
-					<p>This is the percentage of times the player has been in the money based on how many times they have played. The percentage in parentheses is the percentage of times in the money based on the percentage of total games they played in.</p>
+					<p>The percentage of times the player has won a payout based on the number of games they have played.</p><p>The percentage in parentheses is the percentage of times the player has won a payout based on the total number of games played overall.</p>
 				</div>
 				<div id="total_points" data-role="popup" data-arrow="true">
-					<p>This is the total sum of all points earned</p>
+					<p>The total sum of all points earned</p>
 				</div>
 				<div id="total_payouts" data-role="popup" data-arrow="true">
-					<p>This is the total sum of all payouts won</p>
+					<p>The total sum of all payouts won</p>
 				</div>
 				<div data-role="controlgroup" data-type="vertical">
 					<a class="ui-btn ui-corner-all ui-shadow ui-icon-eye ui-btn-icon-left" href="#chartpop" data-transition="pop" data-rel="popup" data-position-to="window" onClick="viewRankHistoryChart();">View Ranking History Chart</a>

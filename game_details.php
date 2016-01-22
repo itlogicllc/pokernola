@@ -108,19 +108,19 @@
                </div>
             </div>
             <div id="game_players" data-role="popup" data-arrow="true">
-               <p>This is the total amount of players in the game</p>
+               <p>The total number of players in the game</p>
             </div>
             <div id="game_pot" data-role="popup" data-arrow="true">
-               <p>This is the total pot for the game</p>
+               <p>The total pot for the game</p>
             </div>
             <div id="first_payout" data-role="popup" data-arrow="true">
-               <p>This is the payout for first place</p>
+               <p>The payout for first place</p>
             </div>
             <div id="second_payout" data-role="popup" data-arrow="true">
-               <p>This is the payout for second place</p>
+               <p>The payout for second place</p>
             </div>
             <div id="third_payout" data-role="popup" data-arrow="true">
-               <p>This is the payout for third place</p>
+               <p>The payout for third place</p>
             </div>
             <div data-role="collapsible-set">
                <div data-role="collapsible" data-collapsed="true">

@@ -55,19 +55,22 @@
 					</div>
 				</div>
 				<div id="largest_pot" data-role="popup" data-arrow="true">
-					<p>This is the largest pot to date of all games played</p>
+					<p>The largest pot of all games played</p>
 				</div>
 				<div id="avg_players" data-role="popup" data-arrow="true">
-					<p>The average amount of players per game</p>
+					<p>The average number of players per game</p>
+				</div>
+				<div id="avg_pot" data-role="popup" data-arrow="true">
+					<p>The average pot per game</p>
 				</div>
 				<div id="total_payout" data-role="popup" data-arrow="true">
-					<p>This is a cumulative sum of all pots per game</p>
+					<p>The sum of all pots per game</p>
 				</div>
 				<div id="total_players" data-role="popup" data-arrow="true">
-					<p>This is the total amount of registered players</p>
+					<p>The total number of registered players</p>
 				</div>
 				<div id="total_games" data-role="popup" data-arrow="true">
-					<p>This is the total amount of games played</p>
+					<p>The total number of games played</p>
 				</div>
 				<ol data-role="listview" data-inset="true">
 					<li data-role="list-divider">Top Dogs</li>
