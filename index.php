@@ -5,10 +5,10 @@
 	require('includes/get_messages.php');
 	
 	// If the player is already logged in, redirect to home.php
-//	if (isset($_SESSION['player_logged_in'])) {
-//		header("Location: home.php");
-//		exit();
-//	}
+	if (isset($_SESSION['player_logged_in'])) {
+		header("Location: home.php");
+		exit();
+	}
 
 	// If the form was submitted, check the email and
 	// password against the database. If a match is found, set the
@@ -60,7 +60,7 @@
 							<input name="submit" type="submit" value="Log In" />
 							<a class="ui-btn" href="password_send.php">Forgot Password?</a>
 						</div>
-						<input name="referer" type="text" id="referer" value="<?php echo (isset($_GET['referer']) ? $_GET['referer'] : 'home.php'); ?>"  />
+						<input name="referer" type="hidden" id="referer" value="<?php echo (isset($_GET['referer']) ? $_GET['referer'] : 'home.php'); ?>"  />
 					</form>
 					<div data-role="footer" data-position="fixed">
 						<?php require('includes/set_footer.php'); ?>

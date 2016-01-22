@@ -2,12 +2,11 @@
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
 	require('includes/set_access.php');
-	get_access();
+	//get_access();
 	require('includes/get_games.php');
 	require('includes/get_game_players.php');
 
 	$games_list = games_all();
-	//$current_settings = settings_current();
 ?>
 <!DOCTYPE html>
 <html>
