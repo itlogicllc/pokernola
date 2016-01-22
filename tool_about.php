@@ -35,7 +35,7 @@
 								<li>Fixed pagination for Players and Games</li>
 								<li>Updated help file</li>
 								<li>Updated tool tips</li>
-								<li>minor bug fixes</li>
+								<li>Minor bug fixes</li>
 							</ul>
                </div>
 					 <div data-role="collapsible" data-collapsed="">
