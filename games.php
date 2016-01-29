@@ -42,7 +42,7 @@
 								// If a player is logged in.
 								if (!empty($_SESSION['player_logged_in'])) {
 									// If they played in the game show the played icon, if not show the notplayed icon.
-									if ($game_player['alternate_order'] == 0) {
+									if ($game_player && $game_player['alternate_order'] == 0) {
 										echo '<img class="ui-li-icon" alt="open" src="images/played.png" >';
 									} else {
 										echo '<img class="ui-li-icon" alt="open" src="images/notplayed.png" >';
