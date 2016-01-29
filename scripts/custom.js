@@ -1,19 +1,54 @@
-function passwordValidate(element1, element2, min_num) {
-	var pass1 = element1;
-	var pass2 = element2;
-	var pass1_val = pass1.value;
-	var pass1_num = pass1_val.length;
-	var pass2_val = pass2.value;
+// This function is used to run the other functions that validate the profile form.
+function validateProfileForm(objForm) {
+	if (!passwordValidate(objForm)) {
+		return false;
+	}
+	
+	if (!emailChangeVerify(objForm)) {
+		return false;
+	}
+	
+	return true;
+}
 
-	if (pass1_num < min_num) {
-		alert("Password must be at least " + min_num + " characters");
+// This validates the password to be at least the minimum number characters passed to it
+// and checks that the passwort in element1 matches the password in element2.
+function passwordValidate(objForm) {
+	var min_num = 6;
+	var pass1 = objForm.password1.value;
+	var pass2 = objForm.password2.value;
+	var pass_num = objForm.password1.value.length;
+
+	if (pass_num < min_num && pass_num > 0) {
+		alert("Password must be at least " + min_num + " characters!");
 		return false;
 	}
 
-	if (pass2_val !== pass1_val) {
-		alert("The passwords do not match");
+	if (pass2 !== pass1) {
+		alert("The passwords do not match!");
 		return false;
 	}
+	
+	return true;
+}
+
+// This checks to see if the email address has changed from the original. If it has
+// the user is alerted that their new login will be the new email and confirm the change.
+function emailChangeVerify(objForm) {
+	var email_original = objForm.email_exist.value;
+	var email_new = objForm.email.value;
+	
+	if (email_original !== email_new) {
+		var answer = confirm("Changing your email address will also change your login email address! Are you sure you wish to change your email address?");
+
+		if (answer === true) {
+			  return true;
+		} else {
+			  return false;
+		} 
+	}
+	
+	return true;
 }
 
 // This function is first given the select menu object who's options are being set.
@@ -242,6 +277,7 @@ function setSplits(pay_3, pay_2, pay_1) {
 	return true;
 }
 
+// This function forces the administrator to verify ending a season.
 function getSeasonEndVerify() {
 	var answer = confirm("By ending this season, no new games can be played until a new season is created and any statistics that were being calulated will stop as of today. Are you sure you wish to end this season?");
 
@@ -252,6 +288,7 @@ function getSeasonEndVerify() {
 	} 
 }
 
+// This function forces the administrator to verify creating a season.
 function getSeasonCreateVerify() {
 	var answer = confirm("Before creating this season, make sure all the settings are correct. Once a season is started it can not be edited. You will have to end this season and create a new one to make any changes. Are you sure this season is correct?");
 
@@ -260,4 +297,20 @@ function getSeasonCreateVerify() {
 	} else {
 		  return false;
 	} 
+}
+
+// This function checks if the number of players is less than or equal to the max allowed.
+// If it is more than the allowed it forces the administrator to verify they want to override the setting.
+function getPlayersOverVerify(playersNumber, playersMax) {
+	if (playersNumber > playersMax) {
+		var answer = confirm("There will be " + playersNumber + " players when only " + playersMax + " players are allowed! Are you sure you want to override this setting?");
+		
+		if (answer === true) {
+			return true;
+		} else {
+			return false;
+		} 
+	}
+	
+	return true;
 }

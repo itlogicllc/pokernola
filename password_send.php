@@ -61,7 +61,6 @@
                <br />
                <div data-role="controlgroup" data-type="horizontal">
                   <input name="submit" type="submit" value="Submit" />
-                  <input name="Reset" type="reset" value="Reset" />
                </div>
             </form>
             <br />

@@ -39,7 +39,7 @@
 			</div>
 			<div role="main" class="ui-content">
 				<?php require('includes/set_messages.php'); ?>
-				<form action="tools_contact.php" id="contact" name="contact" method="POST">
+				<form action="tool_contact.php" id="contact" name="contact" method="POST">
 					<label for="message">Type a message to PokerNOLA below:</label>
 					<textarea name="message" id="message" rows="10"></textarea>
 					<br />

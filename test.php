@@ -17,10 +17,13 @@
 </head>
 <body>
 <div data-role="page" id="test">
-<?php 
-	var_dump($_SERVER['REQUEST_URI']);
+	<?php
+	$game_id = $_GET['game_id'];
 	
-?>
+	$game_alternates_array = game_players_alternates_by_game($game_id);
+	var_dump($game_alternates_array);
+	
+	?>
 </div>
 </body>
 </html>

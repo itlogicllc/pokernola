@@ -35,12 +35,14 @@
 					<li>
 						<a href="<?php echo ($games_list[$i]['registration'] == 1 && $games_list[$i]['status'] == 1) ? 'game_registration.php' : 'game_details.php'; ?>?game_id=<?php echo $games_list[$i]['game_id']; ?>">
 						<?php
+							// Find out if the logged in player was part of this game. Returns false if not, 0 if they played, > 0 if they were an alternate 
+							$game_player = game_players_player_by_game($games_list[$i]['game_id'], $_SESSION['player_logged_in']);
 							// If the game has already been played.
 							if ($game_played) {
 								// If a player is logged in.
 								if (!empty($_SESSION['player_logged_in'])) {
 									// If they played in the game show the played icon, if not show the notplayed icon.
-									if (game_players_get_id($games_list[$i]['game_id'], $_SESSION['player_logged_in'])) {
+									if ($game_player['alternate_order'] == 0) {
 										echo '<img class="ui-li-icon" alt="open" src="images/played.png" >';
 									} else {
 										echo '<img class="ui-li-icon" alt="open" src="images/notplayed.png" >';
@@ -58,10 +60,14 @@
 								if (!empty($_SESSION['player_logged_in'])) {
 									// If the game is a private game.
 									if ($games_list[$i]['registration'] == 1) {
-										// If the logged in player is registered to play the private game show the rigistered icon.
-										// If not, show the private game icon
-										if (game_players_get_id($games_list[$i]['game_id'], $_SESSION['player_logged_in'])) {
-											echo '<img class="ui-li-icon" alt="open" src="images/registered.png" >';
+										// If the logged in player is registered to play the private game show the rigistered icon or alternate
+										// icon if the value is greater than 0. If not, show the private game icon
+										if ($game_player) {
+											if ($game_player['alternate_order'] == 0) {
+												echo '<img class="ui-li-icon" alt="open" src="images/registered.png" >';
+											} else {
+												echo '<img class="ui-li-icon" alt="open" src="images/alternate.png" >';
+											}
 										} else {
 											echo '<img class="ui-li-icon" alt="open" src="images/private.png" >';
 										}

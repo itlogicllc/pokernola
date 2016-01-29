@@ -47,7 +47,20 @@
 		$game_pot = "$" . number_format($total_pot, 2);
 
 		$game_winners_array = winners_by_game($game_id);
+		
+		$game_alternates_array = game_players_alternates_by_game($game_id);
+		if ($game_alternates_array) {
+			$game_alternates_count = count($game_alternates_array);
+		} else {
+			$game_alternates_count = 0;
+		}
+		
 		$game_players_array = game_players_by_game($game_id);
+		if ($game_players_array) {
+			$game_players_count = count($game_players_array);
+		} else {
+			$game_players_count = 0;
+		}
 
 		$first_pot = "$" . number_format($game_winners_array[0]['amount'] * $total_pot, 2);
 		$second_pot = "$" . number_format($game_winners_array[1]['amount'] * $total_pot, 2);
@@ -147,15 +160,27 @@
                </div>
                <div data-role="collapsible" data-collapsed="true">
                   <h3>Players</h3>
-                  <ul data-role="listview" data-inset="true" data-count-theme="a">
-							<?php for ($i = 0; $i <= count($game_players_array) - 1; $i++) { ?>
+                  <ol data-role="listview" data-inset="true" data-count-theme="a">
+							<?php for ($i = 0; $i <= $game_players_count - 1; $i++) { ?>
 							<li>
 								<a href="player_details.php?player_id=<?php echo $game_players_array[$i]['player_id']; ?>"> 
 									<h2><?php echo $game_players_array[$i]['full_name']; ?></h2>
 								</a>
 							</li>
 							<?php } ?>
-                  </ul>
+                  </ol>
+               </div>
+					 <div data-role="collapsible" data-collapsed="true">
+                  <h3>Alternates</h3>
+                  <ol data-role="listview" data-inset="true" data-count-theme="a">
+							<?php for ($i = 0; $i <= $game_alternates_count - 1; $i++) { ?>
+							<li>
+								<a href="player_details.php?player_id=<?php echo $game_alternates_array[$i]['player_id']; ?>"> 
+									<h2><?php echo $game_alternates_array[$i]['full_name']; ?></h2>
+								</a>
+							</li>
+							<?php } ?>
+                  </ol>
                </div>
                <div data-role="collapsible" data-collapsed="true">
                   <h3>Season Rules</h3>

@@ -29,6 +29,15 @@
 						</p>
 					</div>
 					<br />
+					<div data-role="collapsible" data-collapsed="false">
+						<h3>v1.3.0 - 1/28/2016</h3>
+							<ul>
+								<li>Added the alternates system</li>
+								<li>Updated user's profile form and added some validations</li>
+								<li>Updated the email system</li>
+								<li>Updated the help file to add the alternates</li>
+							</ul>
+               </div>
 					 <div data-role="collapsible" data-collapsed="false">
 						<h3>v1.2.1 - 1/21/2016</h3>
 							<ul>

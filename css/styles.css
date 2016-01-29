@@ -73,6 +73,11 @@ body {
 	color: #FFCCC4;
 	text-align: center;
 }
+.input_note {
+	color: darkred;
+	font-style: italic;
+	font-size: small;
+}
 .normal {
 	text-align: center;
 }
@@ -111,6 +116,15 @@ body {
 	width: 85% !important;
 	height: 40px;
 	border-width: 0px;
+}
+.ui-icon-registered:after {
+   background-image: url("../images/registered.png");
+	background-size: 16px 16px;
+
+}
+.ui-icon-alternate:after {
+   background-image: url("../images/alternate.png");
+   background-size: 16px 16px;
 }
 
 

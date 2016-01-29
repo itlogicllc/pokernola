@@ -24,6 +24,10 @@
 		$winners_list = winners_by_game($game_id);
 		$ko_list = winners_ko_by_game($game_id);
 		$players_list = players_all();
+		
+		$game_players_alternates_array = game_players_alternates_by_game($game_id);
+		$game_players_alternates_count = count($game_players_alternates_array);
+		
 		$game_players_array = game_players_by_game($game_id);
 		$game_players_count = count($game_players_array);
 		
@@ -51,6 +55,7 @@
 			</div>
 			<div role="main" class="ui-content">
 				<div class="ui-bar ui-bar-a ui-corner-all normal"><h2><?php echo $game_name; ?></h2></div>
+
 <!--				Start Game Details section.-->
 				<div data-role="collapsible-set">
 					<div data-role="collapsible" data-collapsed="true">
@@ -70,19 +75,48 @@
 							</div>
 							<div  class="ui-field-contain">
 								<label for="total_players">Total Players:</label>
-								<input type="number" max="<?php echo $max_players ?>" step="1" name="total_players" id="total_players" value="<?php echo $game['num_players']; ?>"  />
+								<input type="number" min="<?php echo $game_players_count; ?>" step="1" name="total_players" id="total_players" value="<?php echo $game['num_players']; ?>"  />
 							</div>
 							<div  class="ui-field-contain">
 								<label for="total_pot">Total Pot:</label>
 								<input type="number" min="0.00" step="0.01" name="total_pot" id="total_pot" value="<?php echo $game['total_pot']; ?>"  />
 							</div>
-							<input type="submit" name="submit" value="Update" data-inline="true" />
+							<input type="submit" name="submit" value="Update" data-inline="true" onclick="return getPlayersOverVerify(total_players.value, <?php echo $max_players ?>);"/>
 						</form>
 					</div>
+
 <!--					Start Players section.-->
 					<div data-role="collapsible" data-collapsed="true">
 						<h3>Players</h3>
-						<form method="POST" name="players_form" id="players_form" action="game_update_players.php?game_id=<?php echo $game_id; ?>">
+						<form method="POST" name="players_form" id="players_form" action="game_update_players.php?game_id=<?php echo $game_id; ?>&action=player_add">
+							<?php for ($i = 0; $i <= count($players_list) - 1; $i++) { ?>
+								<input type="hidden" name="players_list[]" value="<?php echo $players_list[$i]['player_id'] . ',' . $players_list[$i]['full_name']; ?>"  />
+							<?php } ?>
+							<select name="players_select" onfocus="setOptions(this, document.getElementsByName('players_list[]'), document.getElementsByName('game_players[]'));" >
+								<option value="0">Guest</option>
+							</select>
+							<input type="submit" name="submit" value="Add" data-inline="true" onclick="return getPlayersOverVerify(<?php echo $game_players_count + 1 ?>, <?php echo $max_players ?>);" />
+							<br />
+							<?php if (!empty($game_players_array)) { ?>
+							<ol data-role="listview" data-inset="true" data-count-theme="a" data-icon="delete" data-split-icon="action">
+								<?php for ($i = 0; $i <= count($game_players_array) - 1; $i++) { ?>
+								<li>
+									<a href="game_update_players.php?game_id=<?php echo $game_id; ?>&player_id=<?php echo $game_players_array[$i]['player_id']; ?>&alternate=0"> 
+										<h3><?php echo $game_players_array[$i]['full_name']; ?></h3>
+										<input type="hidden" name="game_players[]" value="<?php echo $game_players_array[$i]['player_id'] . ',' . $game_players_array[$i]['full_name']; ?>"  />
+									</a>
+									<a href="game_update_players.php?game_id=<?php echo $game_id; ?>&player_id=<?php echo $game_players_array[$i]['player_id']; ?>&action=player_move"></a>
+								</li>
+								<?php } ?>
+							</ol>
+							<?php } ?>
+						</form>
+					</div>
+
+<!--					Start Alternates section.-->
+					<div data-role="collapsible" data-collapsed="true">
+						<h3>Alternates</h3>
+						<form method="POST" name="players_form" id="players_form" action="game_update_players.php?game_id=<?php echo $game_id; ?>&action=alternate_add">
 							<?php for ($i = 0; $i <= count($players_list) - 1; $i++) { ?>
 								<input type="hidden" name="players_list[]" value="<?php echo $players_list[$i]['player_id'] . ',' . $players_list[$i]['full_name']; ?>"  />
 							<?php } ?>
@@ -90,22 +124,23 @@
 								<option value="0">Guest</option>
 							</select>
 							<input type="submit" name="submit" value="Add" data-inline="true" />
-							<input type="hidden" name="add" value="player_add">
 							<br />
-							<?php if (!empty($game_players_array)) { ?>
-							<ul data-role="listview" data-inset="true" data-count-theme="a" data-icon="delete">
-								<?php for ($i = 0; $i <= count($game_players_array) - 1; $i++) { ?>
+							<?php if (!empty($game_players_alternates_array)) { ?>
+							<ol data-role="listview" data-inset="true" data-count-theme="a" data-split-icon="action">
+								<?php for ($i = 0; $i <= count($game_players_alternates_array) - 1; $i++) { ?>
 								<li>
-									<a href="game_update_players.php?game_id=<?php echo $game_id; ?>&player_id=<?php echo $game_players_array[$i]['player_id']; ?>"> 
-										<h3><?php echo $game_players_array[$i]['full_name']; ?></h3>
-										<input type="hidden" name="game_players[]" value="<?php echo $game_players_array[$i]['player_id'] . ',' . $game_players_array[$i]['full_name']; ?>"  />
+									<a href="game_update_players.php?game_id=<?php echo $game_id; ?>&player_id=<?php echo $game_players_alternates_array[$i]['player_id']; ?>&alternate=1">
+										<h3><?php echo $game_players_alternates_array[$i]['full_name']; ?></h3>
+										<input type="hidden" name="game_players[]" value="<?php echo $game_players_alternates_array[$i]['player_id'] . ',' . $game_players_alternates_array[$i]['full_name']; ?>"  />
 									</a>
+									<a href="game_update_players.php?game_id=<?php echo $game_id; ?>&player_id=<?php echo $game_players_alternates_array[$i]['player_id']; ?>&action=alternate_move" onclick="return getPlayersOverVerify(<?php echo $game_players_count + 1 ?>, <?php echo $max_players ?>);"></a>
 								</li>
 								<?php } ?>
-							</ul>
+							</ol>
 							<?php } ?>
 						</form>
 					</div>
+
 <!--					Start Winners section.-->
 					<div data-role="collapsible" data-collapsed="true">
 						<h3>Winners</h3>
@@ -139,6 +174,7 @@
 							<input type="submit" name="submit" value="Update" data-inline="true" onclick="return setSplits(<?php echo $settings_array[0]['third_pay'] . ',' . $settings_array[0]['second_pay'] . ',' . $settings_array[0]['first_pay'] ?>);" />
 						</form>
 					</div>
+
 <!--					Start Knock Out section-->
 					<div data-role="collapsible">
 						<h3>Knock Outs</h3>

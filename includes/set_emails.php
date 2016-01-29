@@ -1,27 +1,32 @@
 <?php
-
-	$testing = true;
-//$testing = false;
-
+	/////////////////////////////////////////////////////////////////////////////
+	// DON'T FORGET TO CHANGE THIS TO TRUE WHEN UPLOADING TO PRODUCTION SERVER //
+	/////////////////////////////////////////////////////////////////////////////
+	$testing = false;
+	/////////////////////////////////////////////////////////////////////////////
+	
 	$headers = "MIME-Version: 1.0\r\n";
 	$headers .= "Content-type:text/html;charset=UTF-8\r\n";
 	
 	// If testing is true then use the localhost testing mail server
 	// otherwise use the production server mail.
 	if ($testing) {
-		$to = "xampp@localhost.com";
+		$admin_to = "xampp@localhost.com";
+		$players_to = "xampp@localhost.com";
 		$link = "http://localhost/pokernola/";
 	} else {
-		$to = "players@pokernola.com";
+		$admin_to = "info@pokernola.com";
+		$players_to = "players@pokernola.com";
 		$link = "http://www.pokernola.com/";
 	}
 
 	// Emails sent to players
 	function player_emails($type, $to_array, $args_array = null) {
-		global $to;
+		global $players_to;
 		global $link;
 		global $headers;
 
+		$to = $players_to;
 		$body = "Hey $args_array[0]:";
 
 		switch ($type) {
@@ -60,8 +65,10 @@
 
 	// Emails sent to the owner with system status messages
 	function system_emails($type, $args_array = null) {
-		global $to;
+		global $admin_to;
 		global $headers;
+		
+		$to = $admin_to;
 
 		switch ($type) {
 			case "password_request":
@@ -101,7 +108,9 @@
 
 	// Emails sent to the owner submitted from the contact form by players
 	function contact_emails($from, $name, $body) {
-		global $to;
+		global $admin_to;
+		
+		$to = $admin_to;
 
 		$subject = "Message From PokerNOLA Contact Form";
 

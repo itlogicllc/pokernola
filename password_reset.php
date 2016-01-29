@@ -62,7 +62,7 @@
          </div>
          <div role="main" class="ui-content">
             <form action="<?php echo $form_action; ?>" id="reset_pass" name="reset_pass" method="POST">
-               <label for="password1">New Password:</label>
+               <label for="password1">New Password: <span class="input_note">must be at least 6 characters</span></label>
                <input name="password1" type="password" id="password1" value="" required />
                <label for="password2">Verify Password:</label>
                <input name="password2" type="password" id="password2" value="" required />
@@ -70,8 +70,7 @@
                <input type="hidden" name="player_id" id="player_id" value="<?php $player_id; ?>"  />
                <br />
                <div data-role="controlgroup" data-type="horizontal">
-                  <input name="Submit" type="submit" value="Submit" onClick="return passwordValidate(document.getElementById('password1'), document.getElementById('password2'), 6);" />
-                  <input name="Reset" type="reset" value="Reset" />
+                  <input name="Submit" type="submit" value="Submit" onClick="return passwordValidate(this.form);" />
                </div>
             </form>
          </div>

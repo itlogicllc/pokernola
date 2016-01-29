@@ -103,7 +103,7 @@
                      <input name="last_name" type="text" id="last_name" value="<?php echo $player_array['last_name']; ?>" maxlength="30" required  />
                      <label for="email">Email:</label>
                      <input name="email" type="email" id="email" value="<?php echo $player_array['email']; ?>" maxlength="30" required  />
-                     <label for="password1">Password:</label>
+                     <label for="password1">Password: <span class="input_note">must be at least 6 characters</span></label>
                      <input name="password1" type="password" id="password1" value="" placeholder="Leave this blank to keep current password" />
                      <label for="password2">Verify Password:</label>
                      <input name="password2" type="password" id="password2" value="" />
@@ -114,7 +114,7 @@
                      <input type="hidden" name="email_exist" id="email_exist" value="<?php echo $player_array['email']; ?>"  />
                      <br />
                      <div data-role="controlgroup" data-type="horizontal">
-                        <input name="submit" type="submit" value="Update" onClick="return passwordValidate(document.getElementById('password1'), document.getElementById('password2'), 6);" />
+                        <input name="submit" type="submit" value="Update" onclick="return validateProfileForm(this.form);" />
                         <input name="reset" type="reset" value="Reset" />
                      </div>
                   </form>
