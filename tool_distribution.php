@@ -44,7 +44,7 @@
 			</div>
 			<div role="main" class="ui-content">
 				<?php require('includes/set_messages.php'); ?>
-				<form action="tools_emails.php" id="contact" name="contact" method="POST">
+				<form action="tool_distribution.php" id="contact" name="contact" method="POST">
 					<fieldset data-role="controlgroup" data-type="horizontal">
 					  <legend>Send To:</legend>
 					  <label for="everyone">Everyone</label>
