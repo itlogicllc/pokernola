@@ -39,6 +39,11 @@
 				$subject = "Invitation to Join PokerNOLA";
 				$body .= "<p>Good news! $args_array[1] would like to invite you to join PokerNOLA. New members are always welcome and we hope you accept this invitation to join us. To do so, simply click on or paste the link at the end of this email into your browser's address bar. You will be taken to a new player registration form. Fill it out, submit it and just like that, you will be a PokerNOLA member.</p><p>As soon as you are registered you will be able to log in, register for games, have your performance tracked, score points, get ranked and send invitations to others just like this one.</p><p>We would be happy to have you, so join today and good luck!</p><p>" . $link . "invitation_accept.php?player_id=$args_array[2]&invitation_code=$args_array[3]&invitation_id=$args_array[4]</p>";
 				break;
+			
+			case "alternate_change":
+				$subject = "Good News From PokerNOLA!";
+				$body .= "<p>Good news, you're in! A player just unregistered from the $args_array[1] game. Since you were the next alternate in line, you just got bumped up and are now registered to play instead.</p><p>Please be courteous, if you will not be able to attend, please go to pokernola.com and unregister from the $args_array[1] game. That way, others will have the opportunity to play.<p>Thanks and good luck!</p>";
+				break;
 
 			case "distribution":
 				$subject = "A Message From PokerNOLA";
@@ -94,6 +99,11 @@
 			case "invitation_deleted":
 				$subject = "PokerNOLA Invitation Deleted";
 				$body = "$args_array[0] just deleted an invitation sent to $args_array[1].";
+				break;
+			
+			case "alternate_change":
+				$subject = "PokerNOLA Alternate Change";
+				$body = "$args_array[0] just got moved from the Alternates List to the Players List for the $args_array[1] game.";
 				break;
 
 			default:

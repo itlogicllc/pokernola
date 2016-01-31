@@ -69,7 +69,7 @@
 	} else {
 		$invitation = invitations_by_id($player_array['invitation_id']);
 		$inviter_id = $invitation['player_id'];
-		$inviter = players_player($inviter_id);
+		$inviter = players_by_id($inviter_id);
 		$inviter_name = $inviter['full_name'];
 	}
 ?>

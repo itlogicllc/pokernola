@@ -30,6 +30,14 @@
 					</div>
 					<br />
 					<div data-role="collapsible" data-collapsed="false">
+						<h3>v1.3.1 - 1/30/2016</h3>
+							<ul>
+								<li>Send email to alternate who gets moved to the Players List when someone unregisters</li>
+								<li>Updated help</li>
+								<li>Bug Fixes</li>
+							</ul>
+               </div>
+					<div data-role="collapsible" data-collapsed="true">
 						<h3>v1.3.0 - 1/28/2016</h3>
 							<ul>
 								<li>Added the alternates system</li>
@@ -38,7 +46,7 @@
 								<li>Updated the help file to add the alternates</li>
 							</ul>
                </div>
-					 <div data-role="collapsible" data-collapsed="false">
+					 <div data-role="collapsible" data-collapsed="true">
 						<h3>v1.2.1 - 1/21/2016</h3>
 							<ul>
 								<li>Fixed pagination for Players and Games</li>
@@ -47,7 +55,7 @@
 								<li>Minor bug fixes</li>
 							</ul>
                </div>
-					 <div data-role="collapsible" data-collapsed="">
+					 <div data-role="collapsible" data-collapsed="true">
 						<h3>v1.2.0 - 1/18/2016</h3>
 							<ul>
 								<li>Enhanced the seasons system</li>
@@ -57,7 +65,7 @@
 								<li>Fixed several bugs</li>
 							</ul>
                </div>
-					<div data-role="collapsible" data-collapsed="">
+					<div data-role="collapsible" data-collapsed="true">
 						<h3>v1.1.0 - 1/25/2015</h3>
 						<ul>
 							<li>Added game registration system</li>
@@ -73,7 +81,7 @@
 							<li>Minor bug fixed and navigation changes</li>
 						</ul>
                </div>
-               <div data-role="collapsible" data-collapsed="">
+               <div data-role="collapsible" data-collapsed="true">
 						<h3>v1.0.0 - 12/31/2013</h3>
 							<ul>
 								<li>Initial release</li>

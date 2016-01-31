@@ -1,7 +1,9 @@
 <?php
 	require_once('includes/get_games.php');
+	require_once('includes/get_players.php');
 	require_once('includes/get_game_players.php');
 	require_once('includes/set_points.php');
+	require_once('includes/set_emails.php');
 	
 	// Add the given player to the game players table for the given game
 	// and update the number of players in the games table.
@@ -78,7 +80,7 @@
 	}
 	
 	// Change the alternate_order of the first alternate to 0 to move them into the registered players
-	function set_game_players_alternate_to_player($game_id, $game_players_id) {
+	function set_game_players_alternate_to_player($game_id, $game_players_id, $alternate_id) {
 		global $db_connect;
 		
 		$game_players_array = game_players_by_game($game_id);
@@ -100,6 +102,16 @@
 		// Execute the queries
 		$db_action1 = mysqli_query($db_connect, $query1);
 		$db_action2 = mysqli_query($db_connect, $query2);
+		
+		// Setup the email information
+		$alternate_player = players_by_id($alternate_id);
+		$game = games_by_id($game_id);
+		
+		// Send email to new registered player
+		player_emails("alternate_change", array($alternate_player['email']), array($alternate_player['first_name'], date_to_php($game['game_name'])));
+		
+		// Send system email
+		system_emails("alternate_change", array($alternate_player['full_name'], date_to_php($game['game_name'])));
 		
 		return true;
 	}

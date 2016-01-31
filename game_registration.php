@@ -56,9 +56,8 @@
 				set_game_players_delete($game_id, $game_player['game_players_id'], $is_alternate);
 				
 				if ($game_player['alternate_order'] == 0 && $num_alternates > 0) {
-					set_game_players_alternate_to_player($game_id, $game_alternates_array[0]['game_players_id']);
+					set_game_players_alternate_to_player($game_id, $game_alternates_array[0]['game_players_id'], $game_alternates_array[0]['player_id']);
 				}
-				
 				break;
 			default:
 				set_game_players_add($game_id, $player_id, $game_alternates_array[$num_alternates - 1]['alternate_order'] + 1);
