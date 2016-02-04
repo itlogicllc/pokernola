@@ -50,7 +50,7 @@
 		global $players_array;
 
 		for ($i = 0; $i <= count($players_array) - 1; $i++) {
-			if ($players_array[$i]['email'] == $email) {
+			if (strtolower($players_array[$i]['email']) == strtolower($email)) {
 				return $players_array[$i];
 			}
 		}
@@ -63,7 +63,7 @@
 		global $players_array;
 
 		for ($i = 0; $i <= count($players_array) - 1; $i++) {
-			if ($players_array[$i]['email'] == $email && $players_array[$i]['password'] == $password) {
+			if (strtolower($players_array[$i]['email']) == strtolower($email) && $players_array[$i]['password'] == $password) {
 				return $players_array[$i];
 			}
 		}
@@ -77,7 +77,7 @@
 		global $players_array;
 
 		for ($i = 0; $i <= count($players_array) - 1; $i++) {
-			if ($players_array[$i]['email'] == $email) {
+			if (strtolower($players_array[$i]['email']) == strtolower($email)) {
 				return true;
 			}
 		}

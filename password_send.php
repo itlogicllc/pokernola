@@ -32,7 +32,7 @@
 
 			$messages[] = get_message("password_email", array($player_email));
 		} else {
-			$messages[] = get_messages("email_not_exists", array($form_email));
+			$messages[] = get_message("email_not_exists", array($form_email));
 		}
 	}
 	
