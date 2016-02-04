@@ -30,12 +30,13 @@
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$game_date = date('Y-m-d', time());
 		$game_name = date_to_mysql($_POST['game_name']);
+		$game_name_more = $_POST['game_name_more'];
 		$settings_id = $settings_array['settings_id'];
 
 		// Insert new game into games table
 		$query = "INSERT INTO games
-					 (game_date, game_name, settings_id)
-					 VALUES ('$game_date', '$game_name', '$settings_id')";
+					 (game_date, game_name, game_name_more, settings_id)
+					 VALUES ('$game_date', '$game_name', '$game_name_more', '$settings_id')";
 
 		$db_action = mysqli_query($db_connect, $query);
 
@@ -133,13 +134,14 @@
 			<div role="main" class="ui-content">
 				<form action="<?php echo $form_action; ?>" id="add_game_form" name="add_game_form" method="POST">
 					<div>
+						<label for="game_name_more">Game Name:</label>
+						<input id='game_name_more' name='game_name_more' type ='text'>
 						<label for="game_name">Game Date:</label>
 						<input id="game_name" name="game_name" type="text" data-role="datebox" data-options='{"mode":"calbox", "useInline":true, "showInitialValue":true, "minDays":<?php echo $todays_day; ?>, "maxDays":<?php echo $max_days; ?>}'>
 					</div>
 					<br />
 					<div data-role="controlgroup" data-type="horizontal">
 						<input name="submit" type="submit" value="Create Game" />
-						<input name="reset" type="reset" value="Reset" />
 					</div>
 				</form>
 			</div>

@@ -37,12 +37,13 @@
 	}
 
 	$game_name = date_to_mysql($_POST['game_name']);
+	$game_name_more = $_POST['game_name_more'];
 	$total_players = $_POST['total_players'];
 	$total_pot = $_POST['total_pot'];
 
 	// Update the game table
 	$query = "UPDATE games
-				 SET status='$status', registration='$registration', game_name='$game_name', num_players='$total_players', total_pot='$total_pot'
+				 SET status='$status', registration='$registration', game_name='$game_name', game_name_more='$game_name_more', num_players='$total_players', total_pot='$total_pot'
 				 WHERE game_id='$game_id'";
 
 	$db_action = mysqli_query($db_connect, $query);

@@ -70,6 +70,10 @@
 								<input name="registration" id="registration" type="checkbox" data-role="flipswitch" <?php echo ($game['registration'] == 1) ? 'checked=""' : ''; ?>>
 							</div>
 							<div  class="ui-field-contain">
+								<label for="game_name_more">Game Name:</label>
+								<input type="text" name="game_name_more" id="game_name_more" value="<?php echo $game['game_name_more']; ?>"  />
+							</div>
+							<div  class="ui-field-contain">
 								<label for="game_name">Game Date:</label>
 								<input id="game_name" name="game_name" type="text" data-role="datebox" data-options='{"mode":"calbox", "useFocus":true, "defaultValue":"<?php echo $game['game_name']; ?>",  "showInitialValue":true}'>
 							</div>

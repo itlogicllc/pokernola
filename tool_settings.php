@@ -26,6 +26,7 @@
 		$pt10 = $_POST['pt10'];
 		$threshold = $_POST['threshold'];
 		$multiplyer = $_POST['multiplier'];
+		$max_increase = $_POST['max_increase'];
 		$ptplay = $_POST['ptplay'];
 		$split_type = $_POST['split_type'];
 		
@@ -39,9 +40,9 @@
 		$bounty = $_POST['bounty'];
 
 		$query = "INSERT INTO settings
-				 (season_name, start_date, end_date, max_players, first_pay, second_pay, third_pay, pt1, pt2, pt3, pt4, pt5, pt6, pt7, pt8, pt9, pt10, threshold, multiplier, ptplay, split_type, split_points, ko, bounty)
+				 (season_name, start_date, end_date, max_players, first_pay, second_pay, third_pay, pt1, pt2, pt3, pt4, pt5, pt6, pt7, pt8, pt9, pt10, threshold, multiplier, max_increase, ptplay, split_type, split_points, ko, bounty)
 				 VALUES
-				 ('$season_name', '$start_date', '$end_date', '$max_players', '$first_pay', '$second_pay', '$third_pay', '$pt1', '$pt2', '$pt3', '$pt4', '$pt5', '$pt6', '$pt7', '$pt8', '$pt9', '$pt10', '$threshold', '$multiplyer', '$ptplay', '$split_type', '$split_points', '$ko', '$bounty')";
+				 ('$season_name', '$start_date', '$end_date', '$max_players', '$first_pay', '$second_pay', '$third_pay', '$pt1', '$pt2', '$pt3', '$pt4', '$pt5', '$pt6', '$pt7', '$pt8', '$pt9', '$pt10', '$threshold', '$multiplyer', $max_increase, '$ptplay', '$split_type', '$split_points', '$ko', '$bounty')";
 
 		$db_action = mysqli_query($db_connect, $query);
 		
@@ -140,6 +141,8 @@
 						<input type="text" name="threshold" id="threshold" value="<?php echo $current_settings['threshold']; ?>" required />
 						<label for="multiplier">Point Multiplier:</label>
 						<input type="text" name="multiplier" id="multiplier" value="<?php echo $current_settings['multiplier']; ?>" required />
+						<label for="max_increase">Times To Increase Points: <span class='input_note'>0 = unlimited</span></label>
+						<input type="text" name="max_increase" id="max_increase" value="<?php echo $current_settings['max_increase']; ?>" required />
 					</div>
 					<div data-role="fieldcontain">
 						<label for="ptplay">Points for Playing:</label>
@@ -165,7 +168,6 @@
 					<div data-role="controlgroup" data-type="horizontal">
 						<input type="hidden" name="settings_id" id="settings_id" value="<?php echo $current_settings['settings_id']; ?>" />
 						<input name="Submit" type="submit" value="Create New Season" onclick="return getSeasonCreateVerify();" />
-						<input name="Reset" type="reset" value="Reset" />
 					</div>
 				</form>
 			</div>

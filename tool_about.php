@@ -33,6 +33,8 @@
 						<h3>v1.3.1 - 1/30/2016</h3>
 							<ul>
 								<li>Send email to alternate who gets moved to the Players List when someone unregisters</li>
+								<li>Added Game Name</li>
+								<li>Added max increase amount to limit how many times the points will increase based on number of players</li>
 								<li>Updated help</li>
 								<li>Bug Fixes</li>
 							</ul>
