@@ -47,7 +47,7 @@
 			<li class="scoring"><?php echo $settings_array[$i]['pt9']; ?></li>
 			<li class="scoring"><?php echo $settings_array[$i]['pt10']; ?></li>
 		</ol>
-		<p>In addition, the points will be multiplied <span class="scoring"><?php echo $settings_array[$i]['multiplier']; ?></span> times for every <span class="scoring"><?php echo $settings_array[$i]['threshold']; ?></span> players in the game.</p>
+		<p>In addition, the points will be multiplied <span class="scoring"><?php echo $settings_array[$i]['multiplier']; ?></span> times for every <span class="scoring"><?php echo $settings_array[$i]['threshold']; ?></span> players in the game. The points will be increased <span class="scoring"><?php echo ($settings_array[$i]['max_increase'] > 0) ? $settings_array[$i]['max_increase'] : 'unlimited'; ?></span> times.</p>
 	</div>
 	<div class="ui-bar ui-bar-a">
 		<h2>PAYOUTS</h2>

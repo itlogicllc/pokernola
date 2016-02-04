@@ -27,6 +27,12 @@
 		// divided by the threshold number. Then get the multiplier amount by raising the  multiplier
 		// to the power of the threshold amount.
 		$threshold_amount = intval(($game_array['num_players'] - 1) / $settings_array['threshold']);
+		
+		// Limit the max amount of the points to be increased by the max_increase setting
+		if ($settings_array['max_increase'] > 0 && $threshold_amount > $settings_array['max_increase']) {
+			$threshold_amount = $settings_array['max_increase'];
+		}
+		
 		$multiply_amount = pow($settings_array['multiplier'], $threshold_amount);
 
 		// If the multiplier equals 0, force it to be 1.
