@@ -31,12 +31,13 @@
 		$game_date = date('Y-m-d', time());
 		$game_name = date_to_mysql($_POST['game_name']);
 		$game_name_more = $_POST['game_name_more'];
+		$game_time = time_to_mysql($_POST['game_time']);
 		$settings_id = $settings_array['settings_id'];
 
 		// Insert new game into games table
 		$query = "INSERT INTO games
-					 (game_date, game_name, game_name_more, settings_id)
-					 VALUES ('$game_date', '$game_name', '$game_name_more', '$settings_id')";
+					 (game_date, game_name, game_name_more, game_time, settings_id)
+					 VALUES ('$game_date', '$game_name', '$game_name_more', '$game_time', '$settings_id')";
 
 		$db_action = mysqli_query($db_connect, $query);
 
@@ -137,7 +138,9 @@
 						<label for="game_name_more">Game Name:</label>
 						<input id='game_name_more' name='game_name_more' type ='text'>
 						<label for="game_name">Game Date:</label>
-						<input id="game_name" name="game_name" type="text" data-role="datebox" data-options='{"mode":"calbox", "useInline":true, "showInitialValue":true, "minDays":<?php echo $todays_day; ?>, "maxDays":<?php echo $max_days; ?>}'>
+						<input id="game_name" name="game_name" type="text" data-role="datebox" data-options='{"mode":"calbox", "useFocus":true ,"minDays":<?php echo $todays_day; ?>, "maxDays":<?php echo $max_days; ?>, "showInitialValue":true}'>
+						<label for="game_time">Game Time:</label> 
+						<input id="game_time" name="game_time" type="text" value="<?php echo time_to_php($settings_array['default_game_time']); ?>" data-role="datebox" data-options='{"mode":"timeflipbox", "useFocus":true, "overrideTimeFormat":12, "overrideTimeOutput":"%I:%M:%S %p", "defaultValue":"<?php echo $settings_array['default_game_time'] ?>"}' required />
 					</div>
 					<br />
 					<div data-role="controlgroup" data-type="horizontal">

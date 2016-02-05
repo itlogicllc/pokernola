@@ -10,6 +10,7 @@
 		$season_name = $_POST['season_name'];
 		$start_date = date_to_mysql($_POST['start_date']);
 		$end_date = date_to_mysql($_POST['end_date']);
+		$default_game_time = time_to_mysql($_POST['default_game_time']);
 		$max_players = $_POST['max_players'];
 		$first_pay = $_POST['first_pay'];
 		$second_pay = $_POST['second_pay'];
@@ -40,9 +41,9 @@
 		$bounty = $_POST['bounty'];
 
 		$query = "INSERT INTO settings
-				 (season_name, start_date, end_date, max_players, first_pay, second_pay, third_pay, pt1, pt2, pt3, pt4, pt5, pt6, pt7, pt8, pt9, pt10, threshold, multiplier, max_increase, ptplay, split_type, split_points, ko, bounty)
+				 (season_name, start_date, end_date, default_game_time, max_players, first_pay, second_pay, third_pay, pt1, pt2, pt3, pt4, pt5, pt6, pt7, pt8, pt9, pt10, threshold, multiplier, max_increase, ptplay, split_type, split_points, ko, bounty)
 				 VALUES
-				 ('$season_name', '$start_date', '$end_date', '$max_players', '$first_pay', '$second_pay', '$third_pay', '$pt1', '$pt2', '$pt3', '$pt4', '$pt5', '$pt6', '$pt7', '$pt8', '$pt9', '$pt10', '$threshold', '$multiplyer', $max_increase, '$ptplay', '$split_type', '$split_points', '$ko', '$bounty')";
+				 ('$season_name', '$start_date', '$end_date', '$default_game_time', '$max_players', '$first_pay', '$second_pay', '$third_pay', '$pt1', '$pt2', '$pt3', '$pt4', '$pt5', '$pt6', '$pt7', '$pt8', '$pt9', '$pt10', '$threshold', '$multiplyer', $max_increase, '$ptplay', '$split_type', '$split_points', '$ko', '$bounty')";
 
 		$db_action = mysqli_query($db_connect, $query);
 		
@@ -71,9 +72,13 @@
 					</div>
 					<div data-role="fieldcontain">
 						<label for="start_date">Season Start Date:</label>
-						<input id="start_date" name="start_date" type="text" data-role="datebox" data-options='{"mode":"calbox", "useFocus":true, "showInitialValue":true, "calUsePickers":true, "calNoHeader":true}' required />
+						<input id="start_date" name="start_date" type="text" data-role="datebox" data-options='{"mode":"flipbox", "useFocus":true, "showInitialValue":true, "calUsePickers":true, "calNoHeader":true}' required />
 						<label for="end_date">Season End Date:</label>
-						<input id="end_date" name="end_date" type="text" data-role="datebox" data-options='{"mode":"calbox", "useFocus":true, "showInitialValue":true, "calUsePickers":true, "calNoHeader":true}' required />
+						<input id="end_date" name="end_date" type="text" data-role="datebox" data-options='{"mode":"flipbox", "useFocus":true, "showInitialValue":true, "calUsePickers":true, "calNoHeader":true}' required />
+					</div>
+					<div data-role="fieldcontain">
+						<label for="default_game_time">Default Game Start Time:</label>
+						<input id="default_game_time" name="default_game_time" type="text" value="<?php echo time_to_php($current_settings['default_game_time']); ?>" data-role="datebox" data-options='{"mode":"timeflipbox", "useFocus":true, "overrideTimeFormat":12, "overrideTimeOutput":"%I:%M:%S %p", "defaultValue":"<?php echo $current_settings['default_game_time'] ?>"}' required />   
 					</div>
 					<div data-role="fieldcontain">
 						<label for="max_players">Maximum Players:</label>

@@ -29,7 +29,11 @@
 		$game_players_alternates_count = count($game_players_alternates_array);
 		
 		$game_players_array = game_players_by_game($game_id);
-		$game_players_count = count($game_players_array);
+		if ($game_players_array) {
+			$game_players_count = count($game_players_array);
+		} else {
+			$game_players_count = 0;
+		}
 		
 		$settings_array[0] = settings_current($game['settings_id']);
 		$max_players = $settings_array[0]['max_players'];
@@ -66,7 +70,7 @@
 								<input name="status" id="status" type="checkbox" data-role="flipswitch" <?php echo ($game['status'] == 1) ? 'checked=""' : ''; ?>>
 							</div>
 							<div  class="ui-field-contain">
-								<label for="registration">Closed Game:</label>
+								<label for="registration">Registration:</label>
 								<input name="registration" id="registration" type="checkbox" data-role="flipswitch" <?php echo ($game['registration'] == 1) ? 'checked=""' : ''; ?>>
 							</div>
 							<div  class="ui-field-contain">
@@ -75,7 +79,11 @@
 							</div>
 							<div  class="ui-field-contain">
 								<label for="game_name">Game Date:</label>
-								<input id="game_name" name="game_name" type="text" data-role="datebox" data-options='{"mode":"calbox", "useFocus":true, "defaultValue":"<?php echo $game['game_name']; ?>",  "showInitialValue":true}'>
+								<input id="game_name" name="game_name" type="text" data-role="datebox" data-options='{"mode":"calbox", "useFocus":true, "defaultValue":"<?php echo $game['game_name']; ?>", "showInitialValue":true}'>
+							</div>
+							<div data-role="fieldcontain">
+								<label for="game_time">Game Time:</label>
+								<input id="game_time" name="game_time" type="text" value="<?php echo time_to_php($game['game_time']); ?>" data-role="datebox" data-options='{"mode":"timeflipbox", "useFocus":true, "overrideTimeFormat":12, "overrideTimeOutput":"%I:%M:%S %p", "defaultValue":"<?php echo $game['game_time'] ?>"}' required />   
 							</div>
 							<div  class="ui-field-contain">
 								<label for="total_players">Total Players:</label>

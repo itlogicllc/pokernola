@@ -18,10 +18,8 @@
 <body>
 <div data-role="page" id="test">
 	<?php
-	$game_id = $_GET['game_id'];
 	
-	$game_alternates_array = game_players_alternates_by_game($game_id);
-	var_dump($game_alternates_array);
+	var_dump(time_to_datepicker("19:30:00"));
 	
 	?>
 </div>

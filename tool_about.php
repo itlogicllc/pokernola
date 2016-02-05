@@ -30,10 +30,11 @@
 					</div>
 					<br />
 					<div data-role="collapsible" data-collapsed="false">
-						<h3>v1.3.1 - 1/30/2016</h3>
+						<h3>v1.3.1 - 2/5/2016</h3>
 							<ul>
 								<li>Send email to alternate who gets moved to the Players List when someone unregisters</li>
 								<li>Added Game Name</li>
+								<li>Added Game Time to games and settings</li>
 								<li>Added max increase amount to limit how many times the points will increase based on number of players</li>
 								<li>Updated help</li>
 								<li>Bug Fixes</li>

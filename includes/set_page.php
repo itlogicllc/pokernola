@@ -27,7 +27,8 @@
 			setcookie("pokernola_pass", "", time() + (86400 * 365), "/"); // 86400 = 1 day
 		}
 	}
-
+	
+	// Convert date functions
 	function date_to_php($date) {
 		$php_date = date_format(date_create($date), "m-d-Y");
 
@@ -44,5 +45,24 @@
 		$datepicker_date = date('m/d/Y', strtotime($date));
 
 		return $datepicker_date;
+	}
+	
+	// Convert time functions
+	function time_to_php($time) {
+		$php_time = date_format(date_create($time), "h:i:s A");
+
+		return $php_time;
+	}
+
+	function time_to_mysql($time) {
+		$mysql_time = date('H:i:s', strtotime($time));
+
+		return $mysql_time;
+	}
+	
+	function time_to_datepicker($time) {
+		$datepicker_time = date('h:i:s A', strtotime($time));
+		
+		return $datepicker_time;
 	}
 	
