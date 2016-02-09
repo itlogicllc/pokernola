@@ -17,16 +17,35 @@
 	}
 
 	mysqli_free_result($records);
+	
+	// Once the rankings array has been created add the rank number to array. The rank number will be calculated to account for ties.
+	// The rank number will be referenced as index 5 in the array.
+	$score_rank = 0;
+	$score_tie_number = 0;
+	$current_score = 0;
+	$previous_score = 0;
+	
+	for ($i = 0; $i <= count($rankings_array) - 1; $i++) {
+		$current_score = $rankings_array[$i]['point_sum'];
+		if ($current_score != $previous_score) {
+			$score_rank = $score_rank + 1;
+			$score_rank = $score_rank + $score_tie_number;
+			$score_tie_number = 0;
+			array_push($rankings_array[$i], $score_rank);
+		} else {
+			$score_tie_number = $score_tie_number + 1;
+			array_push($rankings_array[$i], $score_rank);
+		}
+		$previous_score = $current_score;
+	}
 
 	// Return the ranking of a player by the given player_id.
-	// The number returned needs to add 1 to it because the count
-	// is 0 based.
 	function rankings_player($player_id) {
 		global $rankings_array;
 
 		for ($i = 0; $i <= count($rankings_array) - 1; $i++) {
 			if ($rankings_array[$i]['player_id'] == $player_id) {
-				return ++$i;
+				return $rankings_array[$i][5];
 			}
 		}
 

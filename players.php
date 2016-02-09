@@ -13,18 +13,6 @@
 	$rankings = rankings_range();
 	// Get the payouts of all players
 	$payouts = payout_range();
-	
-	// Initialize variables for the points tab
-	$score_rank = 0;
-	$score_tie_number = 0;
-	$current_score = 0;
-	$previous_score = 0;
-	
-	// Initalize variables for the payouts tab
-	$payout_rank = 0;
-	$payout_tie_number = 0;
-	$current_payout = 0;
-	$previous_payout = 0;
 ?>
 <!DOCTYPE html>
 <html>
@@ -52,24 +40,15 @@
 							<li data-role="list-divider">Overall Point Rankings</li>
 							<?php
 								for ($i = 0; $i <= count($rankings) - 1; $i++) {
-									$current_score = $rankings[$i]['point_sum'];
-									if ($current_score != $previous_score) {
-										$score_rank = $score_rank + 1;
-										$score_rank = $score_rank + $score_tie_number;
-										$score_tie_number = 0;
-									} else {
-										$score_tie_number = $score_tie_number + 1;
-									}
 							?>
 							<li>
 								<a href="player_details.php?player_id=<?php echo $rankings[$i]['player_id']; ?>">
-									<span class="ranking"><?php echo $score_rank . '.  '; ?></span>
+									<span class="ranking"><?php echo $rankings[$i][5] . '.  '; ?></span>
 									<?php echo $rankings[$i]['full_name']; ?>
 									<span class="ui-li-count"><?php echo(number_format($rankings[$i]['point_sum'], 2)); ?></span>
 								</a>
 							</li>
 							<?php
-									$previous_score = $current_score;
 								}
 							?>
 						</ul>
@@ -79,24 +58,15 @@
 							<li data-role="list-divider">Overall Payout Rankings</li>
 							<?php
 								for ($i = 0; $i <= count($payouts) - 1; $i++) {
-									$current_payout = $payouts[$i]['total_amount'];
-									if ($current_payout != $previous_payout) {
-										$payout_rank = $payout_rank + 1;
-										$payout_rank = $payout_rank + $payout_tie_number;
-										$payout_tie_number = 0;
-									} else {
-										$payout_tie_number = $payout_tie_number + 1;
-									}
 							?>
 							<li>
 								<a href="player_details.php?player_id=<?php echo $payouts[$i]['player_id']; ?>">
-									<span class="ranking"><?php echo $payout_rank . '.  '; ?></span>
+									<span class="ranking"><?php echo $payouts[$i][4] . '.  '; ?></span>
 									<?php echo $payouts[$i]['full_name']; ?>
 									<span class="ui-li-count"><?php echo("$" . number_format($payouts[$i]['total_amount'], 2)); ?></span>
 								</a>
 							</li>
 							<?php
-									$previous_payout = $current_payout;
 								}
 							?>
 						</ul>

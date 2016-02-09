@@ -109,8 +109,8 @@
 					</div>
 					<div class="ui-grid-b">
 						<div class="ui-block-a grid3"><h4><a href="#played" data-transition="pop" data-rel="popup">Played</a></h4><p><?php echo $percent_played_f; ?></p></div>
-						<div class="ui-block-b grid1"><h4><a href="#top_10" data-transition="pop" data-rel="popup">Scored</a></h4><p><?php echo $percent_top_10_f . '(' . $comp_percent_top_10_f . ')'; ?></p></div>
-						<div class="ui-block-c grid2"><h4><a href="#itm" data-transition="pop" data-rel="popup">Paid</a></h4><p><?php echo $percent_top_3_f . '(' . $comp_percent_top_3_f . ')'; ?></p></div>
+						<div class="ui-block-b grid1"><h4><a href="#top_10" data-transition="pop" data-rel="popup">Scored</a></h4><p><?php echo $percent_top_10_f . ' <span class="stat_note">(' . $comp_percent_top_10_f . ')</span>'; ?></p></div>
+						<div class="ui-block-c grid2"><h4><a href="#itm" data-transition="pop" data-rel="popup">Paid</a></h4><p><?php echo $percent_top_3_f . ' <span class="stat_note">(' . $comp_percent_top_3_f . ')</span>'; ?></p></div>
 					</div>
 				</div>
 				<div id="rank" data-role="popup" data-arrow="true">

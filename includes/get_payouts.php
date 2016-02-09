@@ -4,13 +4,13 @@
 	// that are between the dates selected in the session variables.
 	// The records are grouped by each player's full name then sorted by
 	// total amount of their payouts in descending order.
-	$query = "SELECT w.player_id, w.game_id, CONCAT(p.first_name,' ',p.last_name) full_name, sum(w.split_diff * g.total_pot) as total_amount
+	$query = "SELECT w.player_id, w.game_id, CONCAT(p.first_name,' ',p.last_name) full_name, SUM(w.split_diff * g.total_pot) as total_amount
 				 FROM winners AS w
 					INNER JOIN players AS p USING (player_id)
 					INNER JOIN games AS g USING (game_id)
 				 WHERE g.game_name BETWEEN '" . $_SESSION['from_date'] . "' AND '" . $_SESSION['to_date'] . "' AND p.player_id != 0
 				 GROUP BY full_name
-				 ORDER BY total_amount DESC";
+				 ORDER BY total_amount DESC, full_name";
 
 	$records = mysqli_query($db_connect, $query);
 
@@ -19,6 +19,27 @@
 	}
 
 	mysqli_free_result($records);
+	
+	// Once the payout array has been created add the rank number to array. The rank number will be calculated to account for ties.
+	// The rank number will be referenced as index 4 in the array.
+	$payout_rank = 0;
+	$payout_tie_number = 0;
+	$current_payout = 0;
+	$previous_payout = 0;
+	
+	for ($i = 0; $i <= count($payout_array) - 1; $i++) {
+		$current_payout = $payout_array[$i]['total_amount'];
+		if ($current_payout != $previous_payout) {
+			$payout_rank = $payout_rank + 1;
+			$payout_rank = $payout_rank + $payout_tie_number;
+			$payout_tie_number = 0;
+			array_push($payout_array[$i], $payout_rank);
+		} else {
+			$payout_tie_number = $payout_tie_number + 1;
+			array_push($payout_array[$i], $payout_rank);
+		}
+		$previous_payout = $current_payout;
+	}
 
 	// Returns an array of players. The array is a range of how
 	// many players need to be returned. If no arguments are given
