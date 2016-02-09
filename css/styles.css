@@ -73,6 +73,10 @@ body {
 	color: #FFCCC4;
 	text-align: center;
 }
+.alert2 {
+	color: crimson;
+	text-align: center;
+}
 .input_note {
 	color: darkred;
 	font-style: italic;
@@ -88,6 +92,18 @@ body {
 	color: #999;
 	text-decoration: line-through;
 	font-style: italic;
+}
+.game_name {
+	color: #CCC;
+	font-size: smaller;
+	font-weight: lighter;
+}
+.game_name_expired {
+	color: #999;
+	text-decoration: line-through;
+	font-style: italic;
+	font-size: smaller;
+	font-weight: lighter;
 }
 .placed {
    font-size: small;
