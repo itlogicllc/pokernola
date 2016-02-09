@@ -53,7 +53,7 @@
 								}
 								
 								// display the game name as expired
-								echo '<span class="expired">' . date_to_php($games_list[$i]['game_name']); echo (!empty($games_list[$i]['game_name_more'])) ? ' [' . $games_list[$i]['game_name_more'] . ']': ''; '</span>';
+								echo '<span class="expired">' . date_to_php($games_list[$i]['game_name']) . '</span><span class="game_name_expired">'; echo (!empty($games_list[$i]['game_name_more'])) ? '  [' . $games_list[$i]['game_name_more'] . ']': ''; '</span>';
 							// If the game is scheduled to be played, but not yet played.
 							} else {
 								// If the user is logged in.
@@ -86,7 +86,7 @@
 								}
 								
 								// display the game name as not played yet
-								echo '<span>' . date_to_php($games_list[$i]['game_name']); echo (!empty($games_list[$i]['game_name_more'])) ? ' [' . $games_list[$i]['game_name_more'] . ']' : ''; '</span>';
+								echo '<span>' . date_to_php($games_list[$i]['game_name']) . '</span><span class="game_name">'; echo (!empty($games_list[$i]['game_name_more'])) ? '  [' . $games_list[$i]['game_name_more'] . ']' : ''; '</span>';
 							}
 						?>
 						</a>

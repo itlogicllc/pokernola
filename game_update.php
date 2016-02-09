@@ -39,6 +39,7 @@
 		$max_players = $settings_array[0]['max_players'];
 		
 		$game_name = date_to_php($game['game_name']);
+		$game_name_more = $game['game_name_more'];
 	// If the game details were not found go to access denied.
 	} else {
 		header("Location: access_denied.php?message=unauthorized");
@@ -58,15 +59,15 @@
 				<?php require('includes/set_game_update.php'); ?>
 			</div>
 			<div role="main" class="ui-content">
-				<div class="ui-bar ui-bar-a ui-corner-all normal"><h2><?php echo $game_name; ?></h2></div>
-
+				<div class="ui-bar ui-bar-a ui-corner-all normal"><h2><?php echo $game_name; ?><span class="game_name"><?php echo (!empty($game_name_more)) ? '  [' . $game_name_more . ']' : ''; ?></span></h2></div>
+				
 <!--				Start Game Details section.-->
 				<div data-role="collapsible-set">
 					<div data-role="collapsible" data-collapsed="true">
 						<h3>Game Details</h3>
 						<form action="<?php echo 'game_update_details.php?game_id=' . $game_id ?>" method="POST" name="details_form" id="details_form">
 							<div  class="ui-field-contain">
-								<label for="status">Active Game:</label>
+								<label for="status">Game:</label>
 								<input name="status" id="status" type="checkbox" data-role="flipswitch" <?php echo ($game['status'] == 1) ? 'checked=""' : ''; ?>>
 							</div>
 							<div  class="ui-field-contain">
@@ -74,15 +75,15 @@
 								<input name="registration" id="registration" type="checkbox" data-role="flipswitch" <?php echo ($game['registration'] == 1) ? 'checked=""' : ''; ?>>
 							</div>
 							<div  class="ui-field-contain">
-								<label for="game_name_more">Game Name:</label>
+								<label for="game_name_more">Name:</label>
 								<input type="text" name="game_name_more" id="game_name_more" value="<?php echo $game['game_name_more']; ?>"  />
 							</div>
 							<div  class="ui-field-contain">
-								<label for="game_name">Game Date:</label>
+								<label for="game_name">Date:</label>
 								<input id="game_name" name="game_name" type="text" data-role="datebox" data-options='{"mode":"calbox", "useFocus":true, "defaultValue":"<?php echo $game['game_name']; ?>", "showInitialValue":true}'>
 							</div>
 							<div data-role="fieldcontain">
-								<label for="game_time">Game Time:</label>
+								<label for="game_time">Time:</label>
 								<input id="game_time" name="game_time" type="text" value="<?php echo time_to_php($game['game_time']); ?>" data-role="datebox" data-options='{"mode":"timeflipbox", "useFocus":true, "overrideTimeFormat":12, "overrideTimeOutput":"%I:%M:%S %p", "defaultValue":"<?php echo $game['game_time'] ?>"}' required />   
 							</div>
 							<div  class="ui-field-contain">

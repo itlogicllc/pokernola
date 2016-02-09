@@ -108,7 +108,7 @@
 		$game = games_by_id($game_id);
 		
 		// Send email to new registered player
-		player_emails("alternate_change", array($alternate_player['email']), array($alternate_player['first_name'], date_to_php($game['game_name'])));
+		player_emails("alternate_change", array($alternate_player['email']), array($alternate_player['first_name'], date_to_php($game['game_name']), time_to_php($game['game_time'])));
 		
 		// Send system email
 		system_emails("alternate_change", array($alternate_player['full_name'], date_to_php($game['game_name'])));

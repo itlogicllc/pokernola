@@ -30,6 +30,14 @@
 					</div>
 					<br />
 					<div data-role="collapsible" data-collapsed="false">
+						<h3>v1.3.2 - 2/8/2016</h3>
+							<ul>
+								<li>Added game start time to pages and email</li>
+								<li>Updated the datebox to latest version</li>
+								<li>Bug Fixes</li>
+							</ul>
+               </div>
+					<div data-role="collapsible" data-collapsed="true">
 						<h3>v1.3.1 - 2/5/2016</h3>
 							<ul>
 								<li>Send email to alternate who gets moved to the Players List when someone unregisters</li>

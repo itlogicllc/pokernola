@@ -12,7 +12,7 @@
 	// Get how many days today is from the season starting date and see if todays day is inverted, meaning a negative vale from the starting date.
 	// Also get the value of the ended_early date. If the value is anything other that 000-00-00 then the season was ended before the end_date.
 	$todays_day_obj = date_diff(date_create($settings_array['start_date']), date_create(date("Y-m-d")));
-	$todays_day = $todays_day_obj->days;
+	$todays_day = $todays_day_obj->days - 1;
 	$todays_day_inverted = $todays_day_obj->invert;
 	$ended_early_date = $settings_array['ended_early'];
 	
@@ -135,7 +135,7 @@
 			<div role="main" class="ui-content">
 				<form action="<?php echo $form_action; ?>" id="add_game_form" name="add_game_form" method="POST">
 					<div>
-						<label for="game_name_more">Game Name:</label>
+						<label for="game_name_more">Game Name: <span class="input_note">Optional</span></label>
 						<input id='game_name_more' name='game_name_more' type ='text'>
 						<label for="game_name">Game Date:</label>
 						<input id="game_name" name="game_name" type="text" data-role="datebox" data-options='{"mode":"calbox", "useFocus":true ,"minDays":<?php echo $todays_day; ?>, "maxDays":<?php echo $max_days; ?>, "showInitialValue":true}'>

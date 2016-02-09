@@ -42,7 +42,7 @@
 			
 			case "alternate_change":
 				$subject = "Good News From PokerNOLA!";
-				$body .= "<p>Good news, you're in! A player just unregistered from the $args_array[1] game. Since you were the next alternate in line, you just got bumped up and are now registered to play instead.</p><p>Please be courteous, if you will not be able to attend, please go to pokernola.com and unregister from the $args_array[1] game. That way, others will have the opportunity to play.<p>Thanks and good luck!</p>";
+				$body .= "<p>Good news, you're in! A player just unregistered from the $args_array[1] game starting at $args_array[2]. Since you were the next alternate in line, you just got bumped up and are now registered to play instead.</p><p>Please be courteous, if you will not be able to attend, please go to pokernola.com and unregister from the $args_array[1] game so that others will have the opportunity to play.<p>Thanks and good luck!</p>";
 				break;
 
 			case "distribution":

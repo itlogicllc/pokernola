@@ -16,6 +16,8 @@
 	}
 
 	$game_array = games_by_id($game_id);
+	$game_name = date_to_php($game_array['game_name']);
+	$game_name_more = $game_array['game_name_more'];
 	
 	// Find the current game_id in the array of all games played and point to it.
 	// if there is a next element in the array set the next_game_id to the next game id
@@ -89,11 +91,16 @@
 					<?php if ($next_game_id && $game_array['status'] == 0) { ?>
 						<div style="float:left"><a href="game_details.php?game_id=<?php echo $next_game_id ?>"><img src="images/icons/carat-l-white.png" alt="next game"/></a></div>
 					<?php } ?>
-					<h2><?php echo date_to_php($game_array['game_name']); ?></h2>
+					<h2><?php echo $game_name; ?><span class="game_name"><?php echo (!empty($game_name_more)) ? '  [' . $game_name_more . ']' : ''; ?></span></h2>
 					<?php if ($previous_game_id && $game_array['status'] == 0) { ?> 
 						<div style="float:right"><a href="game_details.php?game_id=<?php echo $previous_game_id ?>"><img src="images/icons/carat-r-white.png" alt="previous game" /></a></div>
 					<?php } ?>
 				</div>
+				<?php if ($game_array['status'] == 1) { ?>
+					<div class="comment ui-bar ui-bar-b ui-corner-all"><?php echo 'Game starts at ' . time_to_php($game_array['game_time']); ?></div>
+				<?php } else { ?>
+					<div class="alert2 ui-bar ui-bar-b ui-corner-all"><?php echo 'This game has ended'; ?></div>
+				<?php } ?>
             <div class="grid_container">
                <div class="ui-grid-a">
                   <div class="ui-block-a grid1">

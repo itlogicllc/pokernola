@@ -19,6 +19,8 @@
 	$game_player = game_players_player_by_game($game_id, $player_id);
 	
 	$game_array = games_by_id($game_id);
+	$game_name = date_to_php($game_array['game_name']);
+	$game_name_more = $game_array['game_name_more'];
 	
 	$game_alternates_array = game_players_alternates_by_game($game_id);
 	if ($game_alternates_array) {
@@ -85,7 +87,10 @@
 				<?php require('includes/set_game_details.php'); ?>
 			</div>
 			<div role="main" class="ui-content">
-				<div class="ui-bar ui-bar-a ui-corner-all normal"><h2><?php echo date_to_php($game_array['game_name']); ?></h2></div>
+				<div class="ui-bar ui-bar-a ui-corner-all normal">
+					<h2><?php echo $game_name; ?><span class="game_name"><?php echo (!empty($game_name_more)) ? '  [' . $game_name_more . ']' : ''; ?></span></h2>
+				</div>
+				<div class="comment ui-bar ui-bar-b ui-corner-all"><?php echo 'Game starts at ' . time_to_php($game_array['game_time']); ?></div>
 				<?php if ($player_id) { ?>
 					<?php if ($game_player) { ?>
 					<form action="<?php echo $form_action; ?>" id="unregister" name="unregister" method="POST">
