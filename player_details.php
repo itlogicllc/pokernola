@@ -159,7 +159,7 @@
 							$comp_place_percent_f = number_format(($comp_place_percent * 100), 0) . "%";
 				?>
 						<div data-role="collapsible" data-collapsed="true">
-							<h3>Placed <?php echo $i; ?>: <span class="placed"><?php echo $place_amount; ?> times - <?php echo $place_percent_f; ?> (<?php echo $comp_place_percent_f; ?>)</span></h3>
+							<h3>Placed <?php echo $i; ?>: <span class="placed"><?php echo $place_amount; ?> times - <?php echo $place_percent_f; ?><span class="stat_note"> (<?php echo $comp_place_percent_f; ?>)</span></span></h3>
 							<ul data-role="listview" data-inset="true">
 								<?php for ($li = 0; $li <= $place_amount - 1; $li++) { ?>
 								<li>
