@@ -12,7 +12,7 @@
 	// Get the rankings of all players
 	$rankings = rankings_range();
 	// Get the payouts of all players
-	$payouts = payout_range();
+	$payouts = payouts_range();
 ?>
 <!DOCTYPE html>
 <html>
@@ -43,7 +43,7 @@
 							?>
 							<li>
 								<a href="player_details.php?player_id=<?php echo $rankings[$i]['player_id']; ?>">
-									<span class="ranking"><?php echo $rankings[$i][5] . '.  '; ?></span>
+									<span class="ranking"><?php echo $rankings[$i]['rank'] . '.  '; ?></span>
 									<?php echo $rankings[$i]['full_name']; ?>
 									<span class="ui-li-count"><?php echo(number_format($rankings[$i]['point_sum'], 2)); ?></span>
 								</a>
@@ -61,7 +61,7 @@
 							?>
 							<li>
 								<a href="player_details.php?player_id=<?php echo $payouts[$i]['player_id']; ?>">
-									<span class="ranking"><?php echo $payouts[$i][4] . '.  '; ?></span>
+									<span class="ranking"><?php echo $payouts[$i]['rank'] . '.  '; ?></span>
 									<?php echo $payouts[$i]['full_name']; ?>
 									<span class="ui-li-count"><?php echo("$" . number_format($payouts[$i]['total_amount'], 2)); ?></span>
 								</a>
