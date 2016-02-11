@@ -34,6 +34,8 @@
 							<ul>
 								<li>Added game start time to pages and email</li>
 								<li>Updated the datebox to latest version</li>
+								<li>Fixed Top Dogs and Money Makers to show top 3 of each and account for ties</li>
+								<li>Fixed Rankings History Chart</li>
 								<li>Bug Fixes</li>
 							</ul>
                </div>

@@ -9,8 +9,8 @@
 	require('includes/get_payouts.php');
 	require('includes/get_game_players.php');
 
-	$top_3 = rankings_range(1, 3);
-	$money_makers = payout_range(1, 3);
+	$top_3 = rankings_top(3);
+	$money_makers = payouts_top(3);
 	$number_games_played = count(games_played_all());
 	$number_registered = count(players_all());
 	$number_players_played = game_players_count();
@@ -72,18 +72,30 @@
 				<div id="total_games" data-role="popup" data-arrow="true">
 					<p>The total number of games played</p>
 				</div>
-				<ol data-role="listview" data-inset="true">
+				<ul data-role="listview" data-inset="true">
 					<li data-role="list-divider">Top Dogs</li>
 					<?php for ($i = 0; $i <= count($top_3) - 1; $i++) { ?>
-							<li><a href="player_details.php?player_id=<?php echo $top_3[$i]['player_id']; ?>"><?php echo $top_3[$i]['full_name']; ?><span class="ui-li-count"><?php echo(number_format($top_3[$i]['point_sum'], 2)); ?></span></a></li>
-						<?php } ?>
-				</ol>
-				<ol data-role="listview" data-inset="true">
+					<li>
+						<a href="player_details.php?player_id=<?php echo $top_3[$i]['player_id']; ?>">
+							<span class="ranking"><?php echo $top_3[$i]['rank'] . '.  '; ?></span>
+							<?php echo $top_3[$i]['full_name']; ?>
+							<span class="ui-li-count"><?php echo(number_format($top_3[$i]['point_sum'], 2)); ?></span>
+						</a>
+					</li>
+					<?php } ?>
+				</ul>
+				<ul data-role="listview" data-inset="true">
 					<li data-role="list-divider">Money Makers</li>
 					<?php for ($i = 0; $i <= count($money_makers) - 1; $i++) { ?>
-							<li><a href="player_details.php?player_id=<?php echo $money_makers[$i]['player_id']; ?>"><?php echo $money_makers[$i]['full_name']; ?><span class="ui-li-count"><?php echo '$' . number_format($money_makers[$i]['total_amount'], 2); //echo money_format('%n', $money_makers[$i]['total_amount']);  ?></span></a></li>
-								<?php } ?>
-				</ol>
+					<li>
+						<a href="player_details.php?player_id=<?php echo $money_makers[$i]['player_id']; ?>">
+							<span class="ranking"><?php echo $money_makers[$i]['rank'] . '.  '; ?></span>
+							<?php echo $money_makers[$i]['full_name']; ?>
+							<span class="ui-li-count"><?php echo '$' . number_format($money_makers[$i]['total_amount'], 2); ?></span>
+						</a>
+					</li>
+					<?php } ?>
+				</ul>
 			</div>
 			<div data-role="footer" data-position="fixed">
 				<?php require('includes/set_footer.php'); ?>

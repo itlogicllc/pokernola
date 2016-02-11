@@ -15,28 +15,27 @@
 	$records = mysqli_query($db_connect, $query);
 
 	while ($record = mysqli_fetch_array($records)) {
-		$payout_array[] = $record;
+		$payouts_array[] = $record;
 	}
 
 	mysqli_free_result($records);
 	
 	// Once the payout array has been created add the rank number to array. The rank number will be calculated to account for ties.
-	// The rank number will be referenced as index 4 in the array.
 	$payout_rank = 0;
 	$payout_tie_number = 0;
 	$current_payout = 0;
 	$previous_payout = 0;
 	
-	for ($i = 0; $i <= count($payout_array) - 1; $i++) {
-		$current_payout = $payout_array[$i]['total_amount'];
+	for ($i = 0; $i <= count($payouts_array) - 1; $i++) {
+		$current_payout = $payouts_array[$i]['total_amount'];
 		if ($current_payout != $previous_payout) {
 			$payout_rank = $payout_rank + 1;
 			$payout_rank = $payout_rank + $payout_tie_number;
 			$payout_tie_number = 0;
-			array_push($payout_array[$i], $payout_rank);
+			$payouts_array[$i]['rank'] = $payout_rank;
 		} else {
 			$payout_tie_number = $payout_tie_number + 1;
-			array_push($payout_array[$i], $payout_rank);
+			$payouts_array[$i]['rank'] = $payout_rank;
 		}
 		$previous_payout = $current_payout;
 	}
@@ -44,23 +43,41 @@
 	// Returns an array of players. The array is a range of how
 	// many players need to be returned. If no arguments are given
 	// for the to and from amounts, all players are rturned.
-	function payout_range($from_rank = 1, $to_rank = 0) {
-		global $payout_array;
+	function payouts_range($from_rank = 1, $to_rank = 0) {
+		global $payouts_array;
 
-		if ($to_rank == 0 || $to_rank > count($payout_array)) {
-			$to_rank = count($payout_array);
+		if ($to_rank == 0 || $to_rank > count($payouts_array)) {
+			$to_rank = count($payouts_array);
 		}
 
 		for ($i = 0; $i <= $to_rank - 1; $i++) {
 			if ($from_rank - 1 <= $i && $to_rank - 1 >= $i) {
-				$payout_range_array[] = $payout_array[$i];
+				$payout_range_array[] = $payouts_array[$i];
 			}
 		}
 		
-		if (empty($payout_array)) {
+		if (empty($payouts_array)) {
 			return false;
 		} else {
 			return $payout_range_array;
+		}
+	}
+	
+	// Returns an array of top payout players from 1 to the given rank number.
+	function payouts_top($to_rank) {
+		global $payouts_array;
+		$payouts_top_array = array();
+
+		for ($i = 0; $i <= count($payouts_array) - 1; $i++) {
+			if ($payouts_array[$i]['rank'] <= $to_rank) {
+				$payouts_top_array[] = $payouts_array[$i];
+			}
+		}
+
+		if (empty($payouts_array)) {
+			return false;
+		} else {
+			return $payouts_top_array;
 		}
 	}
 	

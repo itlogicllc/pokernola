@@ -19,8 +19,7 @@
 <div data-role="page" id="test">
 	<?php
 	
-	$payouts = payout_range();
-	var_dump($payouts);
+	var_dump(rankings_history("2016-10-02", 20));
 	
 	?>
 </div>

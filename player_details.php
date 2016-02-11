@@ -132,7 +132,7 @@
 					<p>The total sum of all payouts won</p>
 				</div>
 				<div data-role="controlgroup" data-type="vertical">
-					<a class="ui-btn ui-corner-all ui-shadow ui-icon-eye ui-btn-icon-left" href="#chartpop" data-transition="pop" data-rel="popup" data-position-to="window" onClick="viewRankHistoryChart();">View Ranking History Chart</a>
+					<a class="ui-btn ui-corner-all ui-shadow" href="#chartpop" data-transition="pop" data-rel="popup" data-position-to="window" onClick="viewRankHistoryChart();">View Ranking History Chart</a>
 				</div>
 				<div data-role="collapsible-set">
 				<?php
@@ -229,8 +229,8 @@
 									$games_array = array_reverse(games_played_all());
 
 									for ($i = 0; $i <= count($games_array) - 1; $i++) {
-										$rankings_history = rankings_history($games_array[$i]['game_date'], $player_id);
-
+										$rankings_history = rankings_history($games_array[$i]['game_name'], $player_id);
+										
 										if ($i < count($games_array) - 1) {
 											echo $rankings_history . ", ";
 										} else {

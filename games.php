@@ -36,7 +36,12 @@
 						<a href="<?php echo ($games_list[$i]['registration'] == 1 && $games_list[$i]['status'] == 1) ? 'game_registration.php' : 'game_details.php'; ?>?game_id=<?php echo $games_list[$i]['game_id']; ?>">
 						<?php
 							// Find out if the logged in player was part of this game. Returns false if not, 0 if they played, > 0 if they were an alternate 
-							$game_player = game_players_player_by_game($games_list[$i]['game_id'], $_SESSION['player_logged_in']);
+							if (!empty($_SESSION['player_logged_in'])) {
+								$logged_in_id = $_SESSION['player_logged_in'];
+							} else {
+								$logged_in_id = 0;
+							}
+							$game_player = game_players_player_by_game($games_list[$i]['game_id'], $logged_in_id);
 							// If the game has already been played.
 							if ($game_played) {
 								// If a player is logged in.
