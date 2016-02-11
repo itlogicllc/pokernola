@@ -110,3 +110,30 @@
 		return $players_array;
 	}
 	
+	// Returns an array of the given players level and degree
+	function players_level($player_id, $credits_per_degree) {
+		global $players_array;
+		$players_level = array();
+
+		for ($i = 0; $i <= count($players_array) - 1; $i++) {
+			if ($players_array[$i]['player_id'] == $player_id) {
+				$degree = intval($players_array[$i]['credits'] / $credits_per_degree);
+				$level = intval($degree / 10);
+				
+				$degree = $degree - (10 * $level);
+				
+				$players_level['degree'] = $degree;
+				
+				if ($level > 5) {
+					$level = 5;
+				}
+				
+				$players_level['level'] = $level;
+				
+				return $players_level;
+			}
+		}
+		
+		return false;
+	}
+	
