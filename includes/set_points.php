@@ -1,6 +1,7 @@
 <?php
 	require_once('includes/get_winners.php');
 	require_once('includes/get_games.php');
+	require_once('includes/get_game_players.php');
 	
 	// Make sure the query string has a game_id, if not redirect to access denied.
 	if (!empty($_GET['game_id'])) {
@@ -17,16 +18,24 @@
 		// Get new games and winners recordsets after the tables have been updated.
 		games_refresh();
 		winners_refresh();
+		game_players_refresh();
 
 		$game_array = games_by_id($game_id);
 		$settings_id = $game_array['settings_id'];
 		$settings_array = settings_by_id($settings_id);
 		$winners_array = winners_by_game($game_id);
+		
+		$game_players_array = game_players_by_game($game_id);
+		if ($game_players_array) {
+			$game_players_count = count($game_players_array) - 1;
+		} else {
+			$game_players_count = 0;
+		}
 
 		// Get the threshhold amount by getting the integer value of how many players are in the game
 		// divided by the threshold number. Then get the multiplier amount by raising the  multiplier
 		// to the power of the threshold amount.
-		$threshold_amount = intval(($game_array['num_players'] - 1) / $settings_array['threshold']);
+		$threshold_amount = intval($game_players_count  / $settings_array['threshold']);
 		
 		// Limit the max amount of the points to be increased by the max_increase setting
 		if ($settings_array['max_increase'] > 0 && $threshold_amount > $settings_array['max_increase']) {

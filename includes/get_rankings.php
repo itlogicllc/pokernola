@@ -48,7 +48,7 @@
 			}
 		}
 
-		return false;
+		return 0;
 	}
 
 	// Returns an array of ranked players. The array is a range of how

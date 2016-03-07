@@ -1,17 +1,25 @@
 <a href="#date_panel" class="ui-btn-left" data-role="button" data-icon="<?php echo ($date_pick_on == 1 ? 'calendar' : 'forbidden'); ?>" data-iconpos="notext" data-transition="fade">Calendar</a>
 <h6>
 	<?php
+		require_once('includes/get_players.php');
 		$seasons = settings_all();
 		$season_name = "";
 		
 		for ($i = 0; $i <= count($seasons) - 1; $i++) {
 			if (($seasons[$i]['start_date'] == $_SESSION['from_date']) && ($seasons[$i]['end_date'] == $_SESSION['to_date'])) {
 				$season_name = $seasons[$i]['season_name'];
+				$credits_per_degree = $seasons[$i]['credits_per_degree'];
 			}
 		}
 
 		if (isset($_SESSION['player_first'])) {
 			echo "Welcome " . $_SESSION['player_first'] . "!";
+			
+			if ($credits_per_degree > 0) {
+				$player_id = $_SESSION['player_logged_in'];
+				$players_priority = players_priority($player_id, $credits_per_degree);
+				echo " <span class='level_" . $players_priority['level'] . "'>" .  $players_priority['degree'] . "</span>";
+			}
 		} else {
 			echo "PokerNOLA";
 		}

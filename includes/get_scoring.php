@@ -68,4 +68,13 @@
 		<p>When all players agree, the game will end in a split between each of those players. The sum of unclaimed payouts will be divided and distributed <span class="scoring"><?php echo ($settings_array[$i]['split_type'] == 'even' ? 'evenly' : 'by percentage of total chips held'); ?></span> between each player in the split.</p>
 		<p>The sum of unclaimed points <span class="scoring"><?php echo ($settings_array[$i]['split_points'] == '0' ? 'will not' : 'will also'); ?></span> be divided and distributed amongst each splitting player.</p>
 	</div>
+	<div class="ui-bar ui-bar-a">
+		<h2>PLAYER PRIORITY</h2>
+	</div>
+	<div class="ui-body ui-body-a">
+		<p>Player priority is turned <span class="scoring"><?php echo ($settings_array[$i]['credits_per_degree'] == 0 ? 'OFF' : 'ON'); ?>.</span></p>
+		<?php if($settings_array[$i]['credits_per_degree'] > 0) { ?>
+		<p>There are <span class="scoring"><?php echo $settings_array[$i]['credits_per_degree']; ?></span> credits per degree and 10 degrees per level.</p>
+		<?php } ?>
+	</div>
 </div>

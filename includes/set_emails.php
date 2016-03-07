@@ -1,6 +1,6 @@
 <?php
 	/////////////////////////////////////////////////////////////////////////////
-	// DON'T FORGET TO CHANGE THIS TO TRUE WHEN UPLOADING TO PRODUCTION SERVER //
+	// DON'T FORGET TO CHANGE THIS TO FALSE WHEN UPLOADING TO PRODUCTION SERVER //
 	/////////////////////////////////////////////////////////////////////////////
 	$testing = false;
 	/////////////////////////////////////////////////////////////////////////////
@@ -27,7 +27,7 @@
 		global $headers;
 
 		$to = $players_to;
-		$body = "Hey $args_array[0]:";
+		$body = "Hey $args_array[0],";
 
 		switch ($type) {
 			case "password":
@@ -40,9 +40,24 @@
 				$body .= "<p>Good news! $args_array[1] would like to invite you to join PokerNOLA. New members are always welcome and we hope you accept this invitation to join us. To do so, simply click on or paste the link at the end of this email into your browser's address bar. You will be taken to a new player registration form. Fill it out, submit it and just like that, you will be a PokerNOLA member.</p><p>As soon as you are registered you will be able to log in, register for games, have your performance tracked, score points, get ranked and send invitations to others just like this one.</p><p>We would be happy to have you, so join today and good luck!</p><p>" . $link . "invitation_accept.php?player_id=$args_array[2]&invitation_code=$args_array[3]&invitation_id=$args_array[4]</p>";
 				break;
 			
+			case "register_add":
+				$subject = "Thanks For Registering With PokerNOLA!";
+				$body .= "<p>Good news, you're in! You just registered for the $args_array[1] game starting at $args_array[2]. If you registered as a player, see you there. If you registered as an alternate, there is always hope someone will unregister and open up a spot for you. If that happens, we'll let you know. Also, you can show up at game time and if a registered player doesn't show and you're the next alternate in line, you can take their spot.</p><p>Please be courteous, if you will not be able to attend, please go to pokernola.com and unregister from the $args_array[1] game so that others will have the opportunity to play.<p>Thanks and good luck!</p>";
+				break;
+			
+			case "register_delete":
+				$subject = "Sorry You Can't Make it to PokerNOLA!";
+				$body .= "<p>Sorry you can't make it to the $args_array[1] game, but thanks for being respectful and unregistering so another can play.</p><p>Hope to see you next time!</p>";
+				break;
+			
+			case "register_bumped":
+				$subject = "Sorry You Just Got Bumped at PokerNOLA!";
+				$body .= "<p>Sorry, but you just got bumped from the $args_array[1] game. A higher priority player registered and took your spot, so now you're an alternate for that game.</p><p>However, there is always hope someone will unregister and open up a spot for you. If that happens, we'll let you know. Also, you can show up at game time and if a registered player doesn't show and you're the next alternate in line, you can take their spot.</p><p>Please be courteous, if you will not be able to attend, please go to pokernola.com and unregister from the $args_array[1] game so that others will have the opportunity to play.<p>Thanks!</p>";
+				break;
+			
 			case "alternate_change":
 				$subject = "Good News From PokerNOLA!";
-				$body .= "<p>Good news, you're in! A player just unregistered from the $args_array[1] game starting at $args_array[2]. Since you were the next alternate in line, you just got bumped up and are now registered to play instead.</p><p>Please be courteous, if you will not be able to attend, please go to pokernola.com and unregister from the $args_array[1] game so that others will have the opportunity to play.<p>Thanks and good luck!</p>";
+				$body .= "<p>Good news, you're in! A player just unregistered from the $args_array[1] game starting at $args_array[2]. Since you were the next alternate in line, you just got bumped up and are now registered to play.</p><p>Please be courteous, if you will not be able to attend, please go to pokernola.com and unregister from the $args_array[1] game so that others will have the opportunity to play.<p>Thanks and good luck!</p>";
 				break;
 
 			case "distribution":
@@ -99,6 +114,21 @@
 			case "invitation_deleted":
 				$subject = "PokerNOLA Invitation Deleted";
 				$body = "$args_array[0] just deleted an invitation sent to $args_array[1].";
+				break;
+			
+			case "register_add":
+				$subject = "PokerNOLA Game Registrar Added";
+				$body = "$args_array[0] just registered for the $args_array[1] game.";
+				break;
+			
+			case "register_delete":
+				$subject = "PokerNOLA Game Registrar Deleted";
+				$body = "$args_array[0] just unregistered for the $args_array[1] game.";
+				break;
+			
+			case "register_bumped":
+				$subject = "PokerNOLA Game Registrar Bumped";
+				$body = "$args_array[0] just got bumped from the $args_array[1] game.";
 				break;
 			
 			case "alternate_change":

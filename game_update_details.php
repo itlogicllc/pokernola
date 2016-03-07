@@ -23,13 +23,6 @@
 		exit();
 	}
 
-	// Update the games table.
-	if (isset($_POST['status'])) {
-		$status = 1;
-	} else {
-		$status = 0;
-	}
-
 	if (isset($_POST['registration'])) {
 		$registration = 1;
 	} else {
@@ -44,7 +37,7 @@
 
 	// Update the game table
 	$query = "UPDATE games
-				 SET status='$status', registration='$registration', game_name='$game_name', game_name_more='$game_name_more', game_time='$game_time', num_players='$total_players', total_pot='$total_pot'
+				 SET registration='$registration', game_name='$game_name', game_name_more='$game_name_more', game_time='$game_time', num_players='$total_players', total_pot='$total_pot'
 				 WHERE game_id='$game_id'";
 
 	$db_action = mysqli_query($db_connect, $query);

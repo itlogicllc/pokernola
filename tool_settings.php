@@ -72,9 +72,9 @@
 					</div>
 					<div data-role="fieldcontain">
 						<label for="start_date">Season Start Date:</label>
-						<input id="start_date" name="start_date" type="text" data-role="datebox" data-options='{"mode":"flipbox", "useFocus":true, "showInitialValue":true, "calUsePickers":true, "calNoHeader":true}' required />
+						<input id="start_date" name="start_date" type="text" data-role="datebox" data-options='{"mode":"flipbox", "useFocus":true, "showInitialValue":true, "calUsePickers":true, "calNoHeader":true, "overrideDateFormat":"%m-%d-%Y"}' required />
 						<label for="end_date">Season End Date:</label>
-						<input id="end_date" name="end_date" type="text" data-role="datebox" data-options='{"mode":"flipbox", "useFocus":true, "showInitialValue":true, "calUsePickers":true, "calNoHeader":true}' required />
+						<input id="end_date" name="end_date" type="text" data-role="datebox" data-options='{"mode":"flipbox", "useFocus":true, "showInitialValue":true, "calUsePickers":true, "calNoHeader":true, "overrideDateFormat":"%m-%d-%Y"}' required />
 					</div>
 					<div data-role="fieldcontain">
 						<label for="default_game_time">Default Game Start Time:</label>

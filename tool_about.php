@@ -30,6 +30,14 @@
 					</div>
 					<br />
 					<div data-role="collapsible" data-collapsed="false">
+						<h3>v1.4.0 - 3/5/2016</h3>
+							<ul>
+								<li>Added Player Priority System</li>
+								<li>Updated Help</li>
+								<li>Bug Fixes</li>
+							</ul>
+               </div>
+					<div data-role="collapsible" data-collapsed="true">
 						<h3>v1.3.2 - 2/8/2016</h3>
 							<ul>
 								<li>Added game start time to pages and email</li>

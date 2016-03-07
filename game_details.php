@@ -105,7 +105,7 @@
                <div class="ui-grid-a">
                   <div class="ui-block-a grid1">
                      <h4><a href="#game_players" data-transition="pop" data-rel="popup">Total Players</a></h4>
-                     <p><?php echo $game_array['num_players']; ?></p>
+                     <p><?php echo $game_players_count; ?></p>
                   </div>
                   <div class="ui-block-b grid3">
                      <h4><a href="#game_pot" data-transition="pop" data-rel="popup">Total Pot</a></h4>

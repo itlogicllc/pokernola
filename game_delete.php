@@ -4,6 +4,7 @@
 	require('includes/set_access.php');
 	get_access(1);
 	require('includes/get_games.php');
+	require('includes/set_credits.php');
 
 	// Get a list of all games
 	$games_list = games_all();
@@ -11,6 +12,8 @@
 	// If form is submitted
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$game_id = $_POST['game_id'];
+		
+		set_credits($game_id, 1);
 		
 		$query = "DELETE FROM games
 					 WHERE game_id='$game_id'";
@@ -41,7 +44,7 @@
 							<?php } ?>
                </select>
                <br />
-               <input type="submit" value="Delete Game" data-inline="true" />		
+               <input type="submit" value="Delete Game" data-inline="true" onclick="return getGameDeleteVerify();" <?php echo (count($games_list) == 0) ? 'disabled' : '' ?> />		
             </form>
          </div>
          <div data-role="footer" data-position="fixed">

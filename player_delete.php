@@ -53,7 +53,7 @@
 					<?php } ?>
                </select>
                <br />
-               <input type="submit" value="Delete Player" data-inline="true" />		
+               <input type="submit" value="Delete Player" data-inline="true" onclick="return getPlayerDeleteVerify();" <?php echo (count($playerss_list) == 0) ? 'disabled' : '' ?> />		
             </form>
          </div>
          <div data-role="footer" data-position="fixed">

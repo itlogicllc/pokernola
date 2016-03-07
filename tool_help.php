@@ -2,7 +2,7 @@
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
 	require('includes/set_access.php');
-	//get_access();
+	get_access();
 ?>
 <!DOCTYPE html>
 <html>
@@ -72,7 +72,7 @@
 					
                <div data-role="collapsible" data-iconpos="right">
                   <h3><img src="images/icons/grid-white.png" alt="Games" /> Games</h3>
-                  <p>The Games page shows the game schedule. It is a list of dates that represents when each game is to be, or has been played.</p>
+                  <p>The Games page shows the game schedule in terms of upcoming games and completed games. Selecting the Upcoming <img src="images/icons/grid-white.png" alt="upcoming"/> button shows the schedule of games to be played. The first game in the list is the next game to be played. Selecting the Completed <img src="images/icons/grid-black.png" alt="completed"/> button shows the schedule of games that have already been played. The first game in this list is the most recently completed game.</p>
                   <p>There are two types of games, open and closed. An open game is one in which anyone can play up to the maximum amount of players allowed. A closed game must be registered for prior to playing. Only players registered with PokerNOLA are able to register for closed games. The type of game is indicated by an icon in the game schedule:</p>
                   <p>
 							<img alt="Open Game" src="images/open.png"> - Open Game<br />
@@ -81,7 +81,6 @@
 							<img alt="Alternate" src="images/alternate.png"> - Closed Game the logged in player has registered for as an alternate<br />
 							<img alt="Played Game" src="images/played.png"> - Game the logged in player has played in
 						</p>
-                  <p>Games in the schedule that have already been completed will be grayed out and stricken through.</p>
 						<p>When selecting completed or open games, the game's details will be shown</p>
                   <p>On the games's details page, there is a header with the games's date. If there are arrows on either side of the game date, they can be selected to quickly move to the next or previous game details in the schedule of games that have been completed. There are also statistics shown concerning that game. If the header above a statistic is selected, a tool tip will pop up and define what that statistic means.</p>
 						<p>Below the statistics are a list of Winners of that game, a list of Players who played in that game, a list of Alternates for that game and the Season Rules that governed that game. When selecting the Winners list, it will open to show each player who won, which place they were in, how many points they won and the amount of any payouts they received. If there was a split between players, that will be indicated on the list item along with what percentage of the total pot they won. If a player is selected, that player's details page will be shown. If the Players list is selected, it will open to show all the players who played in that game. If a player is selected, that player's details page will be shown, and likewise for the Alternates list. If the Season Rules list is selected, it will open to show what rules governed the game.</p>
@@ -92,12 +91,30 @@
 					<div data-role="collapsible" data-iconpos="right">
                   <h3><img src="images/icons/check-white.png" alt="Game Registration" /> Game Registration</h3>
 						<p>There are open games, signified by the <img alt="Open Game" src="images/open.png"> icon in the Game Schedule, and closed games, signified by the <img alt="Closed Game" src="images/private.png"> icon in the Game Schedule. Open games are those in which anyone can play. Closed games are those in which only PokerNOLA members can and must registered for. Only if the closed game has not reached its maximum allowed players will guest players be allowed to play.</p>
-						<p> To register for a game, the player must first select the closed game in the Game Schedule they want to register for. If the player is logged in and has not previously registered for the game, they will see a Register button. When selected, their name will be added to the Registered Players list, provided that the game has not already reached its maximum allowed players. The number of maximum allowed players is indicated above the registered players list.</p>
-						<p>If the maximum allowed players has already been reached, the Register button will read Register Alternate. When selecting this button, the logged in player will be added to the Alternates List. The Alternates list is displayed in the order in which players registered. Alternates are not able to play in the selected game, however, by being on the alternates list, they are in line to become registered players. If a registered player unregisters, then the first alternate in line will automatically be moved to the Registered Players List and sent an email notifying them of the change.</p>
+						<p> To register for a game, the player must first select the closed game in the Game Schedule they want to register for. If the player is logged in and has not previously registered for the game, they will see a Register button. When selected, their name will be added to the Registered Players list with a time stamp of when they registered, provided that the game has not already reached its maximum allowed players. They will also be sent an email confirming their registration for the specified game. The number of maximum allowed players is indicated above the registered players list.</p>
+						<p>If the maximum allowed players has already been reached, the Register button will read Register Alternate. When selecting this button, the logged in player will be added to the Alternates List. The Alternates list is displayed in the order in which players registered and can be seen by the time stamp that is listed when they registered. Alternates are not able to play in the selected game, however, by being on the alternates list, they are in line to become registered players. If a registered player unregisters, then the first alternate in line will automatically be moved to the Registered Players List and sent an email notifying them of the change.</p>
 							<p>When a player is logged in and registered as a player, they will see the <img alt="Registered" src="images/registered.png"> icon next to the appropriate game in the Game Schedule. When a player is logged in and registered as an alternate, they will see the <img alt="Alternate" src="images/alternate.png"> icon next to the appropriate game in the Game Schedule. If the player is registered as an alternate and is automatically moved to the Registered Players List, their alternate icon will automatically change to a registered icon.</p>
-						<p>If the player is logged in and has already registered for the game, they will see an Unregister button. If they are already registered as an alternate, the button will read Unregister Alternate instead. In either case, the player will be removed from the appropriate list when the button is selected.</p>
+						<p>If the player is logged in and has already registered for the game, they will see an Unregister button. If they are already registered as an alternate, the button will read Unregister Alternate instead. In either case, the player will be removed from the appropriate list when the button is selected and they will be sent an email confirming that they have unregistered for the specified game.</p>
 						<p>Below the registration button are the Registered List and Alternates List. By selecting the Registered or Alternates button you can toggle between the two lists to see which players are there.</p>
 						<p>Once it has been decided that the registration time has ended, selecting the game in the Game Schedule will show the game's details instead of the registration button and no more registrants will be allowed.</P>
+               </div>
+					
+					<div data-role="collapsible" data-iconpos="right">
+                  <h3><img src="images/levels.png" alt="Player Priority" /> Player Priority</h3>
+						<p>When player priority is turned on, a player needs to earn a specified amount of credit to move up a degree and 10 degrees to move up to the next level. To find out if player priority is on and what number of credits are needed per degree, look under Tools > Season Rules and then the rules for the current season. It can also be found under Season Rules in any game's details.</p>
+						<p>Player priority is a way to give priority to players who play the most when registration for a game is full. Each time a player plays a game, they get one credit. These credits are accumulated and carried over from season to season, they do not start over when the next season starts. Therefore, a player receives priority based on their quantity of play, not just their seniority as a member.</p>
+						<p>When player priority is turned on, each player receives a priority badge. The badge is simply a solid circle with a number in the middle. The number represents what degree the player is and the color of the circle represents their level. Players with the same color badge are separated by what degree they are within that color, just like karate with different belt colors and degrees within those belts. The badge can be seen next to their names when they register for games, or at the bottom of the screen next to their name in the welcome message when logged in.</p>
+						<p>The colored levels are:</p>
+						<p>
+							<img alt="level 0" src="images/level_0.png"> - Level 0<br />
+							<img alt="level 1" src="images/level_1.png"> - Level 1<br />
+							<img alt="level 2" src="images/level_2.png"> - Level 2<br />
+							<img alt="level 3" src="images/level_3.png"> - Level 3<br />
+							<img alt="level 4" src="images/level_4.png"> - Level 4<br />
+							<img alt="level 5" src="images/level_5.png"> - Level 5<br />
+						</p>
+						<p>When game registrations are full, a player with a higher priority than the lowest registered priority will bump that lowest priority to the alternates list and take their place as a registered player. When two players of equal priority are in conflict, their priorities will be determined on a first-come-first-serve basis which can be seen by looking at the time stamp of when they registered.</p>
+						<p>Whenever a player is bumped and moved to the alternates list, they will be sent an email to notify them they are no longer registered to play in the specified game and are now an alternated instead.</p>
                </div>
 					
 					

@@ -135,10 +135,10 @@
 			<div role="main" class="ui-content">
 				<form action="<?php echo $form_action; ?>" id="add_game_form" name="add_game_form" method="POST">
 					<div>
-						<label for="game_name_more">Game Name: <span class="input_note">Optional</span></label>
+						<label for="game_name_more">Game Name: <span class="input_note">optional</span></label>
 						<input id='game_name_more' name='game_name_more' type ='text'>
 						<label for="game_name">Game Date:</label>
-						<input id="game_name" name="game_name" type="text" data-role="datebox" data-options='{"mode":"calbox", "useFocus":true ,"minDays":<?php echo $todays_day; ?>, "maxDays":<?php echo $max_days; ?>, "showInitialValue":true}'>
+						<input id="game_name" name="game_name" type="text" data-role="datebox" data-options='{"mode":"calbox", "useFocus":true ,"minDays":<?php echo $todays_day; ?>, "maxDays":<?php echo $max_days; ?>, "overrideDateFormat":"%m-%d-%Y", "showInitialValue":true}'>
 						<label for="game_time">Game Time:</label> 
 						<input id="game_time" name="game_time" type="text" value="<?php echo time_to_php($settings_array['default_game_time']); ?>" data-role="datebox" data-options='{"mode":"timeflipbox", "useFocus":true, "overrideTimeFormat":12, "overrideTimeOutput":"%I:%M:%S %p", "defaultValue":"<?php echo $settings_array['default_game_time'] ?>"}' required />
 					</div>

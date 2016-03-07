@@ -217,7 +217,7 @@ function setSplits(pay_3, pay_2, pay_1) {
 			// Make sure that a lower winner, preceeding chip count, does not have a larger
 			// chip count than a higher winner.
 			if (preceeding_chip_count > chip_count_value) {
-				alert("Check you chip counts. You can not have a larger chip count for a lower winner!");
+				alert("Check you chip counts! You can not have a larger chip count for a lower winner.");
 				return false;
 			}
 			preceeding_chip_count = chip_count_value;
@@ -301,7 +301,10 @@ function getSeasonCreateVerify() {
 
 // This function checks if the number of players is less than or equal to the max allowed.
 // If it is more than the allowed it forces the administrator to verify they want to override the setting.
-function getPlayersOverVerify(playersNumber, playersMax) {
+function getPlayersOverVerify(objForm) {
+	var playersNumber = parseInt(objForm.total_players.value);
+	var playersMax = parseInt(objForm.max_players.value);
+	
 	if (playersNumber > playersMax) {
 		var answer = confirm("There will be " + playersNumber + " players when only " + playersMax + " players are allowed! Are you sure you want to override this setting?");
 		
@@ -313,4 +316,40 @@ function getPlayersOverVerify(playersNumber, playersMax) {
 	}
 	
 	return true;
+}
+
+// This function disables the registrations buttons and displays a message while the request processes
+function setRequestButton(objButton, objForm) {
+	objButton.innerHTML = "Please Wait...";
+	objButton.disabled = true;
+	
+	objForm.submit();
+}
+
+// This function disables the game status buttons and displays a message while the request processes
+function setGameStatus(objForm) {
+	document.getElementById("game_status_note").innerHTML = "Please Wait...";
+	objForm.submit();
+}
+
+// This function verifies that the selected game should be deleted
+function getGameDeleteVerify() {
+	var answer = confirm("This will delete the selected game and all it's associated data! Are you sure you want to delete it?");
+
+	if (answer === true) {
+		return true;
+	} else {
+		return false;
+	} 
+}
+
+// This function verifies that the selected player should be deleted
+function getPlayerDeleteVerify() {
+	var answer = confirm("This will delete the selected player and all their playing history! Are you sure you want to delete them?");
+
+	if (answer === true) {
+		return true;
+	} else {
+		return false;
+	} 
 }

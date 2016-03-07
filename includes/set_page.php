@@ -1,5 +1,4 @@
 <?php
-
 	require('includes/get_settings.php');
 	
 	$settings_array = settings_current();
@@ -36,7 +35,8 @@
 	}
 
 	function date_to_mysql($date) {
-		$mysql_date = date('Y-m-d', strtotime($date));
+		$mysql_date = date_create_from_format("m-d-Y", $date);
+		$mysql_date = date_format($mysql_date, "Y-m-d");
 
 		return $mysql_date;
 	}
@@ -66,3 +66,9 @@
 		return $datepicker_time;
 	}
 	
+	// Convert mysql time stamp to php timestamp
+	function timestamp_to_php($timestamp) {
+		$php_timestamp = date_format(date_create($timestamp), "m-d-Y h:i:s A");
+
+		return $php_timestamp;
+	}

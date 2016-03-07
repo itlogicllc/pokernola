@@ -72,6 +72,9 @@
 		$percent_top_3_f = number_format(($percent_top_3 * 100), 0) . "%";
 		$comp_percent_top_10_f = number_format(($comp_percent_top_10 * 100), 0) . "%";
 		$comp_percent_top_3_f = number_format(($comp_percent_top_3 * 100), 0) . "%";
+		
+		$credits_per_degree = $settings_array['credits_per_degree'];
+		$players_priority = players_priority($player_id, $credits_per_degree);
 	} else {
 		header("Location: access_denied.php?message=unauthorized");
 		exit();
@@ -95,7 +98,12 @@
 					<?php if ($next_player_id) { ?>
 						<div style="float:left"><a href="player_details.php?player_id=<?php echo $next_player_id ?>"><img src="images/icons/carat-l-white.png" alt="next player"/></a></div>
 					<?php } ?>
-					<h2><?php echo $player['full_name']; ?></h2>
+					<h2>
+						<?php echo $player['full_name']; ?>
+						<?php if ($credits_per_degree > 0) { ?>
+						<span class="<?php echo 'level_' . $players_priority['level']; ?>"><?php echo $players_priority['degree']; ?></span>
+						<?php } ?>
+					</h2>
 					<?php if ($previous_player_id) { ?> 
 						<div style="float:right"><a href="player_details.php?player_id=<?php echo $previous_player_id ?>"><img src="images/icons/carat-r-white.png" alt="previous player" /></a></div>
 					<?php } ?>

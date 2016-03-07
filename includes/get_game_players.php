@@ -3,12 +3,12 @@
 	// Select all game_player records and joining players and games records
 	// that are between the dates selected in the session variables.
 	// The records are orderd by the game dates and then the full name of the players.
-	$game_players_query = "SELECT gp.game_players_id, gp.player_id, gp.game_id, gp.alternate_order, g.game_name, g.status, p.credits, CONCAT(p.first_name,' ',p.last_name) AS full_name
+	$game_players_query = "SELECT gp.game_players_id, gp.player_id, gp.game_id, gp.alternate_order, gp.register_time, g.game_name, g.status, p.credits, CONCAT(p.first_name,' ',p.last_name) AS full_name
 								  FROM game_players AS gp 
 										INNER JOIN players AS p USING (player_id)
 										INNER JOIN games AS g USING (game_id)
 								  WHERE g.game_name BETWEEN '" . $_SESSION['from_date'] . "' AND '" . $_SESSION['to_date'] . "'
-								  ORDER BY g.game_date, gp.alternate_order, full_name";
+								  ORDER BY g.game_date, gp.register_time, gp.alternate_order, full_name";
 
 	$records = mysqli_query($db_connect, $game_players_query);
 
