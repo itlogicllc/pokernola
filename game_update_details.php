@@ -1,27 +1,12 @@
 <?php
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
-	require('includes/set_access.php');
-	get_access(1);
-	require('includes/get_games.php');
 	require('includes/get_game_players.php');
 	require('includes/get_winners.php');
 	require('includes/set_points.php');
-
-	// Make sure the query string has a game_id, if not redirect to access denied.
-	if (!empty($_GET['game_id'])) {
-		$game_id = trim($_GET['game_id']);
-	} else {
-		header("Location: access_denied.php?message=unauthorized");
-		exit();
-	}
-
-	// If the game_id is not found redirect to unauthorized.
-	$game = games_by_id($game_id);
-	if (empty($game)) {
-		header("Location: access_denied.php?message=unauthorized");
-		exit();
-	}
+	
+	$page_access_type = 'admin';
+	set_page_access($page_access_type);
 
 	if (isset($_POST['registration'])) {
 		$registration = 1;

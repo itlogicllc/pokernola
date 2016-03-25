@@ -14,6 +14,9 @@
 	if (!isset($_SESSION['to_date'])) {
 		$_SESSION['to_date'] = $settings_array['end_date'];
 	}
+	
+	require('includes/get_players.php');
+	require('includes/get_games.php');
 
 	$date_pick_on = 0;
 
@@ -71,4 +74,63 @@
 		$php_timestamp = date_format(date_create($timestamp), "m-d-Y h:i:s A");
 
 		return $php_timestamp;
+	}
+	
+	// This function recieves the access level of the page that calls it and only allows players with that
+	// level to access it. It also checks to make sure a player_id or game_id exists in the query string and
+	// that the id is valid when access level is not 'all'.
+	function set_page_access($access_level) {
+		$player_logged_in_id = false;
+		$player_id = false;
+		$game_id = false;
+		$player = false;
+		$game = false;
+		
+		if ($access_level == 'member' || $access_level == 'player' || $access_level == 'admin') {
+			// Make sure the user is logged in
+			if (!isset($_SESSION['player_logged_in'])) {
+				header("Location: index.php?message=must_login&referer=" . $_SERVER['REQUEST_URI']);
+				exit();
+			} else {
+				$player_logged_in_id = $_SESSION['player_logged_in'];
+			}
+		}
+		
+		if ($access_level == 'player' || $access_level == 'admin') {
+			// Make sure there is a player_id or game_id in the query string
+			if (!empty($_GET['game_id']) || !empty($_GET['player_id'])) {
+				if (!empty($_GET['game_id'])) {
+					$game_id = trim($_GET['game_id']);
+					$game = games_by_id($game_id);
+				}
+				if (!empty($_GET['player_id'])) {
+					$player_id = trim($_GET['player_id']);
+					$player = players_by_id($player_id);
+				}
+			} else {
+				header("Location: access_denied.php?message=unauthorized");
+				exit();
+			}
+			
+			// Make sure the game and player are valid
+			if (!$player && !$game) {
+				header("Location: access_denied.php?message=unauthorized");
+				exit();
+			}
+		}
+		
+		if ($access_level == 'admin') {
+			// Make sure the user has admin access
+			if ($_SESSION['player_access'] != 'admin') {
+				header("Location: access_denied.php?message=admin_only");
+				exit();
+			}
+		}
+		
+		// Set global variables to be accessed outside the function
+		$GLOBALS['player_logged_in_id'] = $player_logged_in_id;
+		$GLOBALS['player_id'] = $player_id;
+		$GLOBALS['game_id'] = $game_id;
+		$GLOBALS['player'] = $player;
+		$GLOBALS['game'] = $game;
 	}

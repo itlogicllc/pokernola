@@ -1,23 +1,19 @@
 <?php
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
-	require('includes/set_access.php');
-	//get_access();
-	require('includes/get_games.php');
 	require('includes/get_winners.php');
 	require('includes/get_game_players.php');
-
-	// Make sure the query string has a game_id, if not redirect to access denied.
-	if (!empty($_GET['game_id'])) {
-		$game_id = trim($_GET['game_id']);
-	} else {
-		header("Location: access_denied.php?message=unauthorized");
-		exit();
+	
+	$page_access_type = 'player';
+	set_page_access($page_access_type);
+	if ($game['registration'] == 1 && $game['status'] == 1) {
+		$page_access_type = 'admin';
+		set_page_access($page_access_type);
 	}
+	
 
-	$game_array = games_by_id($game_id);
-	$game_name = date_to_php($game_array['game_name']);
-	$game_name_more = $game_array['game_name_more'];
+	$game_name = date_to_php($game['game_name']);
+	$game_name_more = $game['game_name_more'];
 	
 	// Find the current game_id in the array of all games played and point to it.
 	// if there is a next element in the array set the next_game_id to the next game id
@@ -41,38 +37,30 @@
 		$previous_game_id = false;
 	}
 	
-	
-	
-	// If the game_array was returned, if not redirect to access denied
-	if ($game_array) {
-		$total_pot = $game_array['total_pot'];
-		$game_pot = "$" . number_format($total_pot, 2);
+	$total_pot = $game['total_pot'];
+	$game_pot = "$" . number_format($total_pot, 2);
 
-		$game_winners_array = winners_by_game($game_id);
-		
-		$game_alternates_array = game_players_alternates_by_game($game_id);
-		if ($game_alternates_array) {
-			$game_alternates_count = count($game_alternates_array);
-		} else {
-			$game_alternates_count = 0;
-		}
-		
-		$game_players_array = game_players_by_game($game_id);
-		if ($game_players_array) {
-			$game_players_count = count($game_players_array);
-		} else {
-			$game_players_count = 0;
-		}
+	$game_winners_array = winners_by_game($game_id);
 
-		$first_pot = "$" . number_format($game_winners_array[0]['amount'] * $total_pot, 2);
-		$second_pot = "$" . number_format($game_winners_array[1]['amount'] * $total_pot, 2);
-		$third_pot = "$" . number_format($game_winners_array[2]['amount'] * $total_pot, 2);
-		
-		$settings_array[0] = settings_by_id($game_array['settings_id']);
+	$game_alternates_array = game_players_alternates_by_game($game_id);
+	if ($game_alternates_array) {
+		$game_alternates_count = count($game_alternates_array);
 	} else {
-		header("Location: access_denied.php?message=unauthorized");
-		exit();
+		$game_alternates_count = 0;
 	}
+
+	$game_players_array = game_players_by_game($game_id);
+	if ($game_players_array) {
+		$game_players_count = count($game_players_array);
+	} else {
+		$game_players_count = 0;
+	}
+
+	$first_pot = "$" . number_format($game_winners_array[0]['amount'] * $total_pot, 2);
+	$second_pot = "$" . number_format($game_winners_array[1]['amount'] * $total_pot, 2);
+	$third_pot = "$" . number_format($game_winners_array[2]['amount'] * $total_pot, 2);
+
+	$settings_array[0] = settings_by_id($game['settings_id']);
 ?>
 <!DOCTYPE html>
 <html>
@@ -88,18 +76,18 @@
          </div>
          <div role="main" class="ui-content">
             <div class="ui-bar ui-bar-a ui-corner-all normal">
-					<?php if ($next_game_id && $game_array['status'] == 0) { ?>
+					<?php if ($next_game_id && $game['status'] == 0) { ?>
 						<div style="float:left"><a href="game_details.php?game_id=<?php echo $next_game_id ?>"><img src="images/icons/carat-l-white.png" alt="next game"/></a></div>
 					<?php } ?>
 					<h2><?php echo $game_name; ?><span class="game_name"><?php echo (!empty($game_name_more)) ? '  [' . $game_name_more . ']' : ''; ?></span></h2>
-					<?php if ($previous_game_id && $game_array['status'] == 0) { ?> 
+					<?php if ($previous_game_id && $game['status'] == 0) { ?> 
 						<div style="float:right"><a href="game_details.php?game_id=<?php echo $previous_game_id ?>"><img src="images/icons/carat-r-white.png" alt="previous game" /></a></div>
 					<?php } ?>
 				</div>
-				<?php if ($game_array['status'] == 1) { ?>
-					<div class="comment ui-bar ui-bar-b ui-corner-all"><?php echo 'Game starts at ' . time_to_php($game_array['game_time']); ?></div>
+				<?php if ($game['status'] == 1) { ?>
+					<div class="comment ui-bar ui-corner-all"><?php echo 'Game starts at ' . time_to_php($game['game_time']); ?></div>
 				<?php } else { ?>
-					<div class="alert2 ui-bar ui-bar-b ui-corner-all"><?php echo 'This game has ended'; ?></div>
+					<div class="alert2 ui-bar ui-corner-all"><?php echo 'This game has ended'; ?></div>
 				<?php } ?>
             <div class="grid_container">
                <div class="ui-grid-a">
@@ -152,7 +140,7 @@
 									<h2><?php echo $game_winners_array[$i]['full_name']; ?>
 										<span class="ui-li-count"><?php echo trim(number_format($game_winners_array[$i]['points'], 2)); ?></span>
 									</h2>
-									<p style="margin-top:5px">Payout: <strong class="info"><?php echo "$" . number_format($game_winners_array[$i]['split_diff'] * $total_pot, 2); ?></strong>
+									<p style="margin-top:5px">Payout: <span class="info"><?php echo "$" . number_format($game_winners_array[$i]['split_diff'] * $total_pot, 2); ?></span>
 										<?php
 										if ($game_winners_array[$i]['split'] == 1) {
 											$split_percentage = $game_winners_array[$i]['split_diff'] * 100;

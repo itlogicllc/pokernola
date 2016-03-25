@@ -2,6 +2,9 @@
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
 	require('includes/get_messages.php');
+	
+	$page_access_type = 'member';
+	set_page_access($page_access_type);
 ?>
 <!DOCTYPE html>
 <html>

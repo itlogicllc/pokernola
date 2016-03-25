@@ -1,12 +1,12 @@
 <?php
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
-	require('includes/set_access.php');
-	//get_access();
-	require('includes/get_players.php');
 	require('includes/get_invitation.php');
 	require('includes/set_emails.php');
 	require('includes/get_messages.php');
+	
+	$page_access_type = 'player';
+	set_page_access($page_access_type);
 	
 	// If the form was submitted.
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -45,7 +45,7 @@
 			// Get the invitation details that were just added to the database the
 			// Notify the user that the invitation was sent.
 			} else {
-				$player_id = $_SESSION['player_logged_in'];
+				$player_id = $player_logged_in_id;
 				
 				$inviter = players_by_id($player_id);
 				
@@ -90,7 +90,7 @@
          </div>
          <div role="main" class="ui-content">
 				<?php require('includes/set_messages.php'); ?>
-            <form action="invitation_send.php" id="invite" name="intive" method="POST">
+            <form action="" id="invite" name="intive" method="POST">
                <label for="first_name">Invitee's First Name:</label>
                <input name="first_name" type="text" id="first_name" value="" maxlength="30" required  />
                <label for="last_name">Invitee's Last Name:</label>
@@ -99,8 +99,7 @@
                <input name="email" type="email" id="email" value="" maxlength="30" required  />
                <br />
                <div data-role="controlgroup" data-type="horizontal">
-                  <input name="Submit" type="submit" value="Submit" />
-                  <input name="Reset" type="reset" value="Reset" />
+                  <input name="Submit" type="submit" value="Send Invitation" />
                </div>
             </form>
          </div>

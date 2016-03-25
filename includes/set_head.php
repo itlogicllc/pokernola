@@ -2,7 +2,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PokerNOLA Mobile Web App</title>
 <link rel="stylesheet" href="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-<link href="css/green.min.css" rel="stylesheet" type="text/css" media="all">
+<?php if ($page_access_type == 'admin') {
+	echo '<link href="css/admin.min.css" rel="stylesheet" type="text/css" media="all">';
+} else {
+	echo '<link href="css/default.min.css" rel="stylesheet" type="text/css" media="all">';
+} ?>
 <link href="scripts/datebox/jqm-datebox.min.css" rel="stylesheet" type="text/css" media="all">
 <link href="css/styles.css" rel="stylesheet" type="text/css" media="all">
 

@@ -1,7 +1,7 @@
 <?php
 	if (isset($_SESSION['player_access']) && $_SESSION['player_access'] == 'admin') {
-		echo '<a href="game_update.php?game_id=' . (isset($_GET['game_id']) ? $_GET['game_id'] : '') . '" data-role="button" data-icon="edit" data-iconpos="notext">Edit Game</a>';
-		echo '<a href="game_delete.php" data-role="button" data-icon="minus" data-iconpos="notext">Delete Game</a>';
+		echo '<a href="game_update.php?game_id=' . $game_id . '" class="ui-btn ui-shadow ui-corner-all ui-icon-edit ui-btn-icon-notext ui-btn-b ui-btn-inline">Edit Game</a>';
+		echo '<a href="game_delete.php?game_id=' . $game_id . '" class="ui-btn ui-shadow ui-corner-all ui-icon-minus ui-btn-icon-notext ui-btn-b ui-btn-inline">Delete Game</a>';
 	}
 ?>
 <nav data-role="navbar">

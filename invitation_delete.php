@@ -1,11 +1,11 @@
 <?php
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
-	require('includes/set_access.php');
-	//get_access();
 	require('includes/get_invitation.php');
-	require('includes/get_players.php');
 	require('includes/set_emails.php');
+	
+	$page_access_type = 'player';
+	set_page_access($page_access_type);
 
 	// Make sure the query string has an invitation_id value.
 	// If not redirect to access denied.
@@ -38,5 +38,5 @@
 	system_emails("invitation_deleted", array($player['full_name'], $invitation['full_name']));
 
 	// Refresh the page
-	header("Location: player_profile.php?player_id=" . $player['player_id']);
+	header("Location: player_profile.php?player_id=" . $player_id);
 	exit();

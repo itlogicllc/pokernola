@@ -1,9 +1,10 @@
 <?php
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
-	require('includes/set_access.php');
-	get_access(1);
-	require('includes/get_games.php');
+	require('includes/set_emails.php');
+	
+	$page_access_type = 'admin';
+	set_page_access($page_access_type);
 	
 	// Get the days between the season starting date and ending date
 	$total_days = date_diff(date_create($settings_array['start_date']), date_create($settings_array['end_date']));
@@ -33,11 +34,23 @@
 		$game_name_more = $_POST['game_name_more'];
 		$game_time = time_to_mysql($_POST['game_time']);
 		$settings_id = $settings_array['settings_id'];
+		
+		if (isset($_POST['registration'])) {
+			$registration = 1;
+		} else {
+			$registration = 0;
+		}
+		
+		if (isset($_POST['notify'])) {
+			$notify_members = true;
+		} else {
+			$notify_members = false;
+		}
 
 		// Insert new game into games table
 		$query = "INSERT INTO games
-					 (game_date, game_name, game_name_more, game_time, settings_id)
-					 VALUES ('$game_date', '$game_name', '$game_name_more', '$game_time', '$settings_id')";
+					 (game_date, game_name, game_name_more, game_time, registration, settings_id)
+					 VALUES ('$game_date', '$game_name', '$game_name_more', '$game_time', '$registration', '$settings_id')";
 
 		$db_action = mysqli_query($db_connect, $query);
 
@@ -45,11 +58,11 @@
 		// the newly inserted record.
 		games_refresh();
 		$games_array = games_all();
-		$game_array = $games_array[0];
+		$game = $games_array[0];
 		
 		// Create the variables needed to insert new records into the winners table, one
 		// new record for each winning place.
-		$game_id = $game_array['game_id'];
+		$game_id = $game['game_id'];
 		$first_pay = $settings_array['first_pay'];
 		$second_pay = $settings_array['second_pay'];
 		$third_pay = $settings_array['third_pay'];
@@ -111,9 +124,28 @@
 			$i++;
 		} while ($i < 10);
 		
+		// Send email notification to members if selected
+		if ($notify_members) {
+			// Set up email
+			$bcc = players_all();
+
+			foreach($bcc as $value) {
+				$bcc_array[] = $value['email'];
+			}
+
+			$message = "<p>Games have just been created at PokerNOLA! To see what new upcoming games were just created, <a href='http://pokernola.com/games.php'>go to Games at pokernola.com</a>.</p><p>If they are open games, make sure you check the game start time and show up early to get your spot in case there is a limit to the number of players allowed. If the games are closed, register now to make sure you're on the player's list before anyone else.</p><p>Good luck!</p>";
+
+			// Send email distribution.
+			player_emails("distribution", $bcc_array, array($message));
+
+			// Send system email
+			system_emails("game_created", array());
+		}
+		
 		// Redirect to games.php after all records are created
 		header("Location: games.php");
 	}
+	
 
 	$form_action = $_SERVER['PHP_SELF'];
 	if (isset($_SERVER['QUERY_STRING'])) {
@@ -135,12 +167,17 @@
 			<div role="main" class="ui-content">
 				<form action="<?php echo $form_action; ?>" id="add_game_form" name="add_game_form" method="POST">
 					<div>
-						<label for="game_name_more">Game Name: <span class="input_note">optional</span></label>
-						<input id='game_name_more' name='game_name_more' type ='text'>
 						<label for="game_name">Game Date:</label>
 						<input id="game_name" name="game_name" type="text" data-role="datebox" data-options='{"mode":"calbox", "useFocus":true ,"minDays":<?php echo $todays_day; ?>, "maxDays":<?php echo $max_days; ?>, "overrideDateFormat":"%m-%d-%Y", "showInitialValue":true}'>
-						<label for="game_time">Game Time:</label> 
+						<label for="game_time">Game Time:</label>
 						<input id="game_time" name="game_time" type="text" value="<?php echo time_to_php($settings_array['default_game_time']); ?>" data-role="datebox" data-options='{"mode":"timeflipbox", "useFocus":true, "overrideTimeFormat":12, "overrideTimeOutput":"%I:%M:%S %p", "defaultValue":"<?php echo $settings_array['default_game_time'] ?>"}' required />
+						<label for="game_name_more">Game Name: <span class="input_note2">optional</span></label>
+						<input id='game_name_more' name='game_name_more' type ='text'>
+						<label for="registration">Registration:</label>
+						<input name="registration" id="registration" type="checkbox" data-role="flipswitch" checked>
+						<br><br>
+						<label for="notify">Notify Members</label>
+						<input name="notify" id="notify" type="checkbox">
 					</div>
 					<br />
 					<div data-role="controlgroup" data-type="horizontal">

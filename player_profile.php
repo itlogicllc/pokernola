@@ -1,11 +1,11 @@
 <?php
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
-	require('includes/set_access.php');
-	//get_access();
 	require('includes/get_invitation.php');
-	require('includes/get_players.php');
 	require('includes/get_messages.php');
+	
+	$page_access_type = 'player';
+	set_page_access($page_access_type);
 
 	// Check for form submission
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -15,7 +15,6 @@
 		$password1 = trim($_POST['password1']);
 		$password2 = trim($_POST['password2']);
 		$nickname = trim($_POST['nickname']);
-		$player_id = trim($_POST['player_id']);
 		$email_existing = trim($_POST['email_exist']);
 
 		// The function is true and the email value has changed from the existing email, 
@@ -60,14 +59,14 @@
 	if (isset($_SERVER['QUERY_STRING'])) {
 		$form_action .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 	}
-
-	$player_array = players_by_id($_SESSION['player_logged_in']);
+	
+	$player = players_by_id($player_id);
 	$invited = invitations_invited($_SESSION['player_logged_in']);
 
-	if ($player_array['invitation_id'] == 0) {
+	if ($player['invitation_id'] == 0) {
 		$inviter_name = "PokerNOLA";
 	} else {
-		$invitation = invitations_by_id($player_array['invitation_id']);
+		$invitation = invitations_by_id($player['invitation_id']);
 		$inviter_id = $invitation['player_id'];
 		$inviter = players_by_id($inviter_id);
 		$inviter_name = $inviter['full_name'];
@@ -98,24 +97,21 @@
 						<?php require('includes/set_messages.php'); ?>
                   <form action="<?php echo $form_action; ?>" id="profile_form" name="profile_form" method="POST">
                      <label for="first_name">First Name:</label>
-                     <input name="first_name" type="text" id="first_name" value="<?php echo $player_array['first_name']; ?>" maxlength="30" required  />
+                     <input name="first_name" type="text" id="first_name" value="<?php echo $player['first_name']; ?>" maxlength="30" required  />
                      <label for="last_name">Last Name:</label>
-                     <input name="last_name" type="text" id="last_name" value="<?php echo $player_array['last_name']; ?>" maxlength="30" required  />
+                     <input name="last_name" type="text" id="last_name" value="<?php echo $player['last_name']; ?>" maxlength="30" required  />
                      <label for="email">Email:</label>
-                     <input name="email" type="email" id="email" value="<?php echo $player_array['email']; ?>" maxlength="30" required  />
+                     <input name="email" type="email" id="email" value="<?php echo $player['email']; ?>" maxlength="30" required  />
                      <label for="password1">Password: <span class="input_note">must be at least 6 characters</span></label>
                      <input name="password1" type="password" id="password1" value="" placeholder="Leave this blank to keep current password" />
                      <label for="password2">Verify Password:</label>
                      <input name="password2" type="password" id="password2" value="" />
                      <label for="nickname">Nickname:</label>
-                     <input name="nickname" type="text" id="nickname" value="<?php echo $player_array['comment']; ?>" />
-                     
-							<input type="hidden" name="player_id" id="player_id" value="<?php echo $player_array['player_id']; ?>"  />
-                     <input type="hidden" name="email_exist" id="email_exist" value="<?php echo $player_array['email']; ?>"  />
+                     <input name="nickname" type="text" id="nickname" value="<?php echo $player['comment']; ?>" />
+                     <input type="hidden" name="email_exist" id="email_exist" value="<?php echo $player['email']; ?>"  />
                      <br />
                      <div data-role="controlgroup" data-type="horizontal">
-                        <input name="submit" type="submit" value="Update" onclick="return validateProfileForm(this.form);" />
-                        <input name="reset" type="reset" value="Reset" />
+                        <input name="submit" type="submit" value="Update Profile" onclick="return validateProfileForm(this.form);" />
                      </div>
                   </form>
                </div>
@@ -133,7 +129,7 @@
 									<img class="ui-li-icon" alt="accepted" src="images/accepted.png">
 									<?php echo $invited[$i]['full_name']; ?> <br /><?php echo $invited[$i]['invitation_email']; ?>
 								<?php } else { ?>
-									<a href="invitation_delete.php?invitation_id=<?php echo $invited[$i]['invitation_id']; ?>"> 
+									<a href="invitation_delete.php?invitation_id=<?php echo $invited[$i]['invitation_id']; ?>&player_id=<?php echo $player_logged_in_id; ?>"> 
 										<img class="ui-li-icon" alt="pending" src="images/pending.png">
 										<?php echo $invited[$i]['full_name']; ?> <br /><?php echo $invited[$i]['invitation_email']; ?>
 									</a>

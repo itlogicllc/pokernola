@@ -1,8 +1,9 @@
 <?php
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
-	require('includes/set_access.php');
-	//get_access();
+	
+	$page_access_type = 'player';
+	set_page_access($page_access_type);
 
 	// *** Logout the current user.
 	if (!isset($_SESSION)) {

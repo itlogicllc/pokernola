@@ -1,9 +1,11 @@
 <?php
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
-	require('includes/get_players.php');
 	require('includes/set_emails.php');
 	require('includes/get_messages.php');
+	
+	$page_access_type = 'all';
+	set_page_access($page_access_type);
 
 	// If the form was submitted
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -60,7 +62,7 @@
                <input name="email" type="email" id="email" value="" maxlength="30"  />
                <br />
                <div data-role="controlgroup" data-type="horizontal">
-                  <input name="submit" type="submit" value="Submit" />
+                  <input name="submit" type="submit" value="Request New Password" />
                </div>
             </form>
             <br />

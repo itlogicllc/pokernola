@@ -1,58 +1,39 @@
 <?php
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
-	require('includes/set_access.php');
-	get_access(1);
-	require('includes/get_games.php');
 	require('includes/get_winners.php');
-	require('includes/get_players.php');
 	require('includes/get_game_players.php');
 	require('includes/set_credits.php');
 	
-	// Make sure the query string has a player_id, if not redirect to access denied.
-	if (!empty($_GET['game_id'])) {
-		$game_id = trim($_GET['game_id']);
-	} else {
-		header("Location: access_denied.php?message=unauthorized");
-		exit();
-	}
-
-	// Get the game details based on the game id.
-	$game = games_by_id($game_id);
+	$page_access_type = 'admin';
+	set_page_access($page_access_type);
 	
-	// If the game details were found.
-	if ($game) {
-		$winners_list = winners_by_game($game_id);
-		$ko_list = winners_ko_by_game($game_id);
-		$players_list = players_all();
-		
-		$game_players_alternates_array = game_players_alternates_by_game($game_id);
-		$game_players_alternates_count = count($game_players_alternates_array);
-		
-		$game_players_array = game_players_by_game($game_id);
-		if ($game_players_array) {
-			$game_players_count = count($game_players_array);
-			
-			// resort the game players array by full name
-			foreach ($game_players_array as $key => $row) {
-				$full_name[$key]  = $row['full_name'];
-			}
+	$winners_list = winners_by_game($game_id);
+	$ko_list = winners_ko_by_game($game_id);
+	$players_list = players_all();
 
-			array_multisort($full_name, SORT_ASC, $game_players_array);
-		} else {
-			$game_players_count = 0;
+	$game_players_alternates_array = game_players_alternates_by_game($game_id);
+	$game_players_alternates_count = count($game_players_alternates_array);
+
+	$game_players_array = game_players_by_game($game_id);
+	if ($game_players_array) {
+		$game_players_count = count($game_players_array);
+
+		// resort the game players array by full name
+		foreach ($game_players_array as $key => $row) {
+			$full_name[$key]  = $row['full_name'];
 		}
-		
-		$settings_array[0] = settings_current($game['settings_id']);
-		$max_players = $settings_array[0]['max_players'];
-		
-		$game_name = date_to_php($game['game_name']);
-		$game_name_more = $game['game_name_more'];
-	// If the game details were not found go to access denied.
+
+		array_multisort($full_name, SORT_ASC, $game_players_array);
 	} else {
-		header("Location: access_denied.php?message=unauthorized");
-		exit();
+		$game_players_count = 0;
 	}
+
+	$settings_array[0] = settings_current($game['settings_id']);
+	$max_players = $settings_array[0]['max_players'];
+
+	$game_name = date_to_php($game['game_name']);
+	$game_name_more = $game['game_name_more'];
 	
 	// If form is submitted
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -93,16 +74,16 @@
 					<h2><?php echo $game_name; ?><span class="game_name"><?php echo (!empty($game_name_more)) ? '  [' . $game_name_more . ']' : ''; ?></span></h2>
 				</div>
 				<?php if ($game['status'] == 1) { ?>
-					<div class="comment ui-bar ui-bar-b ui-corner-all"><?php echo 'Game starts at ' . time_to_php($game['game_time']); ?></div>
+					<div class="comment ui-bar ui-corner-all"><?php echo 'Game starts at ' . time_to_php($game['game_time']); ?></div>
 				<?php } else { ?>
-					<div class="alert2 ui-bar ui-bar-b ui-corner-all"><?php echo 'This game has ended'; ?></div>
+					<div class="alert ui-bar ui-corner-all"><?php echo 'This game has ended'; ?></div>
 				<?php } ?>
 				
 				<form action="<?php echo 'game_update.php?game_id=' . $game_id ?>" method="POST" name="game_form" id="game_form">
 					<div align="center">
 						<input name="status" id="status" type="checkbox" data-role="flipswitch" <?php echo ($game['status'] == 1) ? 'checked=""' : ''; ?> onchange="setGameStatus(this.form);">
 						<br>
-						<div class="input_note" id="game_status_note"></div>
+						<div class="alert" id="game_status_note"></div>
 					</div>
 				</form>
 					<div <?php echo ($game['status'] == 0) ? 'class="hidden"' : ''; ?>>
@@ -137,7 +118,7 @@
 								</div>
 								<div data-type="horizontal" data-role="controlgroup">
 									<input type="hidden" name="max_players" id="max_players" value="<?php echo $max_players ?>" />
-									<input type="submit" name="submit" value="Update" data-inline="true" onclick="return getPlayersOverVerify(this.form);" />
+									<input type="submit" name="submit" value="Update Details" data-inline="true" onclick="return getPlayersOverVerify(this.form);" />
 								</div>
 							</form>
 						</div>
@@ -234,7 +215,7 @@
 								</div>
 								<br />
 								<?php } ?>
-								<input type="submit" name="submit" value="Update" data-inline="true" onclick="return setSplits(<?php echo $settings_array[0]['third_pay'] . ',' . $settings_array[0]['second_pay'] . ',' . $settings_array[0]['first_pay'] ?>);" />
+								<input type="submit" name="submit" value="Update Winners" data-inline="true" onclick="return setSplits(<?php echo $settings_array[0]['third_pay'] . ',' . $settings_array[0]['second_pay'] . ',' . $settings_array[0]['first_pay'] ?>);" />
 							</form>
 						</div>
 

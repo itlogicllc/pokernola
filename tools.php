@@ -2,6 +2,9 @@
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
 	
+	$page_access_type = 'member';
+	set_page_access($page_access_type);
+	
 	$todays_date = date("Y-m-d");
 	$current_settings = settings_current();
 	$settings_id = $current_settings['settings_id'];
@@ -45,17 +48,17 @@
 						<a href="tool_settings.php" data-role="button" data-transition="fade">Create New Season</a>
 					<?php } else { ?>
 						<form action="tools.php" id="end_date_form" name="end_date_form" method="POST">
-							<input name="Submit" type="submit" value="End Current Season" onclick="return getSeasonEndVerify();" />
+							<input name="Submit" type="submit" value="End Current Season" data-theme="b" onclick="return getSeasonEndVerify();" />
 						</form>
 					<?php }
 				} ?>
+				<?php if (isset($_SESSION['player_access']) && $_SESSION['player_access'] == 'admin') { ?>
+					<a href="tool_distribution.php?player_id=<?php echo $player_logged_in_id ?>" data-role="button" data-theme="b" data-transition="fade">Email Distribution</a>
+				<?php } ?>
 				<?php if (isset($_SESSION['player_access'])) { ?>
 					<a href="tool_scoring.php" data-role="button" data-transition="fade">Season Rules</a>
 				<?php } ?>
-			   <?php if (isset($_SESSION['player_access']) && $_SESSION['player_access'] == 'admin') { ?>
-					<a href="tool_distribution.php" data-role="button" data-transition="fade">Email Distribution</a>
-				<?php } ?>
-				 <?php if (isset($_SESSION['player_access'])) { ?>
+				<?php if (isset($_SESSION['player_access'])) { ?>
 					<a href="tool_contact.php" data-role="button" data-transition="fade">Contact</a>
 				<?php } ?>
 				<?php if (isset($_SESSION['player_access'])) { ?>

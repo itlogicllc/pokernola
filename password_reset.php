@@ -1,8 +1,10 @@
 <?php
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
-	require('includes/get_players.php');
 	require('includes/set_emails.php');
+	
+	$page_access_type = 'all';
+	set_page_access($page_access_type);
 	
 	// Make sure the query string has a player_id and auth_code value.
 	// If not redirect to access denied.
@@ -70,7 +72,7 @@
                <input type="hidden" name="player_id" id="player_id" value="<?php $player_id; ?>"  />
                <br />
                <div data-role="controlgroup" data-type="horizontal">
-                  <input name="Submit" type="submit" value="Submit" onClick="return passwordValidate(this.form);" />
+                  <input name="Submit" type="submit" value="Reset Password" onClick="return passwordValidate(this.form);" />
                </div>
             </form>
          </div>

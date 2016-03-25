@@ -1,8 +1,10 @@
 <?php
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
-	require('includes/get_players.php');
 	require('includes/get_messages.php');
+	
+	$page_access_type = 'all';
+	set_page_access($page_access_type);
 	
 	// If the player is already logged in, redirect to home.php
 	if (isset($_SESSION['player_logged_in'])) {
@@ -37,12 +39,12 @@
 <html>
    <head>
 		<?php require('includes/set_head.php'); ?>
-		<title>PokerNOLA Login</title>
+		<title>PokerNOLA Log In</title>
    </head>
    <body>
       <div data-role="page" id="login">
          <div data-role="header" data-position="fixed">
-            <h1>Login</h1>
+            <h1>Log In</h1>
 				<?php require('includes/set_home.php'); ?>
          </div>
          <div role="main" class="ui-content">

@@ -1,10 +1,10 @@
 <?php
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
-	require('includes/set_access.php');
-	get_access();
-	require('includes/get_games.php');
 	require('includes/get_game_players.php');
+	
+	$page_access_type = 'member';
+	set_page_access($page_access_type);
 
 	$games_list = games_all();
 	$games_list_reversed = array_reverse($games_list);
@@ -31,7 +31,7 @@
 						</ul>
 					</div>
 					<div id='upcoming'>
-						<ul data-role="listview" data-inset="true" data-split-icon="edit">
+						<ul data-role="listview" data-inset="true" data-split-icon="edit" data-split-theme="b">
 							<li data-role="list-divider">Upcoming Games</li>
 							<?php for ($i = 0; $i <= count($games_list_reversed) - 1; $i++) {
 										// If the game has not been played yet
@@ -88,7 +88,7 @@
 						</ul>
 					</div>
 					<div id='completed'>
-						<ul data-role="listview" data-inset="true" data-split-icon="edit">
+						<ul data-role="listview" data-inset="true" data-split-icon="edit" data-split-theme="b">
 							<li data-role="list-divider">Completed Games</li>
 							<?php for ($i = 0; $i <= count($games_list) - 1; $i++) { 
 										// If the game has been played

@@ -1,10 +1,12 @@
 <?php
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
-	require('includes/get_players.php');
 	require('includes/get_invitation.php');
 	require('includes/set_emails.php');
 	require('includes/get_messages.php');
+	
+	$page_access_type = 'all';
+	set_page_access($page_access_type);
 
 	// Make sure the query string has a player_id, invitation_code and invitation_id value.
 	// If not redirect to access denied.
@@ -93,14 +95,13 @@
 					<input name="last_name" type="text" id="last_name" value="<?php echo $invitation['invitation_last']; ?>" maxlength="30" required  />
 					<label for="email">Email:</label>
 					<input name="email" type="email" id="email" value="<?php echo $invitation['invitation_email']; ?>" maxlength="30" required  />
-					<label for="password1">Password:</label>
+					<label for="password1">Password: <span class="input_note">must be at least 6 characters</span></label>
 					<input name="password1" type="password" id="password1" value="" required  />
 					<label for="password2">Verify Password:</label>
 					<input name="password2" type="password" id="password2" value="" required  />
 					<br />
 					<div data-role="controlgroup" data-type="horizontal">
-						<input name="Submit" type="submit" value="Submit" onClick="return passwordValidate(document.getElementById('password1'), document.getElementById('password2'), 6);" />
-						<input name="Reset" type="reset" value="Reset" />
+						<input name="Submit" type="submit" value="Accept Invitation" onClick="return passwordValidate(document.getElementById('password1'), document.getElementById('password2'), 6);" />
 					</div>
 				</form>
 			</div>

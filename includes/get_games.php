@@ -33,7 +33,7 @@
 	}
 
 	// Formerly games_game
-	// Returns the game record associted with given settings ID.
+	// Returns the game record associted with given game ID.
 	function games_by_id($game_id) {
 		global $games_array;
 

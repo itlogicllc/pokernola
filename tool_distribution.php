@@ -1,11 +1,11 @@
 <?php 
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
-	require('includes/set_access.php');
-	get_access(1);
-	require('includes/get_players.php');
 	require('includes/set_emails.php');
 	require('includes/get_messages.php');
+	
+	$page_access_type = 'admin';
+	set_page_access($page_access_type);
 	
 	// Check for form submission.
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -55,8 +55,7 @@
 					<textarea name="message" id="message"></textarea>
 					<br />
 					<div data-role="controlgroup" data-type="horizontal">
-						<input name="submit" type="submit" value="Submit" />
-						<input name="reset" type="reset" value="Reset" />
+						<input name="submit" type="submit" value="Distribute Email" />
 					</div>
 				</form>
 			</div>

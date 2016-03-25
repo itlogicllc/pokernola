@@ -1,7 +1,7 @@
 <?php
 	if (isset($_SESSION['player_access']) && $_SESSION['player_access'] == 'admin') {
-		echo '<a href="game_add.php" data-role="button" data-icon="plus" data-iconpos="notext">Add Game</a>';
-		echo '<a href="game_delete.php" data-role="button" data-icon="minus" data-iconpos="notext">Delete Game</a>';
+		echo '<a href="game_add.php?player_id=' . $player_logged_in_id . '" class="ui-btn ui-shadow ui-corner-all ui-icon-plus ui-btn-icon-notext ui-btn-b ui-btn-inline">Add Game</a>';
+		echo '<a href="game_delete.php?player_id=' . $player_logged_in_id . '" class="ui-btn ui-shadow ui-corner-all ui-icon-minus ui-btn-icon-notext ui-btn-b ui-btn-inline">Delete Game</a>';
 	}
 ?>
 <nav data-role="navbar">

@@ -1,10 +1,10 @@
 <?php
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
-	require('includes/set_access.php');
-	get_access(1);
-	require('includes/get_games.php');
 	require('includes/set_credits.php');
+	
+	$page_access_type = 'admin';
+	set_page_access($page_access_type);
 
 	// Get a list of all games
 	$games_list = games_all();

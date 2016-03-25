@@ -1,24 +1,12 @@
 <?php
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
-	require('includes/set_access.php');
-	//get_access();
-	require('includes/get_players.php');
 	require('includes/get_winners.php');
-	require('includes/get_games.php');
 	require('includes/get_rankings.php');
 	require('includes/get_game_players.php');
 	
-	// Make sure the query string has a player_id, if not redirect to access denied.
-	if (!empty($_GET['player_id'])) {
-		$player_id = trim($_GET['player_id']);
-	} else {
-		header("Location: access_denied.php?message=unauthorized");
-		exit();
-	}
-
-	// Get the player details associated with the querystring's player_id
-	$player = players_by_id($player_id);
+	$page_access_type = 'player';
+	set_page_access($page_access_type);
 	
 	// Find the current player_id in the array of all players and point to it.
 	// if there is a next element in the array set the next_player_id to the next game id
@@ -42,43 +30,40 @@
 		$previous_player_id = false;
 	}
 	
-	// If a player details array is returned then initalize all the variables.
-	// If not, redirect to the access denied page.
-	If ($player) {
-		$player_rank = rankings_player($player_id);
-		$top_10_count = winner_range_count($player_id, 1, 10);
-		$top_3_count = winner_range_count($player_id, 1, 3);
-		$total_payout = "$" . number_format(winner_total_payout($player_id), 2);
-		$total_points = number_format(winner_total_points($player_id), 2);
-		$games_count = count(games_played_all());
-		$number_played = game_players_played($player_id);
+	$player_rank = rankings_player($player_id);
+	$top_10_count = winner_range_count($player_id, 1, 10);
+	$top_3_count = winner_range_count($player_id, 1, 3);
+	$total_payout = "$" . number_format(winner_total_payout($player_id), 2);
+	$total_points = number_format(winner_total_points($player_id), 2);
+	$games_count = count(games_played_all());
+	$number_played = game_players_played($player_id);
 
-		if ($number_played == 0) {
-			$percent_top_10 = 0;
-			$percent_top_3 = 0;
-		} else {
-			$percent_top_10 = $top_10_count / $number_played;
-			$percent_top_3 = $top_3_count / $number_played;
-		}
-		
-		// Calculate values using full percision
-		$percent_played = $number_played / $games_count;
-		$comp_percent_top_10 = $percent_top_10 * $percent_played;
-		$comp_percent_top_3 = $percent_top_3 * $percent_played;
-		
-		// After calculated format and round to percision used in display
-		$percent_played_f = number_format(($percent_played * 100), 0) . "%";
-		$percent_top_10_f = number_format(($percent_top_10 * 100), 0) . "%";
-		$percent_top_3_f = number_format(($percent_top_3 * 100), 0) . "%";
-		$comp_percent_top_10_f = number_format(($comp_percent_top_10 * 100), 0) . "%";
-		$comp_percent_top_3_f = number_format(($comp_percent_top_3 * 100), 0) . "%";
-		
-		$credits_per_degree = $settings_array['credits_per_degree'];
-		$players_priority = players_priority($player_id, $credits_per_degree);
+	if ($number_played == 0) {
+		$percent_top_10 = 0;
+		$percent_top_3 = 0;
 	} else {
-		header("Location: access_denied.php?message=unauthorized");
-		exit();
+		$percent_top_10 = $top_10_count / $number_played;
+		$percent_top_3 = $top_3_count / $number_played;
 	}
+
+	// Calculate values using full percision
+	if ($games_count == 0) {
+		$percent_played = 0;
+	} else {
+		$percent_played = $number_played / $games_count;
+	}
+	$comp_percent_top_10 = $percent_top_10 * $percent_played;
+	$comp_percent_top_3 = $percent_top_3 * $percent_played;
+
+	// After calculated format and round to percision used in display
+	$percent_played_f = number_format(($percent_played * 100), 0) . "%";
+	$percent_top_10_f = number_format(($percent_top_10 * 100), 0) . "%";
+	$percent_top_3_f = number_format(($percent_top_3 * 100), 0) . "%";
+	$comp_percent_top_10_f = number_format(($comp_percent_top_10 * 100), 0) . "%";
+	$comp_percent_top_3_f = number_format(($comp_percent_top_3 * 100), 0) . "%";
+
+	$credits_per_degree = $settings_array['credits_per_degree'];
+	$players_priority = players_priority($player_id, $credits_per_degree);
 ?>
 <!DOCTYPE html>
 <html>
@@ -108,7 +93,7 @@
 						<div style="float:right"><a href="player_details.php?player_id=<?php echo $previous_player_id ?>"><img src="images/icons/carat-r-white.png" alt="previous player" /></a></div>
 					<?php } ?>
 				</div>
-				<div class="comment ui-bar ui-bar-b ui-corner-all"><?php echo $player['comment']; ?></div>
+				<div class="comment ui-bar ui-corner-all"><?php echo $player['comment']; ?></div>
 				<div class="grid_container">
 					<div class="ui-grid-b">
 						<div class="ui-block-a grid1"><h4><a href="#rank" data-transition="pop" data-rel="popup">Rank</a></h4><p><?php echo $player_rank; ?></p></div>

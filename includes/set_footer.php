@@ -31,8 +31,8 @@
 		<span class="season_range date_range" id="season_name"><?php echo $season_name ?></span>
 	<?php } ?>
 </h6>
-<?php if (isset($_SESSION['player_logged_in'])) { ?>
-	<a href="player_profile.php" class="ui-btn-right" data-role="button" data-icon="bars" data-iconpos="notext" data-transition="fade">Edit Profile</a>
+<?php if ($player_logged_in_id) { ?>
+	<a href="player_profile.php?player_id=<?php echo $player_logged_in_id ?>" class="ui-btn-right" data-role="button" data-icon="bars" data-iconpos="notext" data-transition="fade">Edit Profile</a>
 <?php } else { ?>
 	<a href="index.php" class="ui-btn-right" data-role="button" data-icon="lock" data-iconpos="notext" data-transition="fade">Log in</a>
 <?php } ?>

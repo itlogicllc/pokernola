@@ -28,9 +28,10 @@ body {
 	text-align: center;
 	height: 80px;
 }
-.grid1 a {
+.grid1 a, .grid1 > p {
 	color: #000;
 	text-decoration: none;
+	text-shadow: none;
 }
 .grid2 {
 	background-color: #DDD;
@@ -38,9 +39,10 @@ body {
 	text-align: center;
 	height: 80px;
 }
-.grid2 a {
+.grid2 a, .grid2 > p {
 	color: #000;
 	text-decoration: none;
+	text-shadow: none;
 }
 .grid3 {
 	background-color: #CCC;
@@ -48,9 +50,10 @@ body {
 	text-align: center;
 	height: 80px;
 }
-.grid3 a {
+.grid3 a, .grid3 > p {
 	color: #000;
 	text-decoration: none;
+	text-shadow: none;
 }
 .label_div {
 	text-align: center;
@@ -58,9 +61,6 @@ body {
 	padding-top: 10px;
 	padding-bottom: 10px;
 	font-weight: bold;
-}
-.admin {
-	color: red;
 }
 .comment {
 	text-align: center;
@@ -79,6 +79,11 @@ body {
 }
 .input_note {
 	color: darkred;
+	font-style: italic;
+	font-size: smaller;
+}
+.input_note2 {
+	color: #FFCCC4;
 	font-style: italic;
 	font-size: smaller;
 }
@@ -207,6 +212,9 @@ body {
 .ui-icon-alternate:after {
    background-image: url("../images/alternate.png");
    background-size: 16px 16px;
+}
+.ui-li-count {
+	font-size: smaller;
 }
 
 

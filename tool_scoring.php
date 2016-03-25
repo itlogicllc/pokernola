@@ -1,8 +1,9 @@
 <?php
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
-	require('includes/set_access.php');
-	get_access();
+	
+	$page_access_type = 'member';
+	set_page_access($page_access_type);
 	
 	$settings_array = settings_all();
 	$todays_date = date("Y-m-d");

@@ -22,7 +22,7 @@
 				break;
 			
 			case "unauthorized":
-				$message = "<p class='alert'>You are not authorized for this action! If you pasted a link you received into your browser's address bar, make sure you pasted the entire link. Otherwise, report to your local police station and surrender yourself as a cyber criminal.</p>";
+				$message = "<p class='alert'>You are not authorized for this action! Please try again, or if you pasted a link you received into your browser's address bar, make sure you pasted the entire link. Otherwise, report to your local police station and surrender yourself as a cyber criminal.</p>";
 				break;
 			
 			case "password_reset":

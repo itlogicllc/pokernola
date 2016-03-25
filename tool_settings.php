@@ -1,8 +1,9 @@
 <?php
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
-	require('includes/set_access.php');
-	get_access(1);
+	
+	$page_access_type = 'admin';
+	set_page_access($page_access_type);
 	
 	$current_settings = settings_current();
 
@@ -65,14 +66,14 @@
 			</div>
 			<div role="main" class="ui-content">
 				<form action="tool_settings.php" id="settings_form" name="settings_form" method="POST">
-					<div class="ui-bar ui-bar-a ui-corner-all info"><h2>ALL fields are required!</h2></div>
+					<div class="ui-bar ui-bar-a ui-corner-all alert"><h2>ALL fields are required!</h2></div>
 					<div data-role="fieldcontain">
 						<label for="season_name">Season Name:</label>
 						<input id="season_name" name="season_name" type="text" value="" required />
 					</div>
 					<div data-role="fieldcontain">
 						<label for="start_date">Season Start Date:</label>
-						<input id="start_date" name="start_date" type="text" data-role="datebox" data-options='{"mode":"flipbox", "useFocus":true, "showInitialValue":true, "calUsePickers":true, "calNoHeader":true, "overrideDateFormat":"%m-%d-%Y"}' required />
+						<input id="start_date" name="start_date" type="text" data-role="datebox" data-options='{"mode":"flipbox", "useFocus":true, "showInitialValue":true, "calUsePickers":true, "calNoHeader":true, "overrideDateFormat":"%m-%d-%Y"}' required /><br>
 						<label for="end_date">Season End Date:</label>
 						<input id="end_date" name="end_date" type="text" data-role="datebox" data-options='{"mode":"flipbox", "useFocus":true, "showInitialValue":true, "calUsePickers":true, "calNoHeader":true, "overrideDateFormat":"%m-%d-%Y"}' required />
 					</div>
@@ -86,9 +87,9 @@
 					</div>
 					<div data-role="fieldcontain">
 						<label for="first_pay">First Payout:</label>
-						<input name="first_pay" id="first_pay" type="text" value="<?php echo $current_settings['first_pay']; ?>"  required />
+						<input name="first_pay" id="first_pay" type="text" value="<?php echo $current_settings['first_pay']; ?>"  required /><br>
 						<label for="second_pay">Second Payout:</label>
-						<input name="second_pay" id="second_pay" type="text" value="<?php echo $current_settings['second_pay']; ?>" required />
+						<input name="second_pay" id="second_pay" type="text" value="<?php echo $current_settings['second_pay']; ?>" required /><br>
 						<label for="third_pay">Third Payout:</label>
 						<input type="text" name="third_pay" id="third_pay" value="<?php echo $current_settings['third_pay']; ?>" required/>
 					</div>
@@ -143,10 +144,10 @@
 					</div>
 					<div data-role="fieldcontain">
 						<label for="threshold">Player Threshold:</label>
-						<input type="text" name="threshold" id="threshold" value="<?php echo $current_settings['threshold']; ?>" required />
+						<input type="text" name="threshold" id="threshold" value="<?php echo $current_settings['threshold']; ?>" required /><br>
 						<label for="multiplier">Point Multiplier:</label>
-						<input type="text" name="multiplier" id="multiplier" value="<?php echo $current_settings['multiplier']; ?>" required />
-						<label for="max_increase">Times To Increase Points: <span class='input_note'>0 = unlimited</span></label>
+						<input type="text" name="multiplier" id="multiplier" value="<?php echo $current_settings['multiplier']; ?>" required /><br>
+						<label for="max_increase">Times To Increase Points: <span class='input_note2'>0 = unlimited</span></label>
 						<input type="text" name="max_increase" id="max_increase" value="<?php echo $current_settings['max_increase']; ?>" required />
 					</div>
 					<div data-role="fieldcontain">
@@ -166,7 +167,7 @@
 					</div>
 					<div data-role="fieldcontain">
 						<label for="ko">Knock Out Points:</label>
-						<input type="text" name="ko" id="ko" value="<?php echo $current_settings['ko']; ?>" required />
+						<input type="text" name="ko" id="ko" value="<?php echo $current_settings['ko']; ?>" required /><br>
 						<label for="bounty">Bounty Points:</label>
 						<input type="text" name="bounty" id="bounty" value="<?php echo $current_settings['bounty']; ?>" required />	
 					</div>

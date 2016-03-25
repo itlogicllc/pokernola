@@ -1,26 +1,16 @@
 <?php
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
-	require('includes/set_access.php');
-	get_access();
-	require('includes/get_games.php');
-	require('includes/get_players.php');
 	require('includes/get_game_players.php');
 	require('includes/set_game_players.php');
-
-	$game_id = $_GET['game_id'];
 	
-	if (isset($_SESSION['player_logged_in'])) {
-		$player_id = $_SESSION['player_logged_in'];
-	} else {
-		$player_id = false;
-	}
+	$page_access_type = 'player';
+	set_page_access($page_access_type);
 	
-	$game_player = game_players_player_by_game($game_id, $player_id);
+	$game_player = game_players_player_by_game($game_id, $player_logged_in_id);
 	
-	$game_array = games_by_id($game_id);
-	$game_name = date_to_php($game_array['game_name']);
-	$game_name_more = $game_array['game_name_more'];
+	$game_name = date_to_php($game['game_name']);
+	$game_name_more = $game['game_name_more'];
 	
 	$game_alternates_array = game_players_alternates_by_game($game_id);
 	if ($game_alternates_array) {
@@ -45,7 +35,7 @@
 	if ($credits_per_degree > 0) {
 		if ($game_players_array) {
 			// get logged in players priority
-			$this_player_priority = players_priority($player_id, $credits_per_degree);
+			$this_player_priority = players_priority($player_logged_in_id, $credits_per_degree);
 			
 			// add the level and degree of each player in the game to the array
 			for ($i = 0; $i <= $num_players - 1; $i++) {
@@ -104,7 +94,7 @@
 		// delete record from game_players and update the num_players count in the games table.
 		switch ($action) {
 			case "register":
-				set_game_players_add($game_id, $player_id, 0, 1);
+				set_game_players_add($game_id, $player_logged_in_id, 0, 1);
 				break;
 			
 			case "unregister":
@@ -113,7 +103,7 @@
 				} else {
 					$is_alternate = 1;
 				}
-				set_game_players_delete($game_id, $player_id, $is_alternate, 1);
+				set_game_players_delete($game_id, $player_logged_in_id, $is_alternate, 1);
 				
 				if ($game_player['alternate_order'] == 0 && $num_alternates > 0) {
 					set_game_players_alternate_to_player($game_id, $game_alternates_array[0]['game_players_id'], $game_alternates_array[0]['player_id']);
@@ -122,11 +112,11 @@
 			
 				case "register_priority":
 					set_game_players_move($game_id, $last_player_id, $num_alternates + 1, 0, 1);
-					set_game_players_add($game_id, $player_id, 0, 1);
+					set_game_players_add($game_id, $player_logged_in_id, 0, 1);
 					break;
 			
 			default:
-				set_game_players_add($game_id, $player_id, $game_alternates_array[$num_alternates - 1]['alternate_order'] + 1, 1);
+				set_game_players_add($game_id, $player_logged_in_id, $game_alternates_array[$num_alternates - 1]['alternate_order'] + 1, 1);
 		}
 		
 		// Refresh the page to show the updates
@@ -144,6 +134,7 @@
 		<?php require('includes/set_head.php'); ?>
 		<title>PokerNOLA Game Registration</title>
 	</head>
+<!--	<body onload="javascript_countdown.init(30, 'javascript_countdown_time');">-->
 	<body>
 		<div data-role="page" id="game_registration">
 			<div data-role="header" data-position="fixed">
@@ -154,8 +145,8 @@
 				<div class="ui-bar ui-bar-a ui-corner-all normal">
 					<h2><?php echo $game_name; ?><span class="game_name"><?php echo (!empty($game_name_more)) ? '  [' . $game_name_more . ']' : ''; ?></span></h2>
 				</div>
-				<div class="comment ui-bar ui-bar-b ui-corner-all"><?php echo 'Game starts at ' . time_to_php($game_array['game_time']); ?></div>
-				<?php if ($player_id) { ?>
+				<div class="comment ui-bar ui-corner-all"><?php echo 'Game starts at ' . time_to_php($game['game_time']); ?><br><span class="alert2" id="javascript_countdown_time"></span></div>
+				<?php if ($player_logged_in_id) { ?>
 					<?php if ($game_player) { ?>
 					<form action="<?php echo $form_action; ?>" id="unregister" name="unregister" method="POST">
 						<button type="button" data-iconpos="top" data-icon="delete" onclick="setRequestButton(this, this.form);"><?php echo ($game_player['alternate_order'] == 0) ? 'Unregister' : 'Unregister Alternate'; ?></button>

@@ -1,28 +1,14 @@
 <?php
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
-	require('includes/set_access.php');
-	get_access(1);
 	require('includes/get_winners.php');
-	require('includes/get_games.php');
 	require('includes/set_points.php');
 	require('includes/set_splits.php');
 	
-	// Make sure the query string has a game_id, if not redirect to access denied.
-	if (!empty($_GET['game_id'])) {
-		$game_id = trim($_GET['game_id']);
-	} else {
-		header("Location: access_denied.php?message=unauthorized");
-		exit();
-	}
+	$page_access_type = 'admin';
+	set_page_access($page_access_type);
 
-	// If the game_id is not found redirect to unauthorized.
 	$winners_array = winners_by_game($game_id);
-	if (empty($winners_array)) {
-		header("Location: access_denied.php?message=unauthorized");
-		exit();
-	}
-	
 	$game_array = games_by_id($game_id);
 	$settings_id = $game_array['settings_id'];
 	$settings_array = settings_current($settings_id);

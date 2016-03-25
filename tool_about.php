@@ -1,6 +1,9 @@
 <?php 
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
+	
+	$page_access_type = 'member';
+	set_page_access($page_access_type);
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,6 +33,16 @@
 					</div>
 					<br />
 					<div data-role="collapsible" data-collapsed="false">
+						<h3>v1.4.1 - 3/17/2016</h3>
+							<ul>
+								<li>Select if registration is on or off when creating a game</li>
+								<li>Email all players when games are created</li>
+								<li>Made admin pages and functions a different theme</li>
+								<li>Updated page security</li>
+								<li>Bug Fixes</li>
+							</ul>
+               </div>
+					<div data-role="collapsible" data-collapsed="true">
 						<h3>v1.4.0 - 3/5/2016</h3>
 							<ul>
 								<li>Added Player Priority System</li>

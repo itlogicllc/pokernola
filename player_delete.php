@@ -1,9 +1,9 @@
 <?php
 	require('../db_connections/pokernola.php');
 	require('includes/set_page.php');
-	require('includes/set_access.php');
-	get_access(1);
-	require('includes/get_players.php');
+	
+	$page_access_type = 'admin';
+	set_page_access($page_access_type);
 	
 	// Get list of all players
 	$players_list = players_all();
@@ -43,7 +43,7 @@
 				<?php require('includes/set_players.php'); ?>
          </div>
          <div role="main" class="ui-content">
-            <form action="player_delete.php" id="delete_player_form" name="delete_player_form" method="POST">
+            <form action="" id="delete_player_form" name="delete_player_form" method="POST">
                <label for="player_id">Select Player to Delete:</label>
                <select name="player_id" id="player_id" data-native-menu="true">
 					<?php for ($i = 0; $i <= count($players_list) - 1; $i++) { ?>
@@ -53,7 +53,7 @@
 					<?php } ?>
                </select>
                <br />
-               <input type="submit" value="Delete Player" data-inline="true" onclick="return getPlayerDeleteVerify();" <?php echo (count($playerss_list) == 0) ? 'disabled' : '' ?> />		
+               <input type="submit" value="Delete Player" data-inline="true" onclick="return getPlayerDeleteVerify();" <?php echo (count($players_list) == 0) ? 'disabled' : '' ?> />		
             </form>
          </div>
          <div data-role="footer" data-position="fixed">

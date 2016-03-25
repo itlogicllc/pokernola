@@ -135,6 +135,11 @@
 				$subject = "PokerNOLA Alternate Change";
 				$body = "$args_array[0] just got moved from the Alternates List to the Players List for the $args_array[1] game.";
 				break;
+			
+			case "game_created":
+				$subject = "PokerNOLA Game Added";
+				$body = "Games were just created.";
+				break;
 
 			default:
 		}
