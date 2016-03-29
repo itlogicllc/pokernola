@@ -69,9 +69,10 @@
 		<p>The sum of unclaimed points <span class="scoring"><?php echo ($settings_array[$i]['split_points'] == '0' ? 'will not' : 'will also'); ?></span> be divided and distributed amongst each splitting player.</p>
 	</div>
 	<div class="ui-bar ui-bar-a">
-		<h2>PLAYER PRIORITY</h2>
+		<h2>GAME REGISTRATION</h2>
 	</div>
 	<div class="ui-body ui-body-a">
+		<p>The registration period ends <span class="scoring"><?php echo ($settings_array[$i]['hours_to_end'] == 0 ? 'at' : $settings_array[$i]['hours_to_end'] . ' hours before'); ?></span> game time.</p>
 		<p>Player priority is turned <span class="scoring"><?php echo ($settings_array[$i]['credits_per_degree'] == 0 ? 'OFF' : 'ON'); ?>.</span></p>
 		<?php if($settings_array[$i]['credits_per_degree'] > 0) { ?>
 		<p>There are <span class="scoring"><?php echo $settings_array[$i]['credits_per_degree']; ?></span> credits per degree and 10 degrees per level.</p>

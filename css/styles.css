@@ -216,5 +216,10 @@ body {
 .ui-li-count {
 	font-size: smaller;
 }
+.ui-mobile label,
+div.ui-controlgroup-label {
+	font-size: small;
+	font-weight: bold;
+}
 
 

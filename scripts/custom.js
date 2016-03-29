@@ -358,7 +358,7 @@ var javascript_countdown = function () {
 	var time_left = 10; //number of seconds for countdown
 	var output_element_id = 'javascript_countdown_time';
 	var keep_counting = 1;
-	var no_time_left_message = 'Registration has ended';
+	var no_time_left_message = 'The registration period has ended';
  
 	function countdown() {
 		if(time_left < 2) {
@@ -386,7 +386,7 @@ var javascript_countdown = function () {
 		minutes = add_leading_zero( minutes );
 		hours = add_leading_zero( hours );
  
-		return 'Registration ends in ' + hours + ':' + minutes + ':' + seconds;
+		return 'Registration period ends in ' + hours + ':' + minutes + ':' + seconds;
 	}
  
 	function show_time_left() {

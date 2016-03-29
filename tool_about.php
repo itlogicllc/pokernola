@@ -33,6 +33,14 @@
 					</div>
 					<br />
 					<div data-role="collapsible" data-collapsed="false">
+						<h3>v1.4.2 - 3/28/2016</h3>
+							<ul>
+								<li>Added registration period to end so many hours before game time</li>
+								<li>Added countdown to registration end period on registration page</li>
+								<li>Bug Fixes</li>
+							</ul>
+               </div>
+					<div data-role="collapsible" data-collapsed="true">
 						<h3>v1.4.1 - 3/17/2016</h3>
 							<ul>
 								<li>Select if registration is on or off when creating a game</li>

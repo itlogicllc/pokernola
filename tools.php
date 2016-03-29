@@ -45,7 +45,7 @@
 					// then show the Create new season button because the latest season has ended. Otherwise show the
 					// End Season Now button because the latest season is still active.
 					if ($end_date < $todays_date || $ended_early_date != '0000-00-00') { ?>
-						<a href="tool_settings.php" data-role="button" data-transition="fade">Create New Season</a>
+						<a href="tool_settings.php?player_id=<?php echo $player_logged_in_id ?>" data-role="button" data-theme="b" data-transition="fade">Create New Season</a>
 					<?php } else { ?>
 						<form action="tools.php" id="end_date_form" name="end_date_form" method="POST">
 							<input name="Submit" type="submit" value="End Current Season" data-theme="b" onclick="return getSeasonEndVerify();" />

@@ -1,6 +1,8 @@
 <?php
 	require('includes/get_settings.php');
 	
+	date_default_timezone_set("America/Chicago");
+	
 	$settings_array = settings_current();
 
 	if (!isset($_SESSION)) {
@@ -133,4 +135,16 @@
 		$GLOBALS['game_id'] = $game_id;
 		$GLOBALS['player'] = $player;
 		$GLOBALS['game'] = $game;
+	}
+	
+	// Check to see if the registration period has ended. If it has return false, if not, return the
+	// hours remaining until it is.
+	function get_registration_period($game_start_time, $hours_to_end) {
+		$registration_ends = ($game_start_time - time()) - ($hours_to_end * 3600);
+		
+		if ($registration_ends < 0) {
+			return 0;
+		} else {
+			return $registration_ends;
+		}
 	}

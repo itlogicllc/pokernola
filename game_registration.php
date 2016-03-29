@@ -11,6 +11,7 @@
 	
 	$game_name = date_to_php($game['game_name']);
 	$game_name_more = $game['game_name_more'];
+	$game_time = time_to_php($game['game_time']);
 	
 	$game_alternates_array = game_players_alternates_by_game($game_id);
 	if ($game_alternates_array) {
@@ -27,9 +28,13 @@
 	}
 	
 	$max_players = $settings_array['max_players'];
-	
 	$credits_per_degree = $settings_array['credits_per_degree'];
 	
+	// Setup countdown to registration end time
+	$hours_to_end = $settings_array['hours_to_end'];
+	$game_start_time = strtotime((date_to_mysql($game_name) . ' ' . time_to_mysql($game_time)));
+	$registration_ends = get_registration_period($game_start_time, $hours_to_end);
+
 	// if the priority system is turned on, rearrange the game players and alternates array with the
 	// needed information based on the players amount of credits.
 	if ($credits_per_degree > 0) {
@@ -87,36 +92,42 @@
 	
 	// If the form is submitted
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-		$action = $_POST['action'];
+		// Check to see if the registration time eded while the page was open. If it hasn't run the action,
+		// otherwise, just refresh the page to show the registration period has ended.
+		$registration_ends = get_registration_period($game_start_time, $hours_to_end);
 		
-		// Add a record to game_players and update the num_players count
-		// in the games table if the register button is selected. Otherwise,
-		// delete record from game_players and update the num_players count in the games table.
-		switch ($action) {
-			case "register":
-				set_game_players_add($game_id, $player_logged_in_id, 0, 1);
-				break;
-			
-			case "unregister":
-				if ($game_player['alternate_order'] == 0) {
-					$is_alternate = 0;
-				} else {
-					$is_alternate = 1;
-				}
-				set_game_players_delete($game_id, $player_logged_in_id, $is_alternate, 1);
-				
-				if ($game_player['alternate_order'] == 0 && $num_alternates > 0) {
-					set_game_players_alternate_to_player($game_id, $game_alternates_array[0]['game_players_id'], $game_alternates_array[0]['player_id']);
-				}
-				break;
-			
-				case "register_priority":
-					set_game_players_move($game_id, $last_player_id, $num_alternates + 1, 0, 1);
+		if ($registration_ends > 0) {
+			$action = $_POST['action'];
+
+			// Add a record to game_players and update the num_players count
+			// in the games table if the register button is selected. Otherwise,
+			// delete record from game_players and update the num_players count in the games table.
+			switch ($action) {
+				case "register":
 					set_game_players_add($game_id, $player_logged_in_id, 0, 1);
 					break;
-			
-			default:
-				set_game_players_add($game_id, $player_logged_in_id, $game_alternates_array[$num_alternates - 1]['alternate_order'] + 1, 1);
+
+				case "unregister":
+					if ($game_player['alternate_order'] == 0) {
+						$is_alternate = 0;
+					} else {
+						$is_alternate = 1;
+					}
+					set_game_players_delete($game_id, $player_logged_in_id, $is_alternate, 1);
+
+					if ($game_player['alternate_order'] == 0 && $num_alternates > 0) {
+						set_game_players_alternate_to_player($game_id, $game_alternates_array[0]['game_players_id'], $game_alternates_array[0]['player_id']);
+					}
+					break;
+
+					case "register_priority":
+						set_game_players_move($game_id, $last_player_id, $num_alternates + 1, 0, 1);
+						set_game_players_add($game_id, $player_logged_in_id, 0, 1);
+						break;
+
+				default:
+					set_game_players_add($game_id, $player_logged_in_id, $game_alternates_array[$num_alternates - 1]['alternate_order'] + 1, 1);
+			}
 		}
 		
 		// Refresh the page to show the updates
@@ -134,8 +145,7 @@
 		<?php require('includes/set_head.php'); ?>
 		<title>PokerNOLA Game Registration</title>
 	</head>
-<!--	<body onload="javascript_countdown.init(30, 'javascript_countdown_time');">-->
-	<body>
+	<body onload="javascript_countdown.init(<?php echo $registration_ends ?>, 'javascript_countdown_time');">
 		<div data-role="page" id="game_registration">
 			<div data-role="header" data-position="fixed">
 				<h1>Game Registration</h1>
@@ -145,7 +155,7 @@
 				<div class="ui-bar ui-bar-a ui-corner-all normal">
 					<h2><?php echo $game_name; ?><span class="game_name"><?php echo (!empty($game_name_more)) ? '  [' . $game_name_more . ']' : ''; ?></span></h2>
 				</div>
-				<div class="comment ui-bar ui-corner-all"><?php echo 'Game starts at ' . time_to_php($game['game_time']); ?><br><span class="alert2" id="javascript_countdown_time"></span></div>
+				<div class="comment ui-bar ui-corner-all"><?php echo 'Game starts at ' . $game_time; ?><br><span class="alert2" id="javascript_countdown_time"></span><br><span class="input_note">(<?php echo ($hours_to_end > 0) ? $hours_to_end . ' hours before' : 'at'; ?> game time)</span></div>
 				<?php if ($player_logged_in_id) { ?>
 					<?php if ($game_player) { ?>
 					<form action="<?php echo $form_action; ?>" id="unregister" name="unregister" method="POST">
@@ -153,7 +163,11 @@
 						<input type="hidden" name="action" value="unregister">
 					</form>
 					<?php } else { ?>
-						<?php if ($num_players == $max_players) { ?>
+						<?php if ($registration_ends == 0) { ?>
+						<form action="" id="registration_ended" name="registration_ended" method="POST">
+							<button type="button" data-iconpos="top" data-icon="forbidden" disabled>No new registrations allowed</button>
+						</form>
+						<?php } elseif ($num_players == $max_players) { ?>
 							<?php if ($credits_per_degree > 0 && $this_player_priority['level'] >= $last_player_priority['level'] && $this_player_priority['degree'] > $last_player_priority['degree']) { ?>
 							<form action="<?php echo $form_action; ?>" id="register_priority" name="register_priority" method="POST">
 								<button type="button" data-iconpos="top" data-icon="check" onclick="setRequestButton(this, this.form);">Register</button>

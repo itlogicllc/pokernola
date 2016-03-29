@@ -31,6 +31,8 @@
 		$max_increase = $_POST['max_increase'];
 		$ptplay = $_POST['ptplay'];
 		$split_type = $_POST['split_type'];
+		$hours_to_end = $_POST['hours_to_end'];
+		$credits_per_degree = $_POST['credits_per_degree'];
 		
 		if (isset($_POST['split_points'])) {
 			$split_points = 1;
@@ -42,9 +44,9 @@
 		$bounty = $_POST['bounty'];
 
 		$query = "INSERT INTO settings
-				 (season_name, start_date, end_date, default_game_time, max_players, first_pay, second_pay, third_pay, pt1, pt2, pt3, pt4, pt5, pt6, pt7, pt8, pt9, pt10, threshold, multiplier, max_increase, ptplay, split_type, split_points, ko, bounty)
+				 (season_name, start_date, end_date, default_game_time, max_players, first_pay, second_pay, third_pay, pt1, pt2, pt3, pt4, pt5, pt6, pt7, pt8, pt9, pt10, threshold, multiplier, max_increase, ptplay, split_type, split_points, ko, bounty, hours_to_end, credits_per_degree)
 				 VALUES
-				 ('$season_name', '$start_date', '$end_date', '$default_game_time', '$max_players', '$first_pay', '$second_pay', '$third_pay', '$pt1', '$pt2', '$pt3', '$pt4', '$pt5', '$pt6', '$pt7', '$pt8', '$pt9', '$pt10', '$threshold', '$multiplyer', $max_increase, '$ptplay', '$split_type', '$split_points', '$ko', '$bounty')";
+				 ('$season_name', '$start_date', '$end_date', '$default_game_time', '$max_players', '$first_pay', '$second_pay', '$third_pay', '$pt1', '$pt2', '$pt3', '$pt4', '$pt5', '$pt6', '$pt7', '$pt8', '$pt9', '$pt10', '$threshold', '$multiplyer', $max_increase, '$ptplay', '$split_type', '$split_points', '$ko', '$bounty', '$hours_to_end', '$credits_per_degree')";
 
 		$db_action = mysqli_query($db_connect, $query);
 		
@@ -65,7 +67,7 @@
 				<?php require('includes/set_tools.php'); ?>
 			</div>
 			<div role="main" class="ui-content">
-				<form action="tool_settings.php" id="settings_form" name="settings_form" method="POST">
+				<form action="tool_settings.php?player_id=<?php echo $player_logged_in_id ?>" id="settings_form" name="settings_form" method="POST">
 					<div class="ui-bar ui-bar-a ui-corner-all alert"><h2>ALL fields are required!</h2></div>
 					<div data-role="fieldcontain">
 						<label for="season_name">Season Name:</label>
@@ -170,6 +172,12 @@
 						<input type="text" name="ko" id="ko" value="<?php echo $current_settings['ko']; ?>" required /><br>
 						<label for="bounty">Bounty Points:</label>
 						<input type="text" name="bounty" id="bounty" value="<?php echo $current_settings['bounty']; ?>" required />	
+					</div>
+					<div data-role="fieldcontain">
+						<label for="hours_to_end">Registration Ends: <span class='input_note2'>hours before game starts</span></label>
+						<input type="text" name="hours_to_end" id="hours_to_end" value="<?php echo $current_settings['hours_to_end']; ?>" required />
+						<label for="credits_per_degree">Credits Per Degree: <span class='input_note2'>0 turns off priority system</span></label>
+						<input type="text" name="credits_per_degree" id="credits_per_degree" value="<?php echo $current_settings['credits_per_degree']; ?>" required />
 					</div>
 					<div data-role="controlgroup" data-type="horizontal">
 						<input type="hidden" name="settings_id" id="settings_id" value="<?php echo $current_settings['settings_id']; ?>" />
