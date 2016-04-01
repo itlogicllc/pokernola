@@ -9,7 +9,7 @@
 	set_page_access($page_access_type);
 	
 	$winners_list = winners_by_game($game_id);
-	$ko_list = winners_ko_by_game($game_id);
+	//$ko_list = winners_ko_by_game($game_id);
 	$players_list = players_all();
 
 	$game_players_alternates_array = game_players_alternates_by_game($game_id);
@@ -34,6 +34,11 @@
 
 	$game_name = date_to_php($game['game_name']);
 	$game_name_more = $game['game_name_more'];
+	$game_time = time_to_php($game['game_time']);
+	
+	// Check if game has started
+	$game_start_time = $game['game_start_time'];
+	$game_seconds_to_start = get_seconds_between($game_start_time, 0);
 	
 	// If form is submitted
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -73,11 +78,13 @@
 				<div class="ui-bar ui-bar-a ui-corner-all normal">
 					<h2><?php echo $game_name; ?><span class="game_name"><?php echo (!empty($game_name_more)) ? '  [' . $game_name_more . ']' : ''; ?></span></h2>
 				</div>
-				<?php if ($game['status'] == 1) { ?>
+				<?php if ($game['status'] == 1 && $game_seconds_to_start > 0) { ?>
 					<div class="comment ui-bar ui-corner-all"><?php echo 'Game starts at ' . time_to_php($game['game_time']); ?></div>
+				<?php } elseif ($game['status'] == 1 && $game_seconds_to_start == 0) { ?>
+					<div class="alert ui-bar ui-corner-all"><?php echo 'This game is in progress'; ?></div>
 				<?php } else { ?>
 					<div class="alert ui-bar ui-corner-all"><?php echo 'This game has ended'; ?></div>
-				<?php } ?>
+				<?php }  ?>
 				
 				<form action="<?php echo 'game_update.php?game_id=' . $game_id ?>" method="POST" name="game_form" id="game_form">
 					<div align="center">

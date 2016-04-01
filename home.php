@@ -44,7 +44,7 @@
 				<div class="grid_container">
 					<div class="ui-grid-b">
 						<div class="ui-block-a grid1"><h4><a href="#total_games" data-transition="pop" data-rel="popup">Games</a></h4><p><?php echo $number_games_played; ?></p></div>
-						<div class="ui-block-b grid2"><h4><a href="#total_players" data-transition="pop" data-rel="popup">Registered</a></h4><p><?php echo $number_registered; ?></p></div>
+						<div class="ui-block-b grid2"><h4><a href="#total_players" data-transition="pop" data-rel="popup">Members</a></h4><p><?php echo $number_registered; ?></p></div>
 						<div class="ui-block-c grid3"><h4><a href="#avg_players" data-transition="pop" data-rel="popup">Avg. Players</a></h4><p><?php echo $avg_players; ?></p></div>
 					</div>
 					<div class="ui-grid-b">
@@ -66,7 +66,7 @@
 					<p>The sum of all pots per game</p>
 				</div>
 				<div id="total_players" data-role="popup" data-arrow="true">
-					<p>The total number of registered players</p>
+					<p>The total number of registered members</p>
 				</div>
 				<div id="total_games" data-role="popup" data-arrow="true">
 					<p>The total number of games played</p>

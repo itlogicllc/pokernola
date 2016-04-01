@@ -7,6 +7,19 @@
 	$page_access_type = 'player';
 	set_page_access($page_access_type);
 	
+	// Setup countdown to registration end time
+	$hours_to_end = $settings_array['hours_to_end'];
+	$game_start_time = $game['game_start_time'];
+	$registration_ends = get_seconds_between($game_start_time, $hours_to_end);
+	
+	// Check to make sure the game hasn't started. Redirect to game details if it has
+	$game_seconds_to_start = get_seconds_between($game_start_time, 0);
+		
+	if ($game_seconds_to_start == 0) {
+		header("Location: game_details.php?game_id=$game_id");
+		exit();
+	}
+	
 	$game_player = game_players_player_by_game($game_id, $player_logged_in_id);
 	
 	$game_name = date_to_php($game['game_name']);
@@ -29,11 +42,6 @@
 	
 	$max_players = $settings_array['max_players'];
 	$credits_per_degree = $settings_array['credits_per_degree'];
-	
-	// Setup countdown to registration end time
-	$hours_to_end = $settings_array['hours_to_end'];
-	$game_start_time = strtotime((date_to_mysql($game_name) . ' ' . time_to_mysql($game_time)));
-	$registration_ends = get_registration_period($game_start_time, $hours_to_end);
 
 	// if the priority system is turned on, rearrange the game players and alternates array with the
 	// needed information based on the players amount of credits.
@@ -92,46 +100,50 @@
 	
 	// If the form is submitted
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-		// Check to see if the registration time eded while the page was open. If it hasn't run the action,
-		// otherwise, just refresh the page to show the registration period has ended.
-		$registration_ends = get_registration_period($game_start_time, $hours_to_end);
-		
-		if ($registration_ends > 0) {
-			$action = $_POST['action'];
+		$action = $_POST['action'];
 
-			// Add a record to game_players and update the num_players count
-			// in the games table if the register button is selected. Otherwise,
-			// delete record from game_players and update the num_players count in the games table.
-			switch ($action) {
-				case "register":
+		// Add a record to game_players and update the num_players count
+		// in the games table if the register button is selected. Otherwise,
+		// delete record from game_players and update the num_players count in the games table.
+		switch ($action) {
+			case "register":
+				// Don't run if registration time has ended while page was open
+				if ($registration_ends > 0) {
 					set_game_players_add($game_id, $player_logged_in_id, 0, 1);
-					break;
+				}
+				break;
 
-				case "unregister":
-					if ($game_player['alternate_order'] == 0) {
-						$is_alternate = 0;
-					} else {
-						$is_alternate = 1;
-					}
-					set_game_players_delete($game_id, $player_logged_in_id, $is_alternate, 1);
+			case "unregister":
+				if ($game_player['alternate_order'] == 0) {
+					$is_alternate = 0;
+				} else {
+					$is_alternate = 1;
+				}
+				set_game_players_delete($game_id, $player_logged_in_id, $is_alternate, 1);
 
-					if ($game_player['alternate_order'] == 0 && $num_alternates > 0) {
-						set_game_players_alternate_to_player($game_id, $game_alternates_array[0]['game_players_id'], $game_alternates_array[0]['player_id']);
-					}
-					break;
+				if ($game_player['alternate_order'] == 0 && $num_alternates > 0) {
+					set_game_players_alternate_to_player($game_id, $game_alternates_array[0]['game_players_id'], $game_alternates_array[0]['player_id']);
+				}
+				break;
 
-					case "register_priority":
+				case "register_priority":
+					// Don't run if registration time has ended while page was open
+					if ($registration_ends > 0) {
 						set_game_players_move($game_id, $last_player_id, $num_alternates + 1, 0, 1);
 						set_game_players_add($game_id, $player_logged_in_id, 0, 1);
-						break;
+					}
+					break;
 
-				default:
+			default:
+				// Don't run if registration time has ended while page was open
+				if ($registration_ends > 0) {
 					set_game_players_add($game_id, $player_logged_in_id, $game_alternates_array[$num_alternates - 1]['alternate_order'] + 1, 1);
-			}
+				}
 		}
 		
 		// Refresh the page to show the updates
 		header("Location: game_registration.php?game_id=$game_id");
+		exit();
 	}
 	
 	$form_action = $_SERVER['PHP_SELF'];

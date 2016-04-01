@@ -34,11 +34,17 @@
 						<ul data-role="listview" data-inset="true" data-split-icon="edit" data-split-theme="b">
 							<li data-role="list-divider">Upcoming Games</li>
 							<?php for ($i = 0; $i <= count($games_list_reversed) - 1; $i++) {
+										// Check if game time has already started
+										$game_name = $games_list_reversed[$i]['game_name'];
+										$game_time = $games_list_reversed[$i]['game_time'];
+										$game_start_time = $game_name . ' ' . $game_time;
+										$game_seconds_to_start = get_seconds_between($game_start_time, 0);
+										
 										// If the game has not been played yet
 										if ($games_list_reversed[$i]['status'] == 1) {
 							?>
 							<li>
-								<a href="<?php echo ($games_list_reversed[$i]['registration'] == 1 && $games_list_reversed[$i]['status'] == 1) ? 'game_registration.php' : 'game_details.php'; ?>?game_id=<?php echo $games_list_reversed[$i]['game_id']; ?>">
+								<a href="<?php echo ($games_list_reversed[$i]['registration'] == 1 && $game_seconds_to_start > 0) ? 'game_registration.php' : 'game_details.php'; ?>?game_id=<?php echo $games_list_reversed[$i]['game_id']; ?>">
 								<?php
 									// Find out if the logged in player was part of this game. Returns false if not, 0 if they played, > 0 if they were an alternate 
 									if (!empty($_SESSION['player_logged_in'])) {

@@ -60,7 +60,7 @@
 						<br />
 						<div data-role="controlgroup" data-type="horizontal">
 							<input name="submit" type="submit" value="Log In" />
-							<a class="ui-btn" href="password_send.php">Forgot Password?</a>
+							<a class="ui-btn" href="password_send.php">Forgot Password</a>
 						</div>
 						<input name="referer" type="hidden" id="referer" value="<?php echo (isset($_GET['referer']) ? $_GET['referer'] : 'home.php'); ?>"  />
 					</form>

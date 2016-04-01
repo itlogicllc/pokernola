@@ -1,6 +1,6 @@
 <?php
 	if (isset($_SESSION['player_access']) && $_SESSION['player_access'] == 'admin') {
-		if ($game['registration'] == 1 && $game['status'] == 1) {
+		if ($game['registration'] == 1 && $game['status'] == 1 && $game_seconds_to_start > 0) {
 			echo '<a href="game_details.php?game_id=' . $game_id . '" class="ui-btn ui-shadow ui-corner-all ui-icon-grid ui-btn-icon-notext ui-btn-b ui-btn-inline">Edit Game</a>';
 		} else {
 			echo '<a href="game_details.php?game_id=' . $game_id . '" class="ui-btn ui-shadow ui-corner-all ui-icon-grid ui-btn-icon-notext ui-btn-a ui-btn-inline">Edit Game</a>';

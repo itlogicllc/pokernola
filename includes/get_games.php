@@ -2,7 +2,7 @@
 
 	// Select all games that are between the dates selected in the session variables.
 	// The games are ordered in decending order.
-	$games_query = "SELECT *
+	$games_query = "SELECT *, CONCAT(game_name,' ',game_time) game_start_time
 						 FROM games 
 						 WHERE game_name BETWEEN '" . $_SESSION['from_date'] . "' AND '" . $_SESSION['to_date'] . "'
 						 ORDER BY game_name DESC";

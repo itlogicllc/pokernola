@@ -33,9 +33,17 @@
 					</div>
 					<br />
 					<div data-role="collapsible" data-collapsed="false">
+						<h3>v1.4.3 - 3/31/2016</h3>
+							<ul>
+								<li>When selecting a closed game after the start time, you are sent to the game details instead of the registration page</li>
+								<li>Bug Fixes</li>
+								<li>Updated help</li>
+							</ul>
+               </div>
+					<div data-role="collapsible" data-collapsed="true">
 						<h3>v1.4.2 - 3/28/2016</h3>
 							<ul>
-								<li>Added registration period to end so many hours before game time</li>
+								<li>Added registration period to end given hours before game time</li>
 								<li>Added countdown to registration end period on registration page</li>
 								<li>Bug Fixes</li>
 							</ul>

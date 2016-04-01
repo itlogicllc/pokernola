@@ -6,14 +6,19 @@
 	
 	$page_access_type = 'player';
 	set_page_access($page_access_type);
-	if ($game['registration'] == 1 && $game['status'] == 1) {
+	
+	$game_name = date_to_php($game['game_name']);
+	$game_name_more = $game['game_name_more'];
+	$game_time = time_to_php($game['game_time']);
+	
+	// Check if game has started
+	$game_start_time = $game['game_start_time'];
+	$game_seconds_to_start = get_seconds_between($game_start_time, 0);
+	
+	if ($game['registration'] == 1 && $game['status'] == 1 && $game_seconds_to_start > 0) {
 		$page_access_type = 'admin';
 		set_page_access($page_access_type);
 	}
-	
-
-	$game_name = date_to_php($game['game_name']);
-	$game_name_more = $game['game_name_more'];
 	
 	// Find the current game_id in the array of all games played and point to it.
 	// if there is a next element in the array set the next_game_id to the next game id
@@ -84,11 +89,13 @@
 						<div style="float:right"><a href="game_details.php?game_id=<?php echo $previous_game_id ?>"><img src="images/icons/carat-r-white.png" alt="previous game" /></a></div>
 					<?php } ?>
 				</div>
-				<?php if ($game['status'] == 1) { ?>
+				<?php if ($game['status'] == 1 && $game_seconds_to_start > 0) { ?>
 					<div class="comment ui-bar ui-corner-all"><?php echo 'Game starts at ' . time_to_php($game['game_time']); ?></div>
+				<?php } elseif ($game['status'] == 1 && $game_seconds_to_start == 0) { ?>
+					<div class="alert2 ui-bar ui-corner-all"><?php echo 'This game is in progress <br><span class="input_note">(some statistics are not yet updated)</span>'; ?></div>
 				<?php } else { ?>
 					<div class="alert2 ui-bar ui-corner-all"><?php echo 'This game has ended'; ?></div>
-				<?php } ?>
+				<?php }  ?>
             <div class="grid_container">
                <div class="ui-grid-a">
                   <div class="ui-block-a grid1">

@@ -137,14 +137,14 @@
 		$GLOBALS['game'] = $game;
 	}
 	
-	// Check to see if the registration period has ended. If it has return false, if not, return the
-	// hours remaining until it is.
-	function get_registration_period($game_start_time, $hours_to_end) {
-		$registration_ends = ($game_start_time - time()) - ($hours_to_end * 3600);
+	// Check how many seconds between difference in game start time and hours given
+	function get_seconds_between($game_start_time, $hours) {
+		$start_time = strtotime($game_start_time);
+		$seconds = ($start_time - time()) - ($hours * 3600);
 		
-		if ($registration_ends < 0) {
+		if ($seconds <= 0) {
 			return 0;
 		} else {
-			return $registration_ends;
+			return $seconds;
 		}
 	}
