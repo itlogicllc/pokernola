@@ -140,6 +140,16 @@
 				$subject = "PokerNOLA Game Added";
 				$body = "Games were just created.";
 				break;
+			
+			case "game_deleted":
+				$subject = "PokerNOLA Game Deleted";
+				$body = "The $args_array[0] game was just deleted.";
+				break;
+			
+			case "game_rescheduled":
+				$subject = "PokerNOLA Game Rescheduled";
+				$body = "The <b>$args_array[0] $args_array[1] game at $args_array[2]</b> was just rescheduled to <b>$args_array[3] $args_array[4] game at $args_array[5]</b>.";
+				break;
 
 			default:
 		}

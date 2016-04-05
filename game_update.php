@@ -94,19 +94,12 @@
 					</div>
 				</form>
 					<div <?php echo ($game['status'] == 0) ? 'class="hidden"' : ''; ?>>
-<!--				Start Game Details section.-->
+
+<!--				Start Game Schedule section.-->
 					<div data-role="collapsible-set">
 						<div data-role="collapsible" data-collapsed="true">
-							<h3>Game Details</h3>
-							<form action="<?php echo 'game_update_details.php?game_id=' . $game_id ?>" method="POST" name="details_form" id="details_form">
-								<div  class="ui-field-contain">
-									<label for="registration">Registration:</label>
-									<input name="registration" id="registration" type="checkbox" data-role="flipswitch" <?php echo ($game['registration'] == 1) ? 'checked=""' : ''; ?>>
-								</div>
-								<div  class="ui-field-contain">
-									<label for="game_name_more">Name:</label>
-									<input type="text" name="game_name_more" id="game_name_more" value="<?php echo $game['game_name_more']; ?>"  />
-								</div>
+							<h3>Game Schedule</h3>
+							<form action="<?php echo 'game_update_schedule.php?game_id=' . $game_id ?>" method="POST" name="details_form" id="details_form">
 								<div  class="ui-field-contain">
 									<label for="game_name">Date:</label>
 									<input id="game_name" name="game_name" type="text"  value="<?php echo date_to_php($game['game_name']); ?>" data-role="datebox" data-options='{"mode":"calbox", "useFocus":true, "overrideDateFormat":"%m-%d-%Y", "defaultValue":"<?php echo $game['game_name']; ?>"}'>
@@ -114,6 +107,28 @@
 								<div data-role="fieldcontain">
 									<label for="game_time">Time:</label>
 									<input id="game_time" name="game_time" type="text" value="<?php echo time_to_php($game['game_time']); ?>" data-role="datebox" data-options='{"mode":"timeflipbox", "useFocus":true, "overrideTimeFormat":12, "overrideTimeOutput":"%I:%M:%S %p", "defaultValue":"<?php echo $game['game_time'] ?>"}' required />   
+								</div>
+								<div  class="ui-field-contain">
+									<label for="game_name_more">Name: <span class="input_note2">optional</span></label>
+									<input type="text" name="game_name_more" id="game_name_more" value="<?php echo $game['game_name_more']; ?>"  />
+								</div>
+								<div  class="ui-field-contain">
+									<label for="notify"> Notify Members</label>
+									<input name="notify" id="notify" type="checkbox">
+								</div>
+								<div data-type="horizontal" data-role="controlgroup">
+									<input type="submit" name="submit" value="Update Schedule" data-inline="true" onclick="return getPlayersOverVerify(this.form);" />
+								</div>
+							</form>
+						</div>
+						
+<!--				Start Game Details section.-->
+						<div data-role="collapsible" data-collapsed="true">
+							<h3>Game Details</h3>
+							<form action="<?php echo 'game_update_details.php?game_id=' . $game_id ?>" method="POST" name="details_form" id="details_form">
+								<div  class="ui-field-contain">
+									<label for="registration">Registration:</label>
+									<input name="registration" id="registration" type="checkbox" data-role="flipswitch" <?php echo ($game['registration'] == 1) ? 'checked=""' : ''; ?>>
 								</div>
 								<div  class="ui-field-contain">
 									<label for="total_players">Total Players:</label>

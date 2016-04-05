@@ -98,7 +98,6 @@ body {
 }
 .expired {
 	color: #999;
-	text-decoration: line-through;
 	font-style: italic;
 }
 .game_name {
@@ -108,7 +107,6 @@ body {
 }
 .game_name_expired {
 	color: #999;
-	text-decoration: line-through;
 	font-style: italic;
 	font-size: smaller;
 	font-weight: lighter;

@@ -137,13 +137,14 @@
 
 			// Send email distribution.
 			player_emails("distribution", $bcc_array, array($message));
-
-			// Send system email
-			system_emails("game_created", array());
 		}
+		
+		// Send system email
+		system_emails("game_created", array());
 		
 		// Redirect to games.php after all records are created
 		header("Location: games.php");
+		exit();
 	}
 	
 
@@ -176,7 +177,7 @@
 						<label for="registration">Registration:</label>
 						<input name="registration" id="registration" type="checkbox" data-role="flipswitch" checked>
 						<br><br>
-						<label for="notify">Notify Members</label>
+						<label for="notify"> Notify Members</label>
 						<input name="notify" id="notify" type="checkbox">
 					</div>
 					<br />

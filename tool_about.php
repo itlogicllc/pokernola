@@ -33,6 +33,14 @@
 					</div>
 					<br />
 					<div data-role="collapsible" data-collapsed="false">
+						<h3>v1.4.4 - 4/5/2016</h3>
+							<ul>
+								<li>Added email members for game delete and game reschedule</li>
+								<li>Added number of registered players to Upcoming Games</li>
+								<li>Add an edit Game Schedule to admin section</li>
+							</ul>
+               </div>
+					<div data-role="collapsible" data-collapsed="true">
 						<h3>v1.4.3 - 3/31/2016</h3>
 							<ul>
 								<li>When selecting a closed game after the start time, you are sent to the game details instead of the registration page</li>

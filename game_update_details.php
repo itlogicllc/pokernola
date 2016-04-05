@@ -13,16 +13,13 @@
 	} else {
 		$registration = 0;
 	}
-
-	$game_name = date_to_mysql($_POST['game_name']);
-	$game_name_more = $_POST['game_name_more'];
-	$game_time = time_to_mysql($_POST['game_time']);
+	
 	$total_players = $_POST['total_players'];
 	$total_pot = $_POST['total_pot'];
 
 	// Update the game table
 	$query = "UPDATE games
-				 SET registration='$registration', game_name='$game_name', game_name_more='$game_name_more', game_time='$game_time', num_players='$total_players', total_pot='$total_pot'
+				 SET registration='$registration', num_players='$total_players', total_pot='$total_pot'
 				 WHERE game_id='$game_id'";
 
 	$db_action = mysqli_query($db_connect, $query);

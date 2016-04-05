@@ -8,6 +8,8 @@
 
 	$games_list = games_all();
 	$games_list_reversed = array_reverse($games_list);
+	
+	$max_players = $settings_array['max_players'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -34,14 +36,22 @@
 						<ul data-role="listview" data-inset="true" data-split-icon="edit" data-split-theme="b">
 							<li data-role="list-divider">Upcoming Games</li>
 							<?php for ($i = 0; $i <= count($games_list_reversed) - 1; $i++) {
-										// Check if game time has already started
-										$game_name = $games_list_reversed[$i]['game_name'];
-										$game_time = $games_list_reversed[$i]['game_time'];
-										$game_start_time = $game_name . ' ' . $game_time;
-										$game_seconds_to_start = get_seconds_between($game_start_time, 0);
-										
 										// If the game has not been played yet
 										if ($games_list_reversed[$i]['status'] == 1) {
+											// Check if game time has already started
+											$game_name = $games_list_reversed[$i]['game_name'];
+											$game_time = $games_list_reversed[$i]['game_time'];
+											$game_start_time = $game_name . ' ' . $game_time;
+											$game_seconds_to_start = get_seconds_between($game_start_time, 0);
+
+											// The number of players registered
+											game_players_refresh();
+											$game_players_array = game_players_by_game($games_list_reversed[$i]['game_id']);
+											if ($game_players_array) {
+												$num_players = count($game_players_array);
+											} else {
+												$num_players = 0;
+											}
 							?>
 							<li>
 								<a href="<?php echo ($games_list_reversed[$i]['registration'] == 1 && $game_seconds_to_start > 0) ? 'game_registration.php' : 'game_details.php'; ?>?game_id=<?php echo $games_list_reversed[$i]['game_id']; ?>">
@@ -83,7 +93,12 @@
 									}
 
 									// display the game name as not played yet
-									echo '<span>' . date_to_php($games_list_reversed[$i]['game_name']) . '</span><span class="game_name">'; echo (!empty($games_list_reversed[$i]['game_name_more'])) ? '  [' . $games_list_reversed[$i]['game_name_more'] . ']' : ''; '</span>';
+									echo '<h2 style="margin-top: 0">' . date_to_php($games_list_reversed[$i]['game_name']) . '<span class="game_name">';
+									echo (!empty($games_list_reversed[$i]['game_name_more'])) ? '  [' . $games_list_reversed[$i]['game_name_more'] . ']' : '';
+									echo '</span></h2>';
+									if ($games_list_reversed[$i]['registration'] == 1) {
+										echo '<p>Registered players: <span class="info">' . $num_players . ' of ' . $max_players . '</span></p>';
+									}
 								?>
 								</a>
 								<?php if (isset($_SESSION['player_access']) && $_SESSION['player_access'] == 'admin') { ?>
@@ -97,8 +112,17 @@
 						<ul data-role="listview" data-inset="true" data-split-icon="edit" data-split-theme="b">
 							<li data-role="list-divider">Completed Games</li>
 							<?php for ($i = 0; $i <= count($games_list) - 1; $i++) { 
+										
 										// If the game has been played
 										if ($games_list[$i]['status'] == 0) {
+											
+											// The number of players registered
+											$game_players_array = game_players_by_game($games_list[$i]['game_id']);
+											if ($game_players_array) {
+												$num_players = count($game_players_array);
+											} else {
+												$num_players = 0;
+											}
 							?>
 							<li>
 								<a href="<?php echo ($games_list[$i]['registration'] == 1 && $games_list[$i]['status'] == 1) ? 'game_registration.php' : 'game_details.php'; ?>?game_id=<?php echo $games_list[$i]['game_id']; ?>">
@@ -125,7 +149,9 @@
 									}
 
 									// display the game name as expired
-									echo '<span class="expired">' . date_to_php($games_list[$i]['game_name']) . '</span><span class="game_name_expired">'; echo (!empty($games_list[$i]['game_name_more'])) ? '  [' . $games_list[$i]['game_name_more'] . ']': ''; '</span>';
+									echo '<h2 style="margin-top: 0" class="expired">' . date_to_php($games_list[$i]['game_name']) . '<span class="game_name_expired">';
+									echo (!empty($games_list[$i]['game_name_more'])) ? '  [' . $games_list[$i]['game_name_more'] . ']' : '';
+									echo '</span></h2>';
 								?>
 								</a>
 								<?php if (isset($_SESSION['player_access']) && $_SESSION['player_access'] == 'admin') { ?>
