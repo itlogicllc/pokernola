@@ -45,13 +45,7 @@
 		$db_action = mysqli_query($db_connect, $query);
 	}
 	
-	// set_splits is only called when A) The number of splitting players =< the amount of payouts, and B) the lowest
-	// chipcount percentage is < the percentage they would have gotten if the game were played out.
-	// TODO: the split count is hard coaded to 3 because there can only be at most 3 players in the money. This will need to change if that setting is made dynamic.
-	if (($split_count == 2 && $min_split < $settings_array['second_pay']) || ($split_count == 3 && $min_split < $settings_array['third_pay'])) {
-		set_splits($game_id);
-	}
-	
+	set_splits($game_id);
 	set_points($game_id);
 	
 	// Redirect back to game_updates.

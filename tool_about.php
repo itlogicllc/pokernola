@@ -33,6 +33,12 @@
 					</div>
 					<br />
 					<div data-role="collapsible" data-collapsed="false">
+						<h3>v1.4.5 - 4/7/2016</h3>
+							<ul>
+								<li>Fixed split calculation</li>
+							</ul>
+               </div>
+					<div data-role="collapsible" data-collapsed="true">
 						<h3>v1.4.4 - 4/5/2016</h3>
 							<ul>
 								<li>Added email members for game delete and game reschedule</li>

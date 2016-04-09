@@ -11,15 +11,14 @@
 	}
 
 	// This function calculates and updates the split_diff of the winners by percentage of chips held when splitting.
-	// This calculation is done to assure that the lowest percentage winner gets at least how much they would have gotten
-	// if played out. 
 	// 
 	// L = % of lowest splitting player's payout
-	// P = Total amount of pot to be split
+	// X = sum of percentages being split
+	// P = Total amount of pot
 	// N = Number of players splitting
-	// S[i] = Split % of player
+	// S[i] = % of player's chip count
 	//
-	// L(P) + ( (1-N(L)) * (S[i](P)) )
+	// L(P) + ( (X-N(L)) * (S[i](P)) )
 	//
 	function set_splits($game_id) {
 		global $db_connect;
@@ -38,12 +37,14 @@
 		$L = end($splitting_players);
 		$L = $L['amount'];
 		
-		// Get value for P as defined in the comments
-		$P = 0;
+		// Get value of X as defined above
+		$X = 0;
 		for ($i = 0; $i <= count($splitting_players) - 1; $i++) {
-			$P = $P + $splitting_players[$i]['amount'];
+			$X = $X + $splitting_players[$i]['amount'];
 		}
-		$P = $P * $game_array['total_pot'];
+		
+		// Get value for P as defined in the comments
+		$P = $game_array['total_pot'];
 		
 		//Get value for N as defined in the comments
 		$N = count($splitting_players);
@@ -51,7 +52,7 @@
 		for ($i = 0; $i <= count($splitting_players) - 1; $i++) {
 			// This S is the S[i] value defined in the comments
 			$S = $splitting_players[$i]['original_split'];
-			$split_diff = $L * $P + ((1 - ($N * $L)) * ($S * $P));
+			$split_diff = $L * $P + (($X - ($N * $L)) * ($S * $P));
 			
 			// split_diff is the dollar amount. It needs to be converted the the percentage of the total pot
 			$split_diff = $split_diff / $game_array['total_pot'];
