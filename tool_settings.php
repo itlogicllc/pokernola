@@ -13,6 +13,7 @@
 		$end_date = date_to_mysql($_POST['end_date']);
 		$default_game_time = time_to_mysql($_POST['default_game_time']);
 		$max_players = $_POST['max_players'];
+		$max_members = $_POST['max_members'];
 		$first_pay = $_POST['first_pay'];
 		$second_pay = $_POST['second_pay'];
 		$third_pay = $_POST['third_pay'];
@@ -44,9 +45,9 @@
 		$bounty = $_POST['bounty'];
 
 		$query = "INSERT INTO settings
-				 (season_name, start_date, end_date, default_game_time, max_players, first_pay, second_pay, third_pay, pt1, pt2, pt3, pt4, pt5, pt6, pt7, pt8, pt9, pt10, threshold, multiplier, max_increase, ptplay, split_type, split_points, ko, bounty, hours_to_end, credits_per_degree)
+				 (season_name, start_date, end_date, default_game_time, max_players, max_members, first_pay, second_pay, third_pay, pt1, pt2, pt3, pt4, pt5, pt6, pt7, pt8, pt9, pt10, threshold, multiplier, max_increase, ptplay, split_type, split_points, ko, bounty, hours_to_end, credits_per_degree)
 				 VALUES
-				 ('$season_name', '$start_date', '$end_date', '$default_game_time', '$max_players', '$first_pay', '$second_pay', '$third_pay', '$pt1', '$pt2', '$pt3', '$pt4', '$pt5', '$pt6', '$pt7', '$pt8', '$pt9', '$pt10', '$threshold', '$multiplyer', $max_increase, '$ptplay', '$split_type', '$split_points', '$ko', '$bounty', '$hours_to_end', '$credits_per_degree')";
+				 ('$season_name', '$start_date', '$end_date', '$default_game_time', '$max_players', '$max_members', '$first_pay', '$second_pay', '$third_pay', '$pt1', '$pt2', '$pt3', '$pt4', '$pt5', '$pt6', '$pt7', '$pt8', '$pt9', '$pt10', '$threshold', '$multiplyer', $max_increase, '$ptplay', '$split_type', '$split_points', '$ko', '$bounty', '$hours_to_end', '$credits_per_degree')";
 
 		$db_action = mysqli_query($db_connect, $query);
 		
@@ -82,6 +83,10 @@
 					<div data-role="fieldcontain">
 						<label for="default_game_time">Default Game Start Time:</label>
 						<input id="default_game_time" name="default_game_time" type="text" value="<?php echo time_to_php($current_settings['default_game_time']); ?>" data-role="datebox" data-options='{"mode":"timeflipbox", "useFocus":true, "overrideTimeFormat":12, "overrideTimeOutput":"%I:%M:%S %p", "defaultValue":"<?php echo $current_settings['default_game_time'] ?>"}' required />   
+					</div>
+					<div data-role="fieldcontain">
+						<label for="max_members">Maximum Members:<span class='input_note2'> 0 = unlimited</span></label>
+						<input name="max_members" id="max_members" type="text" value="<?php echo $current_settings['max_members']; ?>" required />    
 					</div>
 					<div data-role="fieldcontain">
 						<label for="max_players">Maximum Players:</label>

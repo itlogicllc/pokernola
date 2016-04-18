@@ -3,7 +3,7 @@
 	require('includes/set_page.php');
 	require('includes/get_messages.php');
 	
-	$page_access_type = 'member';
+	$page_access_type = 'all';
 	set_page_access($page_access_type);
 ?>
 <!DOCTYPE html>

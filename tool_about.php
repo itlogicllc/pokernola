@@ -33,6 +33,14 @@
 					</div>
 					<br />
 					<div data-role="collapsible" data-collapsed="false">
+						<h3>v1.4.6 - 4/17/2016</h3>
+							<ul>
+								<li>Added maximum allowed members setting</li>
+								<li>Modified invitations to only be allowed if maximum allowed members has not been met or is set to unlimited</li>
+								<li>Bug fix</li>
+							</ul>
+               </div>
+					<div data-role="collapsible" data-collapsed="true">
 						<h3>v1.4.5 - 4/7/2016</h3>
 							<ul>
 								<li>Fixed split calculation</li>

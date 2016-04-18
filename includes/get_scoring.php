@@ -24,6 +24,12 @@
 		<p> This season is from <span class="scoring"><?php echo date_to_php($settings_array[$i]['start_date']); ?></span> to <span class="scoring"><?php echo date_to_php($settings_array[$i]['end_date']); ?></span></p>
 	</div>
 	<div class="ui-bar ui-bar-a">
+		<h2>MAXIMUM MEMBERS</h2>
+	</div>
+	<div class="ui-body ui-body-a">
+		<p> The maximum amount of members allowed to join is <span class="scoring"><?php echo ($settings_array[$i]['max_members'] > 0) ? $settings_array[$i]['max_members'] : 'unlimited'; ?></span> members.</p>
+	</div>
+	<div class="ui-bar ui-bar-a">
 		<h2>MAXIMUM PLAYERS</h2>
 	</div>
 	<div class="ui-body ui-body-a">

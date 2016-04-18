@@ -65,6 +65,10 @@
 				$message = "<p class='alert'>The latest season has ended! You must create a new season before creating any new games.</p>";
 				break;
 			
+			case "max_members":
+				$message = "<p class='alert'>The maximum number of members allowed has been reached! Therefore, no new members may be invited to join at this time.</p>";
+				break;
+			
 			default:
 		}
 		

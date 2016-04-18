@@ -8,6 +8,13 @@
 	$page_access_type = 'player';
 	set_page_access($page_access_type);
 	
+	// Check to make sure the players count is less than the max members allowed and that
+	// the max_members setting is not 0, which means unlimited allowed
+	if (count(players_all()) >= $settings_array['max_members'] && $settings_array['max_members'] > 0){
+		header("Location: access_denied.php?message=max_members");
+		exit();
+	}
+	
 	// If the form was submitted.
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$first_name = trim($_POST['first_name']);
